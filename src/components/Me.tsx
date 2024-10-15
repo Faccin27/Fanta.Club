@@ -81,7 +81,7 @@ export default function Component() {
                 className="transition-all duration-300"
               />
               <div className="relative h-full flex flex-col justify-center items-center">
-                <h2 className="text-xl font-bold text-white hover:text-orange-600 text-center">
+                <h2 className="text-5xl font-bold text-white hover:text-orange-600 text-center">
                   Fanta Unban
                 </h2>
                 <p className="absolute bottom-3 right-3 text-white">

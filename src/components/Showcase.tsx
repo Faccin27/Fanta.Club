@@ -1,8 +1,10 @@
+"use client"
 import React from "react";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Header from "./Header";
 import showcaseData from "@/data/showcase.json";
+import { FaYoutube, FaTiktok } from 'react-icons/fa';
 
 interface Video {
   id: string;
@@ -30,6 +32,43 @@ const VideoCard: React.FC<{ video: Video }> = ({ video }) => (
   </div>
 );
 
+const SocialMediaButtons: React.FC = () => {
+  const [hoveredButton, setHoveredButton] = React.useState<string | null>(null);
+
+  const buttons = [
+    { name: 'YouTube', icon: FaYoutube, color: 'red' },
+    { name: 'TikTok', icon: FaTiktok, color: 'pink' },
+  ];
+
+  return (
+    <div className="flex">
+      {buttons.map((button, index) => (
+        <button
+          key={button.name}
+          onMouseEnter={() => setHoveredButton(button.name)}
+          onMouseLeave={() => setHoveredButton(null)}
+          className={`
+            flex items-center justify-center
+            py-2 px-4 text-sm font-medium
+            transition-all duration-300 ease-in-out
+            ${hoveredButton === button.name ? `bg-${button.color}-500 w-32` : `bg-gray-700 w-12`}
+            text-white hover:shadow-md
+            ${index === 0 ? 'rounded-l-md' : ''}
+            ${index === buttons.length - 1 ? 'rounded-r-md' : ''}
+          `}
+        >
+          <button.icon className="text-xl" />
+          {hoveredButton === button.name && (
+            <span className="ml-2 whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out">
+              {button.name}
+            </span>
+          )}
+        </button>
+      ))}
+    </div>
+  );
+};
+
 const Home: React.FC<HomeProps> = ({ videos }) => {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
@@ -42,7 +81,10 @@ const Home: React.FC<HomeProps> = ({ videos }) => {
       <Header />
       
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Youtube showcase</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold">Youtube showcase</h1>
+          <SocialMediaButtons />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {videos.map((video) => (
             <VideoCard key={video.id} video={video} />
