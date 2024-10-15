@@ -13,6 +13,8 @@ import {
   Edit,
   MessageSquare,
   Youtube,
+  RefreshCw,
+  Clock,
 } from "lucide-react";
 import {
   FaDiscord,
@@ -101,6 +103,35 @@ export default function Component() {
           </div>
           {/* SEÇÃO DO BANNER DO PRODUTO */}
           <div className="mt-16 space-y-5">
+            <div className="relative w-full h-48 md:h-56 rounded-lg overflow-hidden">
+              <Image
+                src={B2}
+                alt="banner esp"
+                layout="fill"
+                objectFit="cover"
+                className="transition-all duration-300"
+              />
+              <div className="relative h-full flex flex-col justify-center items-center">
+                <h2 className="text-5xl font-bold text-white hover:text-orange-600 text-center">
+                  Fanta Unban
+                </h2>
+                <p className="absolute bottom-3 right-3 text-white">
+                  Subscription end: <span className="font-bold">18d</span>
+                </p>
+                <div className="absolute bottom-3 left-3 flex space-x-2">
+                  <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
+                    <Download className="mr-1 h-4 w-4" /> Download
+                  </button>
+                  <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
+                    <RefreshCw className="mr-1 h-4 w-4" /> Reset HWID
+                  </button>
+                  <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
+                    <Clock className="mr-1 h-4 w-4" /> Freeze
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <div className="relative w-full h-48 md:h-56 rounded-lg overflow-hidden group">
               <Image
                 src={B1}
@@ -110,14 +141,15 @@ export default function Component() {
                 className="transition-all duration-300 filter grayscale group-hover:grayscale-0"
               />
               <div className="relative h-full flex flex-col justify-center items-center">
-                <h2 className="text-7xl font-bold text-white hover:text-orange-600 text-center">Fanta Pro</h2>
+                <h2 className="text-7xl font-bold text-white hover:text-orange-600 text-center">
+                  Fanta Pro
+                </h2>
                 <p className="absolute bottom-3 right-3 text-white">
                   Starting From <span className="font-bold">R$ 160</span>
                 </p>
               </div>
             </div>
 
-            
             <div className="relative w-full h-48 md:h-56 rounded-lg overflow-hidden group">
               <Image
                 src={B2}
@@ -127,7 +159,9 @@ export default function Component() {
                 className="transition-all duration-300 filter grayscale group-hover:grayscale-0"
               />
               <div className="relative h-full flex flex-col justify-center items-center">
-                <h2 className="text-7xl font-bold text-white hover:text-orange-600 text-center">Fanta Light</h2>
+                <h2 className="text-7xl font-bold text-white hover:text-orange-600 text-center">
+                  Fanta Light
+                </h2>
                 <p className="absolute bottom-3 right-3 text-white">
                   Starting From <span className="font-bold">R$ 90</span>
                 </p>
@@ -136,7 +170,9 @@ export default function Component() {
           </div>
           <br />
           <br />
-          <br /><br /><br />
+          <br />
+          <br />
+          <br />
         </div>
       </main>
 
