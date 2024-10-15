@@ -50,7 +50,8 @@ const ForumCategory: React.FC<ForumCategory & { onClick: () => void }> = ({
 );
 
 const ForumPage: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<string>("");
+  const [activeCategory, setActiveCategory] = useState<string>("Announcements");
+
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
