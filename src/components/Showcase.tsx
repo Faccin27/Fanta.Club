@@ -51,10 +51,11 @@ const SocialMediaButtons: React.FC = () => {
             flex items-center justify-center
             py-2 px-4 text-sm font-medium
             transition-all duration-300 ease-in-out
-            ${hoveredButton === button.name ? `bg-${button.color}-500 w-32` : `bg-gray-700 w-12`}
+            ${hoveredButton === button.name ? `bg-${button.color}-500 w-32` : `bg-zinc-900 w-12`}
             text-white hover:shadow-md
             ${index === 0 ? 'rounded-l-md' : ''}
             ${index === buttons.length - 1 ? 'rounded-r-md' : ''}
+            hover:bg-orange-500
           `}
         >
           <button.icon className="text-xl" />
