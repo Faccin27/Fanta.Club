@@ -5,6 +5,7 @@ import Head from "next/head";
 import Header from "./Header";
 import showcaseData from "@/data/showcase.json";
 import { FaYoutube, FaTiktok } from 'react-icons/fa';
+import Aside from "./Aside";
 
 interface Video {
   id: string;
@@ -92,6 +93,7 @@ const Home: React.FC<HomeProps> = ({ videos }) => {
           ))}
         </div>
       </main>
+      <Aside />
     </div>
   );
 };

@@ -13,7 +13,7 @@ import AnnouncementsContent from "@/components/forum/announcements";
 import UpdatesContent from "@/components/forum/updates";
 import ConfigsContent from "@/components/forum/settings";
 import QuestionsContent from "@/components/forum/questions";
-
+import Aside from "./Aside";
 interface ForumCategory {
   icon: React.ElementType;
   label: string;
@@ -91,6 +91,7 @@ const ForumPage: React.FC = () => {
           </div>
         )}
       </main>
+      <Aside />
     </div>
   );
 };
