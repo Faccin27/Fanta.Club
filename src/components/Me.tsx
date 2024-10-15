@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/assets/images/logo.png";
 import PFP from "@/assets/images/pfp.png";
+import B1 from "@/assets/images/b-1.png";
+import B2 from "@/assets/images/b-2.jpg";
 import {
   ChevronDown,
   Download,
@@ -97,6 +99,44 @@ export default function Component() {
               <ShieldCheck className="inline mr-1 h-4 w-4" /> Enable 2FA
             </Link>
           </div>
+          {/* SEÇÃO DO BANNER DO PRODUTO */}
+          <div className="mt-16 space-y-5">
+            <div className="relative w-full h-48 md:h-56 rounded-lg overflow-hidden group">
+              <Image
+                src={B1}
+                alt="banner esp"
+                layout="fill"
+                objectFit="cover"
+                className="transition-all duration-300 filter grayscale group-hover:grayscale-0"
+              />
+              <div className="relative h-full flex flex-col justify-center items-center">
+                <h2 className="text-7xl font-bold text-white hover:text-orange-600 text-center">Fanta Pro</h2>
+                <p className="absolute bottom-3 right-3 text-white">
+                  Starting From <span className="font-bold">R$ 160</span>
+                </p>
+              </div>
+            </div>
+
+            
+            <div className="relative w-full h-48 md:h-56 rounded-lg overflow-hidden group">
+              <Image
+                src={B2}
+                alt="banner esp"
+                layout="fill"
+                objectFit="cover"
+                className="transition-all duration-300 filter grayscale group-hover:grayscale-0"
+              />
+              <div className="relative h-full flex flex-col justify-center items-center">
+                <h2 className="text-7xl font-bold text-white hover:text-orange-600 text-center">Fanta Light</h2>
+                <p className="absolute bottom-3 right-3 text-white">
+                  Starting From <span className="font-bold">R$ 90</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <br />
+          <br />
+          <br /><br /><br />
         </div>
       </main>
 
