@@ -1,87 +1,47 @@
 import React from 'react';
-import Image from 'next/image';
-import { Settings as SettingsIcon } from 'lucide-react';
-import pfp from "@/assets/images/pfp.png";
+import { HelpCircle as FaqIcon } from 'lucide-react';
 
-interface Author {
-  name: string;
-  image: string;
-}
-
-interface Post {
+interface Faq {
   id: number;
-  title: string;
-  author: Author;
-  date: string;
+  question: string;
+  answer: string;
 }
 
-const posts: Post[] = [
+const faqs: Faq[] = [
   {
     id: 1,
-    title: "Aim color settings",
-    author: {
-      name: "Usuário 32",
-      image: pfp.src,
-    },
-    date: "31/02/2023"
+    question: "O cheat é detectável?",
+    answer: "Nosso cheat é atualizado regularmente para evitar detecção por sistemas anti-cheat. No entanto, recomendamos usá-lo com responsabilidade para minimizar o risco."
   },
   {
     id: 2,
-    title: "Keyboard shortcuts customization",
-    author: {
-      name: "Gamer Pro",
-      image: pfp.src,
-    },
-    date: "15/03/2023"
+    question: "Como posso atualizar o cheat?",
+    answer: "Você receberá uma notificação por e-mail ou no painel de usuário quando uma nova atualização estiver disponível. Basta seguir as instruções enviadas para aplicar a atualização."
   },
   {
     id: 3,
-    title: "Audio settings for competitive play",
-    author: {
-      name: "SoundMaster",
-      image: pfp.src,
-    },
-    date: "02/04/2023"
+    question: "Posso ser banido usando o cheat?",
+    answer: "Embora tomemos todas as precauções para evitar detecção, existe sempre o risco de ser banido. Certifique-se de seguir nossas orientações para minimizar esse risco."
   },
   {
     id: 4,
-    title: "Graphics optimization guide",
-    author: {
-      name: "FPSWizard",
-      image: pfp.src,
-    },
-    date: "18/04/2023"
+    question: "Qual é o método de pagamento aceito?",
+    answer: "Aceitamos pagamentos via PayPal, cartões de crédito e criptomoedas. O processo de compra é seguro e garantimos a privacidade de seus dados."
   }
 ];
 
-const Settings: React.FC = () => {
+const Faq: React.FC = () => {
   return (
     <div className="p-4">
       <div className="flex items-center mb-6">
-        <SettingsIcon className="mr-2" />
-        <h1 className="text-2xl font-bold">Configurações</h1>
+        <FaqIcon className="mr-2" />
+        <h1 className="text-2xl font-bold">Perguntas Frequentes</h1>
       </div>
       <div className="space-y-4">
-        {posts.map((post) => (
-          <div key={post.id} className="bg-zinc-700 shadow rounded-lg p-4">
-            <div className="flex items-center mb-2">
-              <Image
-                src={post.author.image}
-                alt={`${post.author.name}'s profile picture`}
-                width={40}
-                height={40}
-                className="rounded-full mr-3"
-              />
-              <div>
-                <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">{post.title}</h2>
-                <p className="text-sm text-gray-400">
-                  Por: {post.author.name} em {post.date}
-                </p>
-              </div>
-            </div>
-            <p className="text-sm text-gray-300 cursor-pointer hover:underline">
-              Clique para ver mais detalhes sobre "{post.title}"
-            </p>
+        {faqs.map((faq) => (
+          <div key={faq.id} className="bg-zinc-700 shadow rounded-lg p-4">
+            <h2 className="text-lg text-orange-500 font-semibold">{faq.question}</h2>
+            <p className="text-sm text-gray-300 mt-2">{faq.answer}</p>
           </div>
         ))}
       </div>
@@ -89,4 +49,4 @@ const Settings: React.FC = () => {
   );
 };
 
-export default Settings;
+export default Faq;

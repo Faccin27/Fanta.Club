@@ -18,7 +18,7 @@ export default function Header() {
           <Link href="/" className="hover:text-orange-400">
             Main
           </Link>
-          <Link href="#" className="hover:text-orange-400">
+          <Link href="/forum" className="hover:text-orange-400">
             Forum
           </Link>
           <Link href="/showcase" className="hover:text-orange-400">

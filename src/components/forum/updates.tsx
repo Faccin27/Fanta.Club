@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { Settings as SettingsIcon } from 'lucide-react';
+import { RefreshCw as UpdatesIcon } from 'lucide-react';
 import pfp from "@/assets/images/pfp.png";
 
 interface Author {
@@ -8,79 +8,79 @@ interface Author {
   image: string;
 }
 
-interface Post {
+interface Update {
   id: number;
   title: string;
   author: Author;
   date: string;
 }
 
-const posts: Post[] = [
+const updates: Update[] = [
   {
     id: 1,
-    title: "Aim color settings",
+    title: "Atualização de segurança para evitar banimentos",
     author: {
-      name: "Usuário 32",
+      name: "DevTeam",
       image: pfp.src,
     },
-    date: "31/02/2023"
+    date: "01/09/2023"
   },
   {
     id: 2,
-    title: "Keyboard shortcuts customization",
+    title: "Aimbot otimizado para headshots com maior precisão",
     author: {
-      name: "Gamer Pro",
+      name: "AimMaster",
       image: pfp.src,
     },
-    date: "15/03/2023"
+    date: "10/09/2023"
   },
   {
     id: 3,
-    title: "Audio settings for competitive play",
+    title: "Wallhack atualizado para compatibilidade com novos mapas",
     author: {
-      name: "SoundMaster",
+      name: "MapPro",
       image: pfp.src,
     },
-    date: "02/04/2023"
+    date: "15/09/2023"
   },
   {
     id: 4,
-    title: "Graphics optimization guide",
+    title: "Correção de bugs e melhoria de desempenho do radar hack",
     author: {
-      name: "FPSWizard",
+      name: "CheatFixer",
       image: pfp.src,
     },
-    date: "18/04/2023"
+    date: "22/09/2023"
   }
 ];
 
-const Settings: React.FC = () => {
+const Updates: React.FC = () => {
   return (
     <div className="p-4">
       <div className="flex items-center mb-6">
-        <SettingsIcon className="mr-2" />
-        <h1 className="text-2xl font-bold">Configurações</h1>
+        <UpdatesIcon className="mr-2" />
+        <h1 className="text-2xl font-bold">Atualizações</h1>
       </div>
       <div className="space-y-4">
-        {posts.map((post) => (
-          <div key={post.id} className="bg-zinc-700 shadow rounded-lg p-4">
+        {updates.map((update) => (
+          <div key={update.id} className="bg-zinc-700 shadow rounded-lg p-4">
             <div className="flex items-center mb-2">
               <Image
-                src={post.author.image}
-                alt={`${post.author.name}'s profile picture`}
+                src={update.author.image}
+                alt={`${update.author.name}'s profile picture`}
                 width={40}
                 height={40}
                 className="rounded-full mr-3"
               />
               <div>
-                <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">{post.title}</h2>
+                <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">{update.title}</h2>
                 <p className="text-sm text-gray-400">
-                  Por: {post.author.name} em {post.date}
+                  Por: {update.author.name} em {update.date}
                 </p>
               </div>
             </div>
             <p className="text-sm text-gray-300 cursor-pointer hover:underline">
-              Clique para ver mais detalhes sobre "{post.title}"
+              Clique para ver mais detalhes sobre "{update.title}"
             </p>
           </div>
         ))}
@@ -89,4 +89,4 @@ const Settings: React.FC = () => {
   );
 };
 
-export default Settings;
+export default Updates;
