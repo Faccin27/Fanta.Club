@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "E-gest | Population Control",
-  description: "A modern type of population control",
+  title: "Fanta.club",
+  description: "The best valorant cheats provider.",
 };
 
 export default function RootLayout({

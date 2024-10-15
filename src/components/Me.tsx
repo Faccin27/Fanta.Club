@@ -4,6 +4,7 @@ import Logo from "@/assets/images/logo.png";
 import PFP from "@/assets/images/pfp.png";
 import B1 from "@/assets/images/b-1.png";
 import B2 from "@/assets/images/b-2.jpg";
+import Header from "./Header";
 import {
   ChevronDown,
   Download,
@@ -26,39 +27,7 @@ import {
 export default function Component() {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      <header className="bg-zinc-900 p-4 border-b border-orange-600">
-        <div className="container mx-auto flex justify-between items-center">
-          <Image
-            src={Logo}
-            alt="Fanta.Club logo"
-            width={100}
-            height={400}
-            className="h-16 w-auto"
-          />
-          <nav className="hidden md:flex space-x-4">
-            <Link href="/" className="hover:text-orange-400">
-              Main
-            </Link>
-            <Link href="#" className="hover:text-orange-400">
-              Forum
-            </Link>
-            <Link href="#" className="hover:text-orange-400">
-              Showcases
-            </Link>
-            <Link href="#" className="hover:text-orange-400">
-              Tickets
-            </Link>
-          </nav>
-          <div className="flex items-center space-x-4">
-            <button className="flex items-center hover:text-orange-400">
-              En <ChevronDown className="ml-1 h-4 w-4" />
-            </button>
-            <button className="flex items-center hover:text-orange-400">
-              POZINHO <ChevronDown className="ml-1 h-4 w-4" />
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header />
       <main>
         <div className="relative">
           <div className="h-40"></div>
@@ -112,7 +81,7 @@ export default function Component() {
                 className="transition-all duration-300"
               />
               <div className="relative h-full flex flex-col justify-center items-center">
-                <h2 className="text-5xl font-bold text-white hover:text-orange-600 text-center">
+                <h2 className="text-xl font-bold text-white hover:text-orange-600 text-center">
                   Fanta Unban
                 </h2>
                 <p className="absolute bottom-3 right-3 text-white">
