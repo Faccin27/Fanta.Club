@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Bell as AnnouncementsIcon } from 'lucide-react';
 import pfp from "@/assets/images/pfp.png";
 
@@ -73,15 +74,19 @@ const Announcements: React.FC = () => {
                 className="rounded-full mr-3"
               />
               <div>
-                <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">{announcement.title}</h2>
+                <Link href={`/forum/announcements/${announcement.id}`}>
+                  <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">{announcement.title}</h2>
+                </Link>
                 <p className="text-sm text-gray-400">
                   Por: {announcement.author.name} em {announcement.date}
                 </p>
               </div>
             </div>
-            <p className="text-sm text-gray-300 cursor-pointer hover:underline">
-              Clique para ver mais detalhes sobre "{announcement.title}"
-            </p>
+            <Link href={`/forum/announcements/${announcement.id}`}>
+              <p className="text-sm text-gray-300 cursor-pointer hover:underline">
+                Clique para ver mais detalhes sobre "{announcement.title}"
+              </p>
+            </Link>
           </div>
         ))}
       </div>

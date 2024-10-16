@@ -1,19 +1,13 @@
-'use client';
+import AnnouncementDetail from "@/components/forum/announcement";
 
-import { useParams } from 'next/navigation';
+interface PageProps {
+  params: { id: string };
+}
 
-const AnnouncementDetail = () => {
-  const { id } = useParams();
-
-  if (!id) {
-    return <p>Carregando...</p>;
-  }
-
+export default function Page({ params }: PageProps) {
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      <h1 className="text-3xl font-bold">Detalhes do Anúncio {id}</h1>
-    </div>
+    <>
+      <AnnouncementDetail id={params.id} />
+    </>
   );
-};
-
-export default AnnouncementDetail;
+}
