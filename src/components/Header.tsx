@@ -5,20 +5,28 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react"; 
 import { motion, AnimatePresence } from "framer-motion"; 
 import Logo from "@/assets/images/logo.png";
+import LoginModal from '@/components/LoginModal';
 
 export default function Header() {
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
-  const [showUserOptions, setShowUserOptions] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Estado para o modal
 
   const toggleLanguageOptions = () => {
     setShowLanguageOptions((prev) => !prev);
-    setShowUserOptions(false);
   };
 
-  const toggleUserOptions = () => {
-    setShowUserOptions((prev) => !prev);
-    setShowLanguageOptions(false); 
+  const openLoginModal = () => {
+    setIsLoginModalOpen(true);
   };
+
+  const closeLoginModal = () => {
+    setIsLoginModalOpen(false);
+  };
+
+  // const toggleUserOptions = () => {
+  //   setShowUserOptions((prev) => !prev);
+  //   setShowLanguageOptions(false); 
+  // };
 
   return (
     <header className="bg-zinc-900 p-4 border-b border-orange-600">
@@ -63,13 +71,16 @@ export default function Header() {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Comentado o código referente ao usuário logado */}
+          {/* 
           <button className="flex items-center hover:text-orange-400" onClick={toggleUserOptions}>
             POZINHO <ChevronDown className="ml-1 h-4 w-4" />
           </button>
           <AnimatePresence>
             {showUserOptions && (
               <motion.div
-                className="absolute left-16 top-full mt-2 bg-zinc-800 text-white border border-gray-600 rounded shadow-lg z-50" // Move o menu para a direita
+                className="absolute left-16 top-full mt-2 bg-zinc-800 text-white border border-gray-600 rounded shadow-lg z-50"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -84,8 +95,15 @@ export default function Header() {
               </motion.div>
             )}
           </AnimatePresence>
+          */}
+
+          {/* Botão de login substituindo o usuário logado */}
+          <Link href="#" onClick={openLoginModal} className="px-4 py-2 bg-orange-500 rounded hover:bg-orange-400 text-white">
+            Login
+          </Link>
         </div>
       </div>
+      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </header>
   );
 }
