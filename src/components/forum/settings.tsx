@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { Settings as SettingsIcon } from 'lucide-react';
 import pfp from "@/assets/images/pfp.png";
@@ -73,15 +74,21 @@ const Settings: React.FC = () => {
                 className="rounded-full mr-3"
               />
               <div>
-                <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">{post.title}</h2>
+                <Link href={`/forum/settings/${post.id}`}>
+                  <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">
+                    {post.title}
+                  </h2>
+                </Link>
                 <p className="text-sm text-gray-400">
                   Por: {post.author.name} em {post.date}
                 </p>
               </div>
             </div>
-            <p className="text-sm text-gray-300 cursor-pointer hover:underline">
-              Clique para ver mais detalhes sobre "{post.title}"
-            </p>
+            <Link href={`/forum/settings/${post.id}`}>
+              <p className="text-sm text-gray-300 cursor-pointer hover:underline">
+                Clique para ver mais detalhes sobre "{post.title}"
+              </p>
+            </Link>
           </div>
         ))}
       </div>
