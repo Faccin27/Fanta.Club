@@ -27,6 +27,16 @@ const faqs: Faq[] = [
     id: 4,
     question: "Qual é o método de pagamento aceito?",
     answer: "Aceitamos pagamentos via PayPal, cartões de crédito e criptomoedas. O processo de compra é seguro e garantimos a privacidade de seus dados."
+  },
+  {
+    id: 5,
+    question: "Qual é o método de pagamento aceito?",
+    answer: "Aceitamos pagamentos via PayPal, cartões de crédito e criptomoedas. O processo de compra é seguro e garantimos a privacidade de seus dados."
+  },
+  {
+    id: 6,
+    question: "Qual é o método de pagamento aceito?",
+    answer: "Aceitamos pagamentos via PayPal, cartões de crédito e criptomoedas. O processo de compra é seguro e garantimos a privacidade de seus dados."
   }
 ];
 

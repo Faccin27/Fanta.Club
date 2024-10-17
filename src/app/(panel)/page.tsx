@@ -1,7 +1,9 @@
-import React from 'react'
+import {Hero} from "@/components/Main";
 
-const App: React.FC = () => {
-  return <></>
+export default function MainComponent() {
+  return (
+    <>
+      <Hero />
+    </>
+  );
 }
-
-export default App
