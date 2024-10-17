@@ -10,12 +10,11 @@ import Aside from "./Aside";
 
 export const Hero = () => {
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="min-h-screen bg-zinc-900 text-zinc-100">
       <Header />
       <main className="flex justify-center items-center">
         <section className="relative overflow-hidden bg-zinc-900 py-[72px] text-white sm:py-24 w-full">
-          <div className="absolute left-1/2 top-[calc(100%-96px)] h-[375px] w-[750px] -translate-x-1/2 rounded-[100%] border border-orange-300 bg-[radial-gradient(closest-side,#18181b_82%,#f97316)] sm:top-[calc(100%-120px)] sm:h-[768px] sm:w-[1536px] lg:h-[1200px] lg:w-[2400px]"></div>
-          <div className="container relative mx-auto px-4 flex flex-col items-center">
+          <div className="container relative mx-auto px-4 flex flex-col items-center mb-44 sm:mb-32">
             <div className="flex items-center justify-center">
               <a
                 href="#"
@@ -84,9 +83,11 @@ export const Hero = () => {
               </button>
             </div>
           </div>
+          <div className="absolute left-1/2 top-[calc(100%-96px)] h-[375px] w-[750px] -translate-x-1/2 rounded-[100%] border border-orange-300 bg-[radial-gradient(closest-side,#18181b_82%,#f97316)] sm:top-[calc(100%-120px)] sm:h-[768px] sm:w-[1536px] lg:h-[1200px] lg:w-[2400px]"></div>
         </section>
       </main>
       <Aside />
+      <br /><br /><br />
     </div>
   );
 };
