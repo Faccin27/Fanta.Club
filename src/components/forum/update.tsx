@@ -3,7 +3,6 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
-  Settings as SettingsIcon,
   XCircle,
   ArrowLeft as BackIcon,
   Download as DownloadIcon,
@@ -17,59 +16,49 @@ interface Author {
   image: string;
 }
 
-interface Setting {
+interface Update {
   id: number;
   title: string;
   author: Author;
   date: string;
-  content: string;
-  jsonUrl: string;
+  description: string;
+  downloadUrl: string;
 }
 
-const getSettingById = (id: string | number): Setting | undefined => {
-  const settings: Setting[] = [
+const getUpdateById = (id: string | number): Update | undefined => {
+  const updates: Update[] = [
     {
       id: 1,
-      title: "Nova configuração de aimbot disponível",
+      title: "Nova Atualização Hack Valorant - Versão 3.0",
       author: {
-        name: "ConfigMaster",
+        name: "HackMaster",
         image: pfp.src,
       },
-      date: "15/10/2023",
-      content:
-        "Lançamos uma nova configuração de aimbot otimizada para o mapa mais recente. Esta configuração oferece melhor precisão em áreas abertas e ajuste fino para combates de curta distância. Baixe o arquivo de configuração abaixo e siga as instruções de instalação no nosso fórum.",
-      jsonUrl: "/api/settings/aimbot-config-v2.json",
+      date: "10/10/2023",
+      description:
+        "A versão 3.0 do hack de Valorant inclui melhorias significativas no aimbot, correções de bugs e novas funcionalidades para o modo 'Ghost'. Certifique-se de baixar a atualização abaixo e seguir as instruções de instalação.",
+      downloadUrl: "/api/updates/valorant-hack-v3.json",
     },
+    // Adicione mais atualizações conforme necessário
   ];
 
-  return settings.find((setting) => setting.id === Number(id));
+  return updates.find((update) => update.id === Number(id));
 };
 
-export interface SettingDetailProps {
+export interface UpdateDetailProps {
   id: string;
 }
 
-const SettingDetail: React.FC<SettingDetailProps> = ({ id }) => {
+const UpdateDetail: React.FC<UpdateDetailProps> = ({ id }) => {
   const router = useRouter();
-  const [setting, setSetting] = React.useState<Setting | undefined>(undefined);
+  const [update, setUpdate] = React.useState<Update | undefined>(undefined);
 
   React.useEffect(() => {
-    const fetchedSetting = getSettingById(id);
-    setSetting(fetchedSetting);
+    const fetchedUpdate = getUpdateById(id);
+    setUpdate(fetchedUpdate);
   }, [id]);
 
-  const handleDownload = () => {
-    if (setting) {
-      const link = document.createElement("a");
-      link.href = setting.jsonUrl;
-      link.download = `setting-${setting.id}.json`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  };
-
-  if (!setting) {
+  if (!update) {
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100">
         <Header />
@@ -85,14 +74,14 @@ const SettingDetail: React.FC<SettingDetailProps> = ({ id }) => {
             </button>
             <XCircle className="mr-2 text-yellow-500" />
             <h1 className="text-3xl font-bold text-red-400">
-              Configuração não encontrada
+              Atualização não encontrada
             </h1>
           </div>
           <div className="bg-zinc-800 shadow-lg rounded-lg p-1">
             <div className="flex items-center mb-6">
               <div className="mt-6">
                 <p className="text-zinc-300 leading-relaxed ml-6">
-                  Oops, parece que voce foi enganado, esta config não esta
+                  Oops, parece que voce foi enganado, esta atualização não esta
                   disponivel !!!
                 </p>
               </div>
@@ -117,44 +106,36 @@ const SettingDetail: React.FC<SettingDetailProps> = ({ id }) => {
           >
             <BackIcon className="w-6 h-6 text-zinc-100" />
           </button>
-          <SettingsIcon className="mr-2 text-yellow-500" />
           <h1 className="text-3xl font-bold text-zinc-300">
-            Detalhes da Configuração
+            Detalhes da Atualização
           </h1>
         </div>
         <div className="bg-zinc-800 shadow-lg rounded-lg p-6">
           <div className="flex items-center mb-6">
             <Image
-              src={setting.author.image}
-              alt={`${setting.author.name}'s profile picture`}
+              src={update.author.image}
+              alt={`${update.author.name}'s profile picture`}
               width={60}
               height={60}
               className="rounded-full mr-4"
             />
             <div>
               <h2 className="text-2xl text-orange-400 font-semibold mb-1">
-                {setting.title}
+                {update.title}
               </h2>
               <p className="text-sm text-zinc-400">
                 Por:{" "}
                 <span className="text-orange-300 cursor-pointer hover:underline">
-                  {setting.author.name}{" "}
+                  {update.author.name}
                 </span>{" "}
-                • {setting.date}
+                • {update.date}
               </p>
             </div>
           </div>
           <div className="mt-6">
             <p className="text-zinc-300 leading-relaxed mb-4">
-              {setting.content}
+              {update.description}
             </p>
-            <button
-              onClick={handleDownload}
-              className="flex items-center bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors"
-            >
-              <DownloadIcon className="mr-2" />
-              Baixar Config
-            </button>
           </div>
         </div>
       </main>
@@ -163,4 +144,4 @@ const SettingDetail: React.FC<SettingDetailProps> = ({ id }) => {
   );
 };
 
-export default SettingDetail;
+export default UpdateDetail;

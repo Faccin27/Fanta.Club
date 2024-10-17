@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { RefreshCw as UpdatesIcon } from 'lucide-react';
 import pfp from "@/assets/images/pfp.png";
 
@@ -73,15 +74,21 @@ const Updates: React.FC = () => {
                 className="rounded-full mr-3"
               />
               <div>
-                <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">{update.title}</h2>
+                <Link href={`/forum/updates/${update.id}`}>
+                  <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">
+                    {update.title}
+                  </h2>
+                </Link>
                 <p className="text-sm text-gray-400">
                   Por: {update.author.name} em {update.date}
                 </p>
               </div>
             </div>
-            <p className="text-sm text-gray-300 cursor-pointer hover:underline">
-              Clique para ver mais detalhes sobre "{update.title}"
-            </p>
+            <Link href={`/forum/updates/${update.id}`}>
+              <p className="text-sm text-gray-300 cursor-pointer hover:underline">
+                Clique para ver mais detalhes sobre "{update.title}"
+              </p>
+            </Link>
           </div>
         ))}
       </div>
