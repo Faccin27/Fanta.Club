@@ -48,8 +48,8 @@ export default function Header() {
           <Link href="/showcase" className="hover:text-orange-400">
             Showcases
           </Link>
-          <Link href="#" className="hover:text-orange-400">
-            Tickets
+          <Link href="/about" className="hover:text-orange-400">
+            About
           </Link>
         </nav>
         <div className="relative flex items-center space-x-4"> 
