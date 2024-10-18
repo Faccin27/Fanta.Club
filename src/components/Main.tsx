@@ -9,6 +9,8 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "./Header";
 import Aside from "./Aside";
+import { title } from "process";
+import { Description } from "@headlessui/react";
 
 const Hero: React.FC = () => {
   return (
@@ -108,9 +110,11 @@ const ProductShowcase: React.FC = () => {
         <div className="mt-5 max-w-xl text-center">
           <p className="text-xl text-white/70">
             Nosso melhor e mais promissor produto.{" "}
-            <span className="text-orange-500 text-2xl font-bold">Fanta PRO</span> a solução para
-            voce, o pratinha que quer amassar todo mundo no radiante sem
-            dificuldade alguma.
+            <span className="text-orange-500 text-2xl font-bold">
+              Fanta PRO
+            </span>{" "}
+            a solução para voce, o pratinha que quer amassar todo mundo no
+            radiante sem dificuldade alguma.
           </p>
         </div>
       </div>
@@ -130,9 +134,97 @@ const ProductShowcase: React.FC = () => {
       </motion.div>
     </section>
   );
-  
 };
 
+
+
+const getColor = (color: string) => {
+  switch (color) {
+    case "orange":
+      return { text: "#f97316", border: "#fb923c", glow: "rgba(249, 115, 22, 0.5)" }
+    case "purple":
+      return { text: "#a855f7", border: "#c084fc", glow: "rgba(168, 85, 247, 0.5)" }
+    case "green":
+      return { text: "#22c55e", border: "#4ade80", glow: "rgba(34, 197, 94, 0.5)" }
+    default:
+      return { text: "#ffffff", border: "#ffffff", glow: "rgba(255, 255, 255, 0.5)" }
+  }
+}
+
+const FeatureSection: React.FC = () => {
+  const features = [
+    {
+      title: "Fanta pro",
+      description:
+        "A elite dos cheats, para voce usuario que quer bater em todo radiante sem se preocupar em ter a minima habilidade necessaria. Agora voce consegue.",
+      videoUrl: "/videos/show.mp4",
+      accentColor: "orange",
+    },
+    {
+      title: "Fanta light",
+      description:
+        "Para voce, usuario que quer aperfeiçoar as suas habilidades, tendo consistencia e liderança em suas partidas, fanta light suprira suas necessidades.",
+      videoUrl: "/videos/show.mp4",
+      accentColor: "purple",
+    },
+    {
+      title: "Fanta unban",
+      description:
+        "Foi de vasco? A fanta resolve, nosso spoofer remove o banimento de seu valorant e quaisquer outros jogos, facil rapido e funcional.",
+      videoUrl: "/videos/show.mp4",
+      accentColor: "green",
+    },
+  ]
+
+  return (
+    <section className="bg-gradient-to-b from-black to-zinc-900 py-24 text-white">
+      <div className="container mx-auto px-4">
+        {features.map((feature, index) => {
+          const colors = getColor(feature.accentColor)
+          return (
+            <div
+              key={index}
+              className={`flex flex-col md:flex-row items-center justify-between mb-24 ${
+                index % 2 !== 0 ? "md:flex-row-reverse" : ""
+              } `}
+            >
+              <div className={`md:w-1/2 mb-8 md:mb-0 ${index % 2 !== 0 ? "md:pl-8" : "md:pr-8"}`}>
+                <h2 className="text-4xl font-bold mb-4" style={{ color: colors.text }}>
+                  {feature.title}
+                </h2>
+                <p className="text-xl text-white/70">{feature.description}</p>
+              </div>
+              <div className="md:w-1/2">
+                <div
+                  className="rounded-lg shadow-lg overflow-hidden"
+                  style={{
+                    boxShadow: `0 0 9999px ${colors.glow}`,
+                    border: `4px solid ${colors.border}`,
+                  }}
+                >
+                  <motion.video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1 }}
+                  >
+                    <source src={feature.videoUrl} type="video/mp4" />
+                    Seu navegador não suporta video.
+                  </motion.video>
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
 const MainPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100">
@@ -140,6 +232,7 @@ const MainPage: React.FC = () => {
       <main>
         <Hero />
         <ProductShowcase />
+        <FeatureSection />
       </main>
       <Aside />
     </div>
