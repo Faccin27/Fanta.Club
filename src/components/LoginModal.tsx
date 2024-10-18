@@ -4,6 +4,9 @@ import { X } from "lucide-react";
 import { FaDiscord } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/images/logo.png";
+import axios from "axios";
+import Cookies from 'js-cookie';
+import { api, handleApiError } from '@/utils/api';
 
 export default function EnhancedLoginModal({
   isOpen,
@@ -17,19 +20,45 @@ export default function EnhancedLoginModal({
   const [username, setUsername] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isRegistering) {
-      console.log(
-        "Registration attempt with:",
-        email,
-        username,
-        password,
-        acceptTerms
-      );
-    } else {
-      console.log("Login attempt with:", email, password);
+    setError("");
+  
+    try {
+      if (isRegistering) {
+        if (!acceptTerms) {
+          setError("Você deve aceitar os termos de uso para se registrar.");
+          return;
+        }
+        const registrationData = {
+          name: username,
+          email,
+          password,
+          photo: null,
+          registeredDate: new Date().toISOString(),
+          expiryDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),
+          isActive: true,
+          role: "User"
+        };
+  
+        const response = await api.post("/users", registrationData);
+        console.log("Registro bem-sucedido:", response.data);
+      } else {
+        const loginData = { email, password };
+        const response = await api.post("/users/login", loginData);
+        console.log("Login bem-sucedido:", response.data);
+        
+        if (response.data.token) {
+          Cookies.set('authToken', response.data.token, { expires: 7 });
+          console.log("Token salvo nos cookies");
+        }
+      }
+      
+      onClose(); 
+    } catch (error) {
+      setError(handleApiError(error));
     }
   };
 
@@ -103,6 +132,11 @@ export default function EnhancedLoginModal({
               <h3 className="text-3xl font-bold mb-8">
                 {isRegistering ? "Criar Conta" : "Entrar"}
               </h3>
+              {error && (
+                <div className="bg-red-500 text-white p-3 rounded-lg mb-4">
+                  {error}
+                </div>
+              )}
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <input
@@ -111,6 +145,7 @@ export default function EnhancedLoginModal({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
+                    required
                   />
                 </div>
                 {isRegistering && (
@@ -126,6 +161,7 @@ export default function EnhancedLoginModal({
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       className="w-full px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
+                      required
                     />
                   </motion.div>
                 )}
@@ -136,6 +172,7 @@ export default function EnhancedLoginModal({
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
+                    required
                   />
                   {!isRegistering && (
                     <a
@@ -160,6 +197,7 @@ export default function EnhancedLoginModal({
                       checked={acceptTerms}
                       onChange={(e) => setAcceptTerms(e.target.checked)}
                       className="mr-2"
+                      required
                     />
                     <label htmlFor="terms" className="text-sm text-gray-300">
                       Eu aceito os{" "}
