@@ -1,9 +1,9 @@
-import {Hero} from "@/components/Main";
+import Main from "@/components/Main";
 
 export default function MainComponent() {
   return (
     <>
-      <Hero />
+      <Main />
     </>
   );
 }
