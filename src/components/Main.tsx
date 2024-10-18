@@ -9,8 +9,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "./Header";
 import Aside from "./Aside";
-import { title } from "process";
-import { Description } from "@headlessui/react";
+import PricingSection from "./PriceSection";
 
 const Hero: React.FC = () => {
   return (
@@ -225,6 +224,9 @@ const FeatureSection: React.FC = () => {
     </section>
   )
 }
+
+
+
 const MainPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100">
@@ -233,6 +235,7 @@ const MainPage: React.FC = () => {
         <Hero />
         <ProductShowcase />
         <FeatureSection />
+        <PricingSection />
       </main>
       <Aside />
     </div>
