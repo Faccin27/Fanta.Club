@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef } from "react";
-import Header from "./Header";
 import Aside from "./Aside";
 import PricingSection from "@/components/home/PriceSection";
 import FeatureSection from "@/components/home/FeatureSection"
@@ -11,7 +10,6 @@ import Hero from '@/components/home/HeroSection'
 const MainPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100">
-      <Header />
       <main>
         <Hero />
         <ProductShowcase />

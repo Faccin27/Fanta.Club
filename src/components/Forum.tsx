@@ -1,18 +1,16 @@
 "use client";
-import React, { useState } from "react";
-import Header from "./Header";
-import {
-  MessageSquare,
-  Bell,
-  RefreshCw,
-  Settings,
-  HelpCircle,
-  Search,
-} from "lucide-react";
 import AnnouncementsContent from "@/components/forum/announcements";
-import UpdatesContent from "@/components/forum/updates";
-import ConfigsContent from "@/components/forum/settings";
 import QuestionsContent from "@/components/forum/questions";
+import ConfigsContent from "@/components/forum/settings";
+import UpdatesContent from "@/components/forum/updates";
+import {
+  Bell,
+  HelpCircle,
+  RefreshCw,
+  Search,
+  Settings
+} from "lucide-react";
+import React, { useState } from "react";
 import Aside from "./Aside";
 interface ForumCategory {
   icon: React.ElementType;
@@ -55,7 +53,6 @@ const ForumPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      <Header />
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-orange-400">Fórum Fanta</h1>

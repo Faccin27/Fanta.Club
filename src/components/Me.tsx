@@ -1,34 +1,41 @@
-import Image from "next/image";
-import Link from "next/link";
-import Logo from "@/assets/images/logo.png";
-import PFP from "@/assets/images/pfp.png";
 import B1 from "@/assets/images/b-1.png";
 import B2 from "@/assets/images/b-2.jpg";
-import Header from "./Header";
-import Aside from "./Aside";
+import PFP from "@/assets/images/pfp.png";
 import {
-  ChevronDown,
-  Download,
-  Mail,
-  Lock,
-  ShieldCheck,
-  Edit,
-  MessageSquare,
-  Youtube,
-  RefreshCw,
   Clock,
+  Download,
+  Edit,
+  Lock,
+  Mail,
+  RefreshCw,
+  ShieldCheck
 } from "lucide-react";
-import {
-  FaDiscord,
-  FaTelegramPlane,
-  FaTiktok,
-  FaYoutube,
-} from "react-icons/fa";
+import Image from "next/image";
+import Link from "next/link";
+import Aside from "./Aside";
 
-export default function Component() {
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  photo: string;
+  registeredDate: string;
+  expiryDate: string;
+  gender: string;
+  birthDate: string;
+  isActive: boolean;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface MeProps {
+  user: User | null;
+}
+
+export default function Component({ user }: MeProps) {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      <Header />
       <main>
         <div className="relative">
           <div className="h-40"></div>
@@ -36,22 +43,24 @@ export default function Component() {
         <div className="container mx-auto px-4 -mt-16">
           <div className="text-center">
             <Image
-              src={PFP}
+              src={user?.photo == null ? PFP : user.photo}
               alt="profile picture"
               width={128}
               height={128}
               className="mx-auto h-32 w-32 rounded-full border-2 border-orange-500 shadow-lg"
             />
             <div className="mt-4 flex items-center justify-center">
-              <h1 className="text-3xl font-bold text-orange-400">POZINHO</h1>
-              <button className="ml-2 p-1 rounded-full bg-zinc-800 hover:bg-zinc-700 transition-colors">
+              <h1 className="text-3xl font-bold text-orange-400">
+                {user?.name}
+              </h1>
+              <button className="ml-2 p-1 rounded-full hover:text-orange-400 transition-colors">
                 <Edit className="mr-2 h-4 w-4" />
                 <span className="sr-only">Edit Profile</span>
               </button>
             </div>
             <div className="mt-2 flex items-center justify-center text-zinc-400">
               <Mail className="mr-2 h-4 w-4" />
-              <span>pozinhoisback01@gmail.com</span>
+              <span>{user?.email || "email@example.com"}</span>
             </div>
             <button className="mt-8 bg-orange-400 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition-colors flex items-center justify-center mx-auto">
               <Download className="inline mr-1 h-4 w-4" /> Download Loader

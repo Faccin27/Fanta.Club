@@ -9,7 +9,6 @@ import {
   Download as DownloadIcon,
 } from "lucide-react";
 import pfp from "@/assets/images/pfp.png";
-import Header from "@/components/Header";
 import Aside from "@/components/Aside";
 
 interface Author {
@@ -72,7 +71,6 @@ const SettingDetail: React.FC<SettingDetailProps> = ({ id }) => {
   if (!setting) {
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100">
-        <Header />
         <main className="container mx-auto px-4 py-8">
           <h1 className="text-4xl font-bold text-orange-400">Fórum Fanta</h1>
 
@@ -106,7 +104,6 @@ const SettingDetail: React.FC<SettingDetailProps> = ({ id }) => {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      <Header />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-orange-400">Fórum Fanta</h1>
 

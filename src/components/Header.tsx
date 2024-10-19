@@ -9,7 +9,7 @@ import LoginModal from '@/components/LoginModal';
 
 export default function Header() {
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Estado para o modal
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); 
 
   const toggleLanguageOptions = () => {
     setShowLanguageOptions((prev) => !prev);
@@ -38,7 +38,7 @@ export default function Header() {
           height={400}
           className="h-16 w-auto"
         />
-        <nav className="hidden md:flex space-x-4">
+        <nav className="hidden md:flex space-x-4 text-white/70">
           <Link href="/" className="hover:text-orange-400">
             Main
           </Link>
@@ -52,7 +52,7 @@ export default function Header() {
             About
           </Link>
         </nav>
-        <div className="relative flex items-center space-x-4"> 
+        <div className="relative flex items-center space-x-4 text-white/70"> 
           <button className="flex items-center hover:text-orange-400" onClick={toggleLanguageOptions}>
             EN <ChevronDown className="ml-1 h-4 w-4" />
           </button>

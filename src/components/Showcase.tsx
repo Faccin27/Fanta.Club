@@ -1,10 +1,9 @@
 "use client"
-import React from "react";
+import showcaseData from "@/data/showcase.json";
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import Header from "./Header";
-import showcaseData from "@/data/showcase.json";
-import { FaYoutube, FaTiktok } from 'react-icons/fa';
+import React from "react";
+import { FaTiktok, FaYoutube } from 'react-icons/fa';
 import Aside from "./Aside";
 
 interface Video {
@@ -79,8 +78,6 @@ const Home: React.FC<HomeProps> = ({ videos }) => {
         <meta name="description" content="Showcase of YouTube videos" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Header />
       
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">

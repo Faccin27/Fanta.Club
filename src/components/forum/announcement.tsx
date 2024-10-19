@@ -1,16 +1,14 @@
 "use client";
-import React from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import pfp from "@/assets/images/pfp.png";
+import Aside from "@/components/Aside";
 import {
   Bell as AnnouncementsIcon,
-  XCircle as CircleX,
   ArrowLeft as BackIcon,
-  XCircle,
+  XCircle
 } from "lucide-react";
-import pfp from "@/assets/images/pfp.png";
-import Header from "@/components/Header";
-import Aside from "@/components/Aside";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 
 interface Author {
@@ -62,7 +60,6 @@ const AnnouncementDetail: React.FC<AnnouncementDetailProps> = ({ id }) => {
   if (!announcement) {
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100">
-        <Header />
         <main className="container mx-auto px-4 py-8">
           <h1 className="text-4xl font-bold text-orange-400">Fórum Fanta</h1>
 
@@ -96,7 +93,6 @@ const AnnouncementDetail: React.FC<AnnouncementDetailProps> = ({ id }) => {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      <Header />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-orange-400">Fórum Fanta</h1>
 
