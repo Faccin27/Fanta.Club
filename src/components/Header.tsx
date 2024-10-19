@@ -1,39 +1,44 @@
-'use client'
-import Image from "next/image";
-import Link from "next/link";
-import { ChevronDown } from "lucide-react";
-import { useState } from "react"; 
-import { motion, AnimatePresence } from "framer-motion"; 
-import Logo from "@/assets/images/logo.png";
-import LoginModal from '@/components/LoginModal';
-import { User } from '@/utils/auth';
+"use client"
+
+import Image from "next/image"
+import Link from "next/link"
+import { ChevronDown } from "lucide-react"
+import { useState, useRef } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import Logo from "@/assets/images/logo.png"
+import LoginModal from '@/components/LoginModal'
+import { User } from '@/utils/auth'
+import pfp from '@/assets/images/pfp.png'
 
 interface HeaderProps {
-  isLoggedIn: boolean;
-  user: User | null;
+  isLoggedIn: boolean
+  user: User | null
 }
 
-export default function Header({ isLoggedIn, user }: HeaderProps) {
-  const [showLanguageOptions, setShowLanguageOptions] = useState(false);
-  const [showUserOptions, setShowUserOptions] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+export default function Component({ isLoggedIn, user }: HeaderProps) {
+  const [showLanguageOptions, setShowLanguageOptions] = useState(false)
+  const [showUserOptions, setShowUserOptions] = useState(false)
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const languageButtonRef = useRef<HTMLButtonElement>(null)
+  const userButtonRef = useRef<HTMLButtonElement>(null)
 
   const toggleLanguageOptions = () => {
-    setShowLanguageOptions((prev) => !prev);
-  };
+    setShowLanguageOptions((prev) => !prev)
+    setShowUserOptions(false)
+  }
 
   const toggleUserOptions = () => {
-    setShowUserOptions((prev) => !prev);
-    setShowLanguageOptions(false); 
-  };
+    setShowUserOptions((prev) => !prev)
+    setShowLanguageOptions(false)
+  }
 
   const openLoginModal = () => {
-    setIsLoginModalOpen(true);
-  };
+    setIsLoginModalOpen(true)
+  }
 
   const closeLoginModal = () => {
-    setIsLoginModalOpen(false);
-  };
+    setIsLoginModalOpen(false)
+  }
 
   return (
     <header className="bg-zinc-900 p-4 border-b border-orange-600">
@@ -59,58 +64,83 @@ export default function Header({ isLoggedIn, user }: HeaderProps) {
             About
           </Link>
         </nav>
-        <div className="relative flex items-center space-x-4 text-white/70"> 
-          <button className="flex items-center hover:text-orange-400" onClick={toggleLanguageOptions}>
-            EN <ChevronDown className="ml-1 h-4 w-4" />
-          </button>
-          <AnimatePresence>
-            {showLanguageOptions && (
-              <motion.div
-                className="absolute top-full mt-2 bg-zinc-800 text-white border border-gray-600 rounded shadow-lg z-50"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }} 
-              >
-                <Link href="#" className="block px-4 py-2 hover:bg-orange-500">
-                  pt-BR
-                </Link>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {isLoggedIn && user ? (
-          <>
-            <button className="flex items-center hover:text-orange-400" onClick={toggleUserOptions}>
-              {user.name} <ChevronDown className="ml-1 h-4 w-4" />
+        <div className="relative flex items-center space-x-4 text-white/70">
+          <div className="relative">
+            <button
+              ref={languageButtonRef}
+              className="flex items-center hover:text-orange-400"
+              onClick={toggleLanguageOptions}
+            >
+              EN <ChevronDown className="ml-1 h-4 w-4" />
             </button>
             <AnimatePresence>
-              {showUserOptions && (
+              {showLanguageOptions && (
                 <motion.div
-                  className="absolute right-0 top-full mt-2 bg-zinc-800 text-white border border-gray-600 rounded shadow-lg z-50"
+                  className="absolute left-0 mt-2 bg-zinc-800 text-white border border-gray-600 rounded shadow-lg z-50"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }} 
-                > 
-                  <Link href="/me" className="block px-4 py-2 hover:bg-orange-500">
-                    Profile
-                  </Link>
-                  <Link href="/logout" className="block px-4 py-2 hover:bg-orange-500">
-                    Logout
+                  transition={{ duration: 0.2 }}
+                  style={{
+                    width: 'max-content',
+                    minWidth: languageButtonRef.current?.offsetWidth,
+                  }}
+                >
+                  <Link href="#" className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap">
+                    pt-BR
                   </Link>
                 </motion.div>
               )}
             </AnimatePresence>
-          </>
-        ) : (
-          <Link href="#" onClick={openLoginModal} className="px-4 py-2 bg-orange-500 rounded hover:bg-orange-400 text-white">
-            Login
-          </Link>
-        )}
-      </div>
+          </div>
+
+          {isLoggedIn && user ? (
+            <div className="relative">
+              <button
+                ref={userButtonRef}
+                className="flex items-center hover:text-orange-400 bg-zinc-800 rounded-md px-1 py-1"
+                onClick={toggleUserOptions}
+              >
+                <Image
+                  src={user?.photo == null ? pfp : user.photo}
+                  alt={`${user.name}'s avatar`}
+                  width={32}
+                  height={32}
+                  className="rounded-lg mr-2"
+                />
+                <span>{user.name}</span>
+                <ChevronDown className="ml-1 h-4 w-4" />
+              </button>
+              <AnimatePresence>
+                {showUserOptions && (
+                  <motion.div
+                    className="absolute right-0 mt-2 bg-zinc-800 text-white border border-gray-600 rounded shadow-lg z-50"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    style={{
+                      width: userButtonRef.current?.offsetWidth,
+                    }}
+                  >
+                    <Link href="/me" className="block px-4 py-2 hover:bg-orange-500">
+                      Profile
+                    </Link>
+                    <Link href="/logout" className="block px-4 py-2 hover:bg-orange-500">
+                      Logout
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ) : (
+            <Link href="#" onClick={openLoginModal} className="px-4 py-2 bg-orange-500 rounded hover:bg-orange-400 text-white">
+              Login
+            </Link>
+          )}
+        </div>
       </div>
       <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </header>
-  );
+  )
 }
