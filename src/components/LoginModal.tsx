@@ -51,7 +51,7 @@ export default function EnhancedLoginModal({
         console.log("Login bem-sucedido:", response.data);
         
         if (response.data.token) {
-          Cookies.set('authToken', response.data.token, { expires: 7 });
+          Cookies.set('token', response.data.token, { expires: 7 });
           console.log("Token salvo nos cookies");
         }
       }
@@ -62,7 +62,7 @@ export default function EnhancedLoginModal({
     }
   };
 
-  const toggleForm = () => {
+  const toggleForm = () => {  
     setIsRegistering(!isRegistering);
     setEmail("");
     setPassword("");
