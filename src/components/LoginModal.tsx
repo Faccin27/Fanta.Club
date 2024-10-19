@@ -49,6 +49,7 @@ export default function EnhancedLoginModal({
         const loginData = { email, password };
         const response = await api.post("/users/login", loginData);
         console.log("Login bem-sucedido:", response.data);
+        window.location.reload()
         
         if (response.data.token) {
           Cookies.set('token', response.data.token, { expires: 7 });
