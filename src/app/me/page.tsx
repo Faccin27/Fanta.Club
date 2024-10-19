@@ -15,7 +15,7 @@ export default function MainComponent() {
         if (isLoggedIn && user) {
           setUser(user);
         } else {
-          setError('User not logged in');
+          window.location.href = '/'
         }
       } catch (err) {
         setError('Failed to fetch user data');
