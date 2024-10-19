@@ -15,6 +15,7 @@ interface Plan {
   features: string[];
   moreFeatures: number;
   popular: boolean;
+  link: string;
 }
 
 interface PricingCardProps {
@@ -72,7 +73,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
             ? "bg-white text-black hover:bg-zinc-200"
             : "bg-black bg-opacity-50 text-white hover:bg-opacity-70  "
         }`}
-      >
+        onClick={() => window.location.href = `product/${plan.link}`}      >
         Get Started
       </button>
       <div className="mt-6">
@@ -107,6 +108,7 @@ const PricingSection: React.FC = () => {
       features: ["Aimbot", "Trigger Bot", "Recoil System", "Flickbot"],
       moreFeatures: 2,
       popular: false,
+      link: 'fantalight'
     },
     {
       name: "Fanta Pro",
@@ -117,6 +119,7 @@ const PricingSection: React.FC = () => {
       features: ["ESP", "Aimbot", "Trigger Bot", "Recoil System"],
       moreFeatures: 6,
       popular: true,
+      link: 'fantapro'
     },
     {
       name: "Fanta Unban",
@@ -132,6 +135,7 @@ const PricingSection: React.FC = () => {
       ],
       moreFeatures: 6,
       popular: false,
+      link: 'fantaunban'
     },
   ];
 
