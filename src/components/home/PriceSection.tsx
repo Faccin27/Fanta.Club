@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Check, LucideIcon, FlaskConical, Eye, Unlock } from "lucide-react";
-
+import { motion } from "framer-motion";
 import { StaticImageData } from "next/image";
 import p1 from "@/assets/images/banner.jpg";
 import p2 from "@/assets/images/b-1.png";
@@ -31,6 +31,16 @@ const PricingCard: React.FC<PricingCardProps> = ({
   glowColor,
   bannerImage,
 }) => (
+  <motion.div
+    className={`relative overflow-hidden rounded-2xl bg-transparent transition-all duration-300 hover:scale-105 ${accentColor}`}
+    style={{
+      boxShadow: `0 0 40px 5px ${glowColor}`,
+    }}
+    initial={{ opacity: 0, y: -50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 1 }}
+  >
   <div
     className={`relative overflow-hidden rounded-2xl bg-transparent transition-all duration-300 hover:scale-105 ${accentColor}`}
     style={{
@@ -68,10 +78,10 @@ const PricingCard: React.FC<PricingCardProps> = ({
       </div>
       <p className="text-zinc-300 text-center mb-6">Mensalmente.</p>
       <button
-        className={`w-full py-2 rounded-lg font-medium transition-colors duration-1000 hover:scale-110 ${
+        className={`w-full py-2 rounded-lg font-medium transition-colors duration-1000 ${
           plan.popular
             ? "bg-white text-black hover:bg-zinc-200"
-            : "bg-black bg-opacity-50 text-white hover:bg-opacity-70  "
+            : "bg-zinc-600 bg-opacity-50 text-white hover:bg-opacity-90  "
         }`}
         onClick={() => window.location.href = `product/${plan.link}`}      >
         Get Started
@@ -95,6 +105,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
       </div>
     </div>
   </div>
+  </motion.div>
 );
 
 const PricingSection: React.FC = () => {
@@ -153,8 +164,24 @@ const PricingSection: React.FC = () => {
 
   const bannerImages: StaticImageData[] = [p1, p2, p3];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
   return (
-    <div className="container mx-auto px-4 py-16">
+    <motion.div 
+      className="container mx-auto px-4 py-16"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+    >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {plans.map((plan, index) => (
           <PricingCard
@@ -166,7 +193,7 @@ const PricingSection: React.FC = () => {
           />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
