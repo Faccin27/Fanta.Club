@@ -59,6 +59,8 @@ const products: Product[] = [
 export default function Component({ user }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
 
+
+
   useEffect(() => {
     const fetchOrders = async () => {
       if (user) {
@@ -74,9 +76,9 @@ export default function Component({ user }: MeProps) {
         }
       }
     };
-
-    fetchOrders();
-  }, [user]);
+     fetchOrders();
+     console.log(orders)
+  }, []);
 
   const isProductActive = (productName: string) => {
     const order = orders.find(order => order.name === productName);
@@ -105,7 +107,7 @@ export default function Component({ user }: MeProps) {
     return null;
   };
 
-  console.log(orders);
+  
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <main>
