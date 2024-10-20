@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import B1 from "@/assets/images/b-1.png";
 import B2 from "@/assets/images/b-2.jpg";
 import PFP from "@/assets/images/pfp.png";
@@ -29,11 +30,82 @@ interface User {
   updatedAt: string;
 }
 
+interface Order {
+  id: number;
+  name: string;
+  price: number;
+  expiration: string;
+  createdAt: string;
+  userId: number;
+  expirationDate: string;
+}
+
+interface Product {
+  name: string;
+  image: any;
+  price: number;
+}
+
 interface MeProps {
   user: User | null;
 }
 
+const products: Product[] = [
+  { name: "FANTA_UNBAN", image: B2, price: 50 },
+  { name: "FANTA_PRO", image: B1, price: 60 },
+  { name: "FANTA_LIGHT", image: B2, price: 25 },
+];
+
 export default function Component({ user }: MeProps) {
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (user) {
+        try {
+          const response = await fetch(`http://localhost:3535/users/orders/${user.id}`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+          }
+          const data = await response.json();
+          setOrders(data);
+        } catch (error) {
+          console.error('Error fetching orders:', error);
+        }
+      }
+    };
+
+    fetchOrders();
+  }, [user]);
+
+  const isProductActive = (productName: string) => {
+    const order = orders.find(order => order.name === productName);
+    if (!order) return false;
+
+    if (order.expiration === "LIFETIME") return true;
+
+    const expirationDate = new Date(order.expirationDate);
+    const today = new Date();
+    return today < expirationDate;
+  };
+
+  const getRemainingDays = (productName: string) => {
+    const order = orders.find(order => order.name === productName);
+    if (order) {
+      if (order.expiration === "LIFETIME") return "NEVER";
+
+      const expirationDate = new Date(order.expirationDate);
+      const today = new Date();
+      if (today >= expirationDate) return 0;
+
+      const diffTime = Math.abs(expirationDate.getTime() - today.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays;
+    }
+    return null;
+  };
+
+  console.log(orders);
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <main>
@@ -82,71 +154,51 @@ export default function Component({ user }: MeProps) {
           </div>
           {/* SEÇÃO DO BANNER DO PRODUTO */}
           <div className="mt-16 space-y-5">
-            <div className="relative w-full h-48 md:h-56 rounded-lg overflow-hidden">
-              <Image
-                src={B2}
-                alt="banner esp"
-                layout="fill"
-                objectFit="cover"
-                className="transition-all duration-300"
-              />
-              <div className="relative h-full flex flex-col justify-center items-center">
-                <h2 className="text-5xl font-bold text-white  text-center">
-                  Fanta Unban
-                </h2>
-                <p className="absolute bottom-3 right-3 text-white">
-                  Subscription end: <span className="font-bold">18d</span>
-                </p>
-                <div className="absolute bottom-3 left-3 flex space-x-2">
-                  <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
-                    <Download className="mr-1 h-4 w-4" /> Download
-                  </button>
-                  <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
-                    <RefreshCw className="mr-1 h-4 w-4" /> Reset HWID
-                  </button>
-                  <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
-                    <Clock className="mr-1 h-4 w-4" /> Freeze
-                  </button>
+          {products.map((product, index) => {
+            const isActive = isProductActive(product.name);
+            return (
+              <div 
+                key={index}
+                className={`relative w-full h-48 md:h-56 rounded-lg overflow-hidden ${!isActive ? 'group' : ''}`}
+              >
+                <Image
+                  src={product.image}
+                  alt={`banner ${product.name}`}
+                  layout="fill"
+                  objectFit="cover"
+                  className={`transition-all duration-300 ${!isActive ? 'filter grayscale group-hover:grayscale-0' : ''}`}
+                />
+                <div className="relative h-full flex flex-col justify-center items-center">
+                  <h2 className="text-5xl font-bold text-white text-center">
+                    {product.name.replace('_', ' ')}
+                  </h2>
+                  {isActive ? (
+                    <>
+                      <p className="absolute bottom-3 right-3 text-white">
+                        Subscription end: <span className="font-bold">{getRemainingDays(product.name)}{getRemainingDays(product.name) == 'NEVER' ? '' : 'd'}</span>
+                      </p>
+                      <div className="absolute bottom-3 left-3 flex space-x-2">
+                        <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
+                          <Download className="mr-1 h-4 w-4" /> Download
+                        </button>
+                        <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
+                          <RefreshCw className="mr-1 h-4 w-4" /> Reset HWID
+                        </button>
+                        <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
+                          <Clock className="mr-1 h-4 w-4" /> Freeze
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="absolute bottom-3 right-3 text-white">
+                      Starting From <span className="font-bold">R$ {product.price}</span>
+                    </p>
+                  )}
                 </div>
               </div>
-            </div>
-
-            <div className="relative w-full h-48 md:h-56 rounded-lg overflow-hidden group">
-              <Image
-                src={B1}
-                alt="banner esp"
-                layout="fill"
-                objectFit="cover"
-                className="transition-all duration-300 filter grayscale group-hover:grayscale-0"
-              />
-              <div className="relative h-full flex flex-col justify-center items-center">
-                <h2 className="text-7xl font-bold text-white  text-center">
-                  Fanta Pro
-                </h2>
-                <p className="absolute bottom-3 right-3 text-white">
-                  Starting From <span className="font-bold">R$ 160</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="relative w-full h-48 md:h-56 rounded-lg overflow-hidden group">
-              <Image
-                src={B2}
-                alt="banner esp"
-                layout="fill"
-                objectFit="cover"
-                className="transition-all duration-300 filter grayscale group-hover:grayscale-0"
-              />
-              <div className="relative h-full flex flex-col justify-center items-center">
-                <h2 className="text-7xl font-bold text-white  text-center">
-                  Fanta Light
-                </h2>
-                <p className="absolute bottom-3 right-3 text-white">
-                  Starting From <span className="font-bold">R$ 90</span>
-                </p>
-              </div>
-            </div>
-          </div>
+            );
+          })}
+        </div>
           <br />
           <br />
           <br />
