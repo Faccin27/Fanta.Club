@@ -44,6 +44,7 @@ interface Product {
   name: string;
   image: any;
   price: number;
+  link: string;
 }
 
 interface MeProps {
@@ -51,9 +52,9 @@ interface MeProps {
 }
 
 const products: Product[] = [
-  { name: "FANTA_UNBAN", image: B2, price: 50 },
-  { name: "FANTA_PRO", image: B1, price: 60 },
-  { name: "FANTA_LIGHT", image: B2, price: 25 },
+  { name: "FANTA_UNBAN", image: B2, price: 50, link: 'fantaunban' },
+  { name: "FANTA_PRO", image: B1, price: 60 , link: 'fantapro'},
+  { name: "FANTA_LIGHT", image: B2, price: 25 , link: 'fantalight'},
 ];
 
 export default function Component({ user }: MeProps) {
@@ -161,8 +162,9 @@ export default function Component({ user }: MeProps) {
             return (
               <div 
                 key={index}
-                className={`relative w-full h-48 md:h-56 rounded-lg overflow-hidden ${!isActive ? 'group' : ''}`}
-              >
+                className={`relative w-full h-48 md:h-56 rounded-lg overflow-hidden ${!isActive ? 'group cursor-pointer' : ''}`}
+                onClick={() => { isActive ? '' : window.location.href = `/product/${product.link}` }}
+                >
                 <Image
                   src={product.image}
                   alt={`banner ${product.name}`}
