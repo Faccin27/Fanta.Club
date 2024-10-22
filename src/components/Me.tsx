@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import B1 from "@/assets/images/b-1.png";
 import B2 from "@/assets/images/b-2.jpg";
 import PFP from "@/assets/images/pfp.png";
@@ -9,7 +9,7 @@ import {
   Lock,
   Mail,
   RefreshCw,
-  ShieldCheck
+  ShieldCheck,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -52,37 +52,37 @@ interface MeProps {
 }
 
 const products: Product[] = [
-  { name: "FANTA_UNBAN", image: B2, price: 50, link: 'fantaunban' },
-  { name: "FANTA_PRO", image: B1, price: 60 , link: 'fantapro'},
-  { name: "FANTA_LIGHT", image: B2, price: 25 , link: 'fantalight'},
+  { name: "FANTA_UNBAN", image: B2, price: 50, link: "fantaunban" },
+  { name: "FANTA_PRO", image: B1, price: 60, link: "fantapro" },
+  { name: "FANTA_LIGHT", image: B2, price: 25, link: "fantalight" },
 ];
 
 export default function Component({ user }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
 
-
-
   useEffect(() => {
     const fetchOrders = async () => {
       if (user) {
         try {
-          const response = await fetch(`http://localhost:3535/users/orders/${user.id}`);
+          const response = await fetch(
+            `http://localhost:3535/users/orders/${user.id}`
+          );
           if (!response.ok) {
-            throw new Error('Failed to fetch orders');
+            throw new Error("Failed to fetch orders");
           }
           const data = await response.json();
           setOrders(data);
         } catch (error) {
-          console.error('Error fetching orders:', error);
+          console.error("Error fetching orders:", error);
         }
       }
     };
-     fetchOrders();
-     console.log(orders)
+    fetchOrders();
+    console.log(orders);
   }, []);
 
   const isProductActive = (productName: string) => {
-    const order = orders.find(order => order.name === productName);
+    const order = orders.find((order) => order.name === productName);
     if (!order) return false;
 
     if (order.expiration === "LIFETIME") return true;
@@ -93,7 +93,7 @@ export default function Component({ user }: MeProps) {
   };
 
   const getRemainingDays = (productName: string) => {
-    const order = orders.find(order => order.name === productName);
+    const order = orders.find((order) => order.name === productName);
     if (order) {
       if (order.expiration === "LIFETIME") return "NEVER";
 
@@ -108,7 +108,6 @@ export default function Component({ user }: MeProps) {
     return null;
   };
 
-  
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <main>
@@ -156,58 +155,70 @@ export default function Component({ user }: MeProps) {
             </Link>
           </div>
           {/* SEÇÃO DO BANNER DO PRODUTO */}
-          <div className="mt-16 space-y-5">
-          {products.map((product, index) => {
-            const isActive = isProductActive(product.name);
-            return (
-              <div 
-                key={index}
-                className={`relative w-full h-48 md:h-56 rounded-lg overflow-hidden ${!isActive ? 'group cursor-pointer' : ''}`}
-                onClick={() => { isActive ? '' : window.location.href = `/product/${product.link}` }}
+          <div className="mt-16 space-y-5 pb-32">
+            {products.map((product, index) => {
+              const isActive = isProductActive(product.name);
+              return (
+                <div
+                  key={index}
+                  className={`relative w-full h-48 md:h-56 rounded-lg overflow-hidden ${
+                    !isActive ? "group cursor-pointer" : ""
+                  }`}
+                  onClick={() => {
+                    isActive
+                      ? ""
+                      : (window.location.href = `/product/${product.link}`);
+                  }}
                 >
-                <Image
-                  src={product.image}
-                  alt={`banner ${product.name}`}
-                  layout="fill"
-                  objectFit="cover"
-                  className={`transition-all duration-300 ${!isActive ? 'filter grayscale group-hover:grayscale-0' : ''}`}
-                />
-                <div className="relative h-full flex flex-col justify-center items-center">
-                  <h2 className="text-5xl font-bold text-white text-center">
-                    {product.name.replace('_', ' ')}
-                  </h2>
-                  {isActive ? (
-                    <>
+                  <Image
+                    src={product.image}
+                    alt={`banner ${product.name}`}
+                    layout="fill"
+                    objectFit="cover"
+                    className={`transition-all duration-300 ${
+                      !isActive
+                        ? "filter grayscale group-hover:grayscale-0"
+                        : ""
+                    }`}
+                  />
+                  <div className="relative h-full flex flex-col justify-center items-center">
+                    <h2 className="text-5xl font-bold text-white text-center">
+                      {product.name.replace("_", " ")}
+                    </h2>
+                    {isActive ? (
+                      <>
+                        <p className="absolute bottom-3 right-3 text-white">
+                          Subscription end:{" "}
+                          <span className="font-bold">
+                            {getRemainingDays(product.name)}
+                            {getRemainingDays(product.name) == "NEVER"
+                              ? ""
+                              : "d"}
+                          </span>
+                        </p>
+                        <div className="absolute bottom-3 left-3 flex space-x-2">
+                          <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
+                            <Download className="mr-1 h-4 w-4" /> Download
+                          </button>
+                          <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
+                            <RefreshCw className="mr-1 h-4 w-4" /> Reset HWID
+                          </button>
+                          <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
+                            <Clock className="mr-1 h-4 w-4" /> Freeze
+                          </button>
+                        </div>
+                      </>
+                    ) : (
                       <p className="absolute bottom-3 right-3 text-white">
-                        Subscription end: <span className="font-bold">{getRemainingDays(product.name)}{getRemainingDays(product.name) == 'NEVER' ? '' : 'd'}</span>
+                        Starting From{" "}
+                        <span className="font-bold">R$ {product.price}</span>
                       </p>
-                      <div className="absolute bottom-3 left-3 flex space-x-2">
-                        <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
-                          <Download className="mr-1 h-4 w-4" /> Download
-                        </button>
-                        <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
-                          <RefreshCw className="mr-1 h-4 w-4" /> Reset HWID
-                        </button>
-                        <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
-                          <Clock className="mr-1 h-4 w-4" /> Freeze
-                        </button>
-                      </div>
-                    </>
-                  ) : (
-                    <p className="absolute bottom-3 right-3 text-white">
-                      Starting From <span className="font-bold">R$ {product.price}</span>
-                    </p>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
+              );
+            })}
+          </div>
         </div>
       </main>
 
