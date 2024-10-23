@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
                 </h1>
                 <motion.div
                   drag
-                  className="absolute right-[-100px] top-[108px] hidden sm:inline"
+                  className="absolute right-[-100px] top-[300px] hidden sm:inline"
                 >
                   <Image
                     src={cursorImage}
@@ -48,12 +48,12 @@ const Hero: React.FC = () => {
                     width={200}
                     className="max-w-none"
                     draggable={false}
-                    alt="Cursor Image | SaaS Landing Page built by Diego Tech"
+                    alt="Cursor Image"
                   />
                 </motion.div>
                 <motion.div
                   drag
-                  className="absolute left-[-100px] top-[56px] hidden sm:inline"
+                  className="absolute left-[-100px] top-[-15px] hidden sm:inline"
                 >
                   <Image
                     src={messageImage}
@@ -61,7 +61,7 @@ const Hero: React.FC = () => {
                     width={200}
                     className="max-w-none"
                     draggable={false}
-                    alt="Message Image | SaaS Landing Page built by Diego Tech"
+                    alt="Message Image"
                   />
                 </motion.div>
               </div>
