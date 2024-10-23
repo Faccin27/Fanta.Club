@@ -2,3 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --primary: #1d1818;
+    --secondary: rgba(255, 229, 215, 0.199);
+    --tertiary: rgba(253, 112, 31, 0.281);
+  }
+  
+*::-webkit-scrollbar {
+    width: 17px;
+    background-color: #18181b ;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: var(--primary);
+    border-radius: 5px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--secondary);
+    border-radius: 6px;
+    border: 3px solid var(--primary);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--tertiary);
+  }
