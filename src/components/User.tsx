@@ -61,7 +61,7 @@ export default function Component({ user }: { user: User }) {
       if (user) {
         try {
           const response = await fetch(
-            `http://localhost:3535/users/orders/${user.id}`
+            `https://${process.env.NEXT_PUBLIC_API}/users/orders/${user.id}`
           );
           if (!response.ok) {
             throw new Error("Failed to fetch orders");

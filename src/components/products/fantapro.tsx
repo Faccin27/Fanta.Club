@@ -36,9 +36,9 @@ interface PaymentModalContentProps {
 }
 
 const plans: Plan[] = [
-  { id: 'daily', name: 'Diário', price: 9.99 },
+  { id: 'monthly', name: 'Mensal', price: 0.05 },
   { id: 'weekly', name: 'Semanal', price: 49.99 },
-  { id: 'monthly', name: 'Mensal', price: 149.99 },
+  { id: 'daily', name: 'Diário', price: 9.99 },
 ]
 
 const features = [
@@ -117,7 +117,7 @@ const PaymentModalContent: React.FC<PaymentModalContentProps> = ({
 
 export default function ProductPage() {
   const [selectedImage, setSelectedImage] = useState(0)
-  const [selectedPlan, setSelectedPlan] = useState(plans[1])
+  const [selectedPlan, setSelectedPlan] = useState(plans[0])
   const [coupon, setCoupon] = useState('')
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
   const [paymentData, setPaymentData] = useState<PaymentResponse | null>(null);
@@ -148,7 +148,7 @@ export default function ProductPage() {
         descricao: "Fanta pro"
       };
 
-      const response = await fetch("http://localhost:3535/payment/qrcode", {
+      const response = await fetch(`https://${process.env.NEXT_PUBLIC_API}/payment/qrcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

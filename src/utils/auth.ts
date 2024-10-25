@@ -22,7 +22,7 @@ export async function checkLoginStatus(): Promise<{ isLoggedIn: boolean; user: U
   
   if (token) {
     try {
-      const response = await axios.get('http://localhost:3535/users/me', {
+      const response = await axios.get(`https://${process.env.NEXT_PUBLIC_API}/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

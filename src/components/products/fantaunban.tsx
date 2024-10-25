@@ -148,7 +148,7 @@ export default function ProductPage() {
         descricao: "Fanta Unban"
       };
 
-      const response = await fetch("http://localhost:3535/payment/qrcode", {
+      const response = await fetch(`https://${process.env.NEXT_PUBLIC_API}/payment/qrcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

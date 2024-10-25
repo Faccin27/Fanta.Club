@@ -24,7 +24,7 @@ export default function MainComponent() {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch(`http://localhost:3535/users/${userId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/users/${userId}`);
         
         if (!response.ok) {
           if (response.status === 404) {

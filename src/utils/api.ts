@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 
-const API_BASE_URL = 'http://localhost:3535';
+const API_BASE_URL = `https://${process.env.NEXT_PUBLIC_API}`;
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
