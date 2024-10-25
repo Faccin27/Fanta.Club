@@ -27,3 +27,42 @@
   ::-webkit-scrollbar-thumb:hover {
     background-color: var(--tertiary);
   }
+
+
+
+
+  
+
+  
+  /* Cor dos ícones da toolbar */
+  .custom-toolbar .ql-toolbar .ql-stroke {
+    stroke: #e4570d; 
+  }
+  
+  .custom-toolbar .ql-toolbar .ql-fill {
+    fill: #e4570d; 
+  }
+  
+  /* Cor do texto dos botões */
+  .custom-toolbar .ql-toolbar .ql-picker-label,
+  .custom-toolbar .ql-toolbar .ql-picker-item {
+    color: #e4570d; /* Cor do texto dos botões */
+  }
+  
+  /* Cor ao passar o mouse sobre os ícones */
+  .custom-toolbar .ql-toolbar .ql-picker-item:hover,
+  .custom-toolbar .ql-toolbar .ql-picker-label:hover {
+    color: #ff8c00; /* Cor ao passar o mouse (opcional) */
+  }
+  
+  /* Mudar cor dos botões de seleção, se necessário */
+  .custom-toolbar .ql-picker-options {
+    background-color: #333; /* Cor de fundo das opções de dropdown */
+    color: orange; /* Cor do texto das opções */
+  }
+  
+  /* Botão para remover formatação */
+  .custom-toolbar .ql-clean {
+    color: orange; /* Cor do botão limpar formatação */
+  }
+  

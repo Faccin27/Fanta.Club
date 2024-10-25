@@ -1,7 +1,8 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Bell as AnnouncementsIcon } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Bell as AnnouncementsIcon } from "lucide-react";
 import pfp from "@/assets/images/pfp.png";
 
 interface Author {
@@ -24,7 +25,7 @@ const announcements: Announcement[] = [
       name: "DevHacker",
       image: pfp.src,
     },
-    date: "01/10/2023"
+    date: "01/10/2023",
   },
   {
     id: 2,
@@ -33,7 +34,7 @@ const announcements: Announcement[] = [
       name: "AntiBanMaster",
       image: pfp.src,
     },
-    date: "05/10/2023"
+    date: "05/10/2023",
   },
   {
     id: 3,
@@ -42,7 +43,7 @@ const announcements: Announcement[] = [
       name: "RecoilExpert",
       image: pfp.src,
     },
-    date: "10/10/2023"
+    date: "10/10/2023",
   },
   {
     id: 4,
@@ -51,11 +52,52 @@ const announcements: Announcement[] = [
       name: "ValorantHacksStore",
       image: pfp.src,
     },
-    date: "12/10/2023"
-  }
+    date: "12/10/2023",
+  },
 ];
 
-const Announcements: React.FC = () => {
+interface Order {
+  id: number;
+  name: string;
+  price: number;
+  expiration: string;
+  createdAt: string;
+  userId: number;
+  expirationDate: string;
+}
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  photo: string | null;
+  registeredDate: string;
+  role: string;
+}
+
+export default function Announcements({ user }: { user: User }) {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const rota = useRouter();
+
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (user) {
+        try {
+          const response = await fetch(
+            `http://localhost:3535/users/orders/${user.id}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch orders");
+          }
+          const data = await response.json();
+          setOrders(data);
+        } catch (error) {
+          console.error("Error fetching orders:", error);
+        }
+      }
+    };
+    fetchOrders();
+  }, [user]);
   return (
     <div className="p-4">
       <div className="flex items-center mb-6">
@@ -63,8 +105,21 @@ const Announcements: React.FC = () => {
         <h1 className="text-2xl font-bold">Anúncios</h1>
       </div>
       <div className="space-y-4">
+    
+          <div className="max-w-fit ml-auto">
+            <button
+              className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
+              onClick={() => rota.push("/post")}
+            >
+              Postar novo anúncio
+            </button>
+          </div>
+
         {announcements.map((announcement) => (
-          <div key={announcement.id} className="bg-zinc-700 shadow rounded-lg p-4">
+          <div
+            key={announcement.id}
+            className="bg-zinc-700 shadow rounded-lg p-4"
+          >
             <div className="flex items-center mb-2">
               <Image
                 src={announcement.author.image}
@@ -75,7 +130,9 @@ const Announcements: React.FC = () => {
               />
               <div>
                 <Link href={`/forum/announcements/${announcement.id}`}>
-                  <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">{announcement.title}</h2>
+                  <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">
+                    {announcement.title}
+                  </h2>
                 </Link>
                 <p className="text-sm text-gray-400">
                   Por: {announcement.author.name} em {announcement.date}
@@ -92,6 +149,4 @@ const Announcements: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default Announcements;
+}
