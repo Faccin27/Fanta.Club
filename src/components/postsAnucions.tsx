@@ -77,10 +77,10 @@ export default function PostAnucios({ user }: { user: User }) {
               alt="profile picture"
               width={128}
               height={128}
-              className="mx-auto h-32 w-32 rounded-full border-2 border-orange-500 shadow-lg"
+              className="mx-auto h-32 w-32 rounded-full border-2 border-orange-500 shadow-lg sm:h-24 sm:w-24"
             />
             <div className="mt-4 flex items-center justify-center">
-              <h1 className="text-3xl font-bold text-orange-400">
+              <h1 className="text-lg font-bold mb-2 block sm:text-base">              
                 {user?.name}
               </h1>
             </div>
@@ -100,12 +100,12 @@ export default function PostAnucios({ user }: { user: User }) {
                     value={anuncioT}
                     onChange={(evento) => setAnuncioT(evento.target.value)}
                     placeholder="Insira o título do post"
-                    className="w-full bg-zinc-800 rounded-lg p-3 outline-none border border-zinc-700 focus:border-orange-500 text-white"
+                    className="w-full bg-zinc-800 rounded-lg p-3 outline-none border border-zinc-700 focus:border-orange-500 text-white sm:p-2"
                   />
                 </div>
                 <h2 className="text-lg font-bold mb-2 block">Conteúdo</h2>
                 <div>
-                  <div>
+                  <div className="min-w-100">
                     <ReactQuill
                       modules={{
                         toolbar: {
@@ -115,7 +115,8 @@ export default function PostAnucios({ user }: { user: User }) {
                       theme="snow"
                       value={anuncioP}
                       onChange={setAnuncioP}
-                      className="quill-editor custom-toolbar text-white  h-56 border-orange-500"
+                      className="quill-editor custom-toolbar text-white h-56 border-orange-500"
+                      style={{ minWidth: "auto", minHeight: "auto" }}
                     />
                   </div>
                 </div>
@@ -123,7 +124,7 @@ export default function PostAnucios({ user }: { user: User }) {
                 <br />
                 <button
                   type="submit"
-                  className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
+                  className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors sm:px-4 sm:py-2"
                 >
                   Postar Anúncio
                 </button>
