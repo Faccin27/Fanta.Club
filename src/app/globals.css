@@ -36,24 +36,19 @@
   
   /* Cor dos ícones da toolbar */
   .custom-toolbar .ql-toolbar .ql-stroke {
-    stroke: #e4570d; 
+    stroke: #e3581c; 
   }
   
   .custom-toolbar .ql-toolbar .ql-fill {
-    fill: #e4570d; 
+    fill: #e3581c; 
   }
   
   /* Cor do texto dos botões */
   .custom-toolbar .ql-toolbar .ql-picker-label,
   .custom-toolbar .ql-toolbar .ql-picker-item {
-    color: #e4570d; /* Cor do texto dos botões */
+    color: #e3581c; /* Cor do texto dos botões */
   }
   
-  /* Cor ao passar o mouse sobre os ícones */
-  .custom-toolbar .ql-toolbar .ql-picker-item:hover,
-  .custom-toolbar .ql-toolbar .ql-picker-label:hover {
-    color: #ff8c00; /* Cor ao passar o mouse (opcional) */
-  }
   
   /* Mudar cor dos botões de seleção, se necessário */
   .custom-toolbar .ql-picker-options {

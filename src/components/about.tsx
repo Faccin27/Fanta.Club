@@ -81,7 +81,7 @@ export default function About() {
             👤
             </div>
             <h3 className="text-lg font-semibold">Gabriel</h3>
-            <p className="text-sm text-zinc-400">Helper</p>
+            <p className="text-sm text-zinc-400">Front-End Helper</p>
           </div>
       </div>
 

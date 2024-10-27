@@ -114,7 +114,7 @@ export default function PostAnucios({ user }: { user: User }) {
                 }}
                 onSubmit={handleSubmitForm}
               >
-                <div className="mt-6 bg-gradient-to-b from-orange-600 via-zinc-800 to-zinc-900 rounded-xl shadow-2xl p-6">
+                <div className="mt-6 bg-gradient-to-b from-orange-500 via-zinc-800 to-zinc-900 rounded-xl shadow-2xl p-6">
                   <div className="mb-4">
                     <h2 className="text-lg font-bold mb-2 block">Título</h2>
                     <input
@@ -128,7 +128,20 @@ export default function PostAnucios({ user }: { user: User }) {
                   </div>
                   <h2 className="text-lg font-bold mb-2 block">Conteúdo</h2>
                   <div>
-                    <div className="min-w-100">
+                    <motion.div 
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      duration: 0.9,
+                      ease: [0, 0.71, 0.2, 1.01],
+                      scale: {
+                        type: "spring",
+                        damping: 5,
+                        stiffness: 100,
+                        restDelta: 0.001
+                      }
+                    }}
+                    className="min-w-100">
                       <ReactQuill
                         modules={{
                           toolbar: {
@@ -141,7 +154,7 @@ export default function PostAnucios({ user }: { user: User }) {
                         className="quill-editor custom-toolbar text-white h-56 border-orange-500"
                         style={{ minWidth: "auto", minHeight: "auto" }}
                       />
-                    </div>
+                    </motion.div>
                     <br />
                     <br />
                     <br />
