@@ -153,18 +153,19 @@ export default function AdmComponent({ user }: { user: User }) {
               
             </table>
           </div>
-          <div className="flex justify-center space-x-2 mt-4">
+          <div className="flex justify-center space-x-2 mt-4  flex-wrap ">
           {Array.from({ length: totalDePages }, (_, index) => (
             <button
               key={index}
               onClick={() => handlePageChange(index + 1)}
-              className={`px-4 py-2 rounded-lg ${
-                page === index + 1
-                  ? "bg-orange-500 text-white"
-                  : "bg-gray-600 text-zinc-100"
-              } hover:bg-green-600 transition-colors`}
+              className={`px-2 py-1 sm:px-3 sm:py-2 lg:px-4 lg:py-2 rounded-lg 
+                ${page === index + 1 ? "bg-orange-500 text-white" : "bg-gray-600 text-zinc-100"} 
+                md:min-w-[80px] lg:min-w-[120px] 
+                hover:bg-green-600 transition-colors
+                md:flex-1 lg:flex-none lg:w-auto`} // Adicionando flex-grow para botões responsivos
             >
               {index + 1}
+              <br />
             </button>
           ))}
         </div>
