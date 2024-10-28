@@ -68,7 +68,7 @@ export default function About() {
       <h2 className="text-2xl font-semibold mb-4">Meet the Cheat Masterminds</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {['Pozinho', 'Lkzin', 'Faccin'].map((name, index) => (
-          <div key={index} className="bg-zinc-800 p-4 rounded-lg">
+          <div key={index} className="bg-zinc-800 p-4 rounded-lg cursor-pointer">
             <div className="w-12 h-12 bg-orange-500 rounded-full mb-2 flex items-center justify-center text-2xl">
             👤
             </div>
@@ -76,16 +76,10 @@ export default function About() {
             <p className="text-sm text-zinc-400">Co-founder</p>
           </div>
         ))}
-        <div className="bg-zinc-800 p-4 rounded-lg">
-            <div className="w-12 h-12 bg-orange-500 rounded-full mb-2 flex items-center justify-center text-2xl">
-            👤
-            </div>
-            <h3 className="text-lg font-semibold">Gabriel</h3>
-            <p className="text-sm text-zinc-400">Front-End Helper</p>
-          </div>
       </div>
 
-      <h2 className="text-2xl font-semibold mb-4">Why fanta.club Kicks Ass</h2>
+      <h2 
+      className="text-2xl font-semibold mb-4">Why fanta.club Kicks Ass</h2>
       <div className="mb-8">
         {faqItems.map((item, index) => (
           <div key={index} className="mb-4">
@@ -97,9 +91,12 @@ export default function About() {
               <span className="float-right">{openFaq === item.question ? '▲' : '▼'}</span>
             </button>
             {openFaq === item.question && (
-              <div className="p-4 bg-zinc-700 rounded-b-lg mt-1">
+              <motion.div 
+              initial={{ opacity: 2, x: 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="p-4 bg-zinc-700 rounded-b-lg mt-1">
                 {item.answer}
-              </div>
+              </motion.div>
             )}
           </div>
         ))}

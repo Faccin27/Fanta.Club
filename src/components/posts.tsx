@@ -161,7 +161,7 @@ export default function PostAnucios({ user }: { user: User }) {
                     <div className="mb-4">
                     <h2 className="text-lg font-bold mb-2 block">Tipo do Postagem</h2>
                     <div>
-                    <select name="Tipo do anúncio" id="opcoes" className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors sm:px-4 sm:py-2" required>
+                    <select name="Tipo do anúncio" id="opcoes" className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 transition-colors sm:px-4 sm:py-2" required>
                       <option value={anuncio}>Announcements</option>
                       <option value={atualizacao}>Updates</option>
                       <option value={configs}>Configs</option>
@@ -177,7 +177,7 @@ export default function PostAnucios({ user }: { user: User }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 3 }}
                     type="submit"
-                    className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors sm:px-4 sm:py-2"
+                    className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-blue-700 transition-colors sm:px-4 sm:py-2"
                   >
                     Postar Anúncio
                   </motion.button>

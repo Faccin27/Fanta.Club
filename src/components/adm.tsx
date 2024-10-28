@@ -83,8 +83,8 @@ export default function AdmComponent({ user }: { user: User }) {
         <section
         >
           <div className="overflow-x-auto">
-            <table className="min-w-full border-collapse rounded-lg overflow-hidden shadow-lg text-left">
-              <thead className="bg-orange-500 text-zinc-900 font-semibold">
+            <table className="min-w-full border-collapse rounded-lg overflow-hidden shadow-xl text-left">
+              <thead className="bg-gradient-to-r from-orange-500 via-orange-700 to-orange-400 text-white font-semibold">
                 <tr>
                   <th className="px-4 py-2 border-b border-zinc-800">Nome</th>
                   <th className="px-4 py-2 border-b border-zinc-800">Id</th>
@@ -103,12 +103,12 @@ export default function AdmComponent({ user }: { user: User }) {
               </thead>
               {atividade.map(({nome,user_id,email,current_activity,duration,plano},index)=>(
                 <tbody key={index} className="">
-                <tr className="bg-zinc-800 hover:bg-orange-200 hover:text-zinc-900 transition-colors">
+                <tr className="bg-zinc-800 transition-colors">
                   <td className="px-4 py-2 border-b border-zinc-800">
                     <Link
                       href={`/me/:${user?.id}`}
                       target="_blank"
-                      className=" text-orange-600  font-medium  hover:text-orange-400 transition-colors"
+                      className=" text-orange-600  font-medium  hover:text-orange-700 transition-colors"
                     >
                       {nome}
                     </Link>
@@ -126,7 +126,7 @@ export default function AdmComponent({ user }: { user: User }) {
                     {duration}
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
-                    <p className=" text-green-600  font-medium  hover:text-green-400 transition-colors">
+                    <p className=" text-green-400  font-medium  hover:text-green-600 transition-colors">
                       {plano}
                     </p>
                   </td>
@@ -147,7 +147,7 @@ export default function AdmComponent({ user }: { user: User }) {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.3 }}
-            className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors">
+            className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-green-600 transition-colors">
               Gerar Cupom
             </motion.button>
           </div>
