@@ -43,6 +43,18 @@ const getRoleStyles = (role: string) => {
 
 export default function AdmComponent({ user }: { user: User }) {
   const atividade: Atividade[] = Data1;
+  const itensPerPage: number = 7
+  const [page, setPage] = useState<number>(1);
+  const totalDePages = Math.ceil(atividade.length / itensPerPage);
+
+  const currentItems = atividade.slice(
+    (page - 1) * itensPerPage,
+    page * itensPerPage
+  );
+
+  const handlePageChange = (page:number) => {
+    setPage(page)
+  }
 
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100">
@@ -101,7 +113,7 @@ export default function AdmComponent({ user }: { user: User }) {
                   </th>
                 </tr>
               </thead>
-              {atividade.map(({nome,user_id,email,current_activity,duration,plano},index)=>(
+              {currentItems.map(({nome,user_id,email,current_activity,duration,plano},index)=>(
                 <tbody key={index} className="">
                 <tr className="bg-zinc-800 transition-colors">
                   <td className="px-4 py-2 border-b border-zinc-800">
@@ -141,6 +153,21 @@ export default function AdmComponent({ user }: { user: User }) {
               
             </table>
           </div>
+          <div className="flex justify-center space-x-2 mt-4">
+          {Array.from({ length: totalDePages }, (_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              className={`px-4 py-2 rounded-lg ${
+                page === index + 1
+                  ? "bg-orange-500 text-white"
+                  : "bg-gray-600 text-zinc-100"
+              } hover:bg-green-600 transition-colors`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
           <br />
           <div className="flex justify-center">
             <motion.button 
