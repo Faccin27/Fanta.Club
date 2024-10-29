@@ -76,7 +76,7 @@ interface User {
 
 export default function Announcements({ user }: { user: User }) {
   const [orders, setOrders] = useState<Order[]>([]);
-  const rota = useRouter();
+  const router = useRouter();
 
 
   useEffect(() => {
@@ -100,21 +100,19 @@ export default function Announcements({ user }: { user: User }) {
   }, [user]);
   return (
     <div className="p-4">
-      <div className="flex items-center mb-6">
-        <AnnouncementsIcon className="mr-2" />
-        <h1 className="text-2xl font-bold">Anúncios</h1>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center">
+          <AnnouncementsIcon className="mr-2" />
+          <h1 className="text-2xl font-bold">Anúncios</h1>
+        </div>
+        <button
+          className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
+          onClick={() => router.push("/post")}
+        >
+          Postar novo anúncio
+        </button>
       </div>
       <div className="space-y-4">
-    
-          <div className="max-w-fit ml-auto">
-            <button
-              className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
-              onClick={() => rota.push("/post")}
-            >
-              Postar novo anúncio
-            </button>
-          </div>
-
         {announcements.map((announcement) => (
           <div
             key={announcement.id}

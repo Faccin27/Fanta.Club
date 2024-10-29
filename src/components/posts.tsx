@@ -68,42 +68,23 @@ export default function PostAnucios({ user }: { user: User }) {
   const [configs, setConfigs] = useState();
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100">
-       <div className="p-8 font-sans">
+      <div className="p-8 font-sans">
         <motion.h1
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
           className="text-left text-3xl font-bold tracking-tighter sm:text-3xl text-orange-400"
         >
-          Área de Postagem
+        Nova publicação
         </motion.h1>
+      </div>
+      <main>
+        <div className="relative">
+          <div className="h-40"></div>
         </div>
-        <main>
-          <div className="relative">
-            <div className="h-40"></div>
-          </div>
-          <div className="container mx-auto px-4 -mt-16">
-            <div className="text-center">
-              <Image
-                src={user?.photo || PFP}
-                alt="profile picture"
-                width={128}
-                height={128}
-                className="mx-auto h-32 w-32 rounded-full border-2 border-orange-500 shadow-lg sm:h-24 sm:w-24"
-              />
-              <div className="mt-4 flex items-center justify-center">
-                <h1 className="text-lg font-bold mb-2 block sm:text-base">
-                  {user?.name}
-                </h1>
-              </div>
-              <div className="mt-2 flex items-center justify-center">
-                <UserIcon className="mr-2 h-4 w-4 text-zinc-400" />
-                <span className={getRoleStyles(user?.role)}>{user?.role}</span>
-              </div>
-              <br />
-              <br />
-              <div className="bg-zinc-800 z-50">
-
+        <div className="container mx-auto px-4 -mt-16">
+          <div className="text-center">
+            <div className="bg-zinc-800 z-50">
               <motion.form
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -129,19 +110,20 @@ export default function PostAnucios({ user }: { user: User }) {
                   <h2 className="text-lg font-bold mb-2 block">Conteúdo</h2>
                   <div>
                     <motion.div 
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                      duration: 0.9,
-                      ease: [0, 0.71, 0.2, 1.01],
-                      scale: {
-                        type: "spring",
-                        damping: 5,
-                        stiffness: 100,
-                        restDelta: 0.001
-                      }
-                    }}
-                    className="min-w-100">
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.9,
+                        ease: [0, 0.71, 0.2, 1.01], 
+                        scale: {
+                          type: "spring",
+                          damping: 5,
+                          stiffness: 100,
+                          restDelta: 0.001,
+                        },
+                      }}
+                      className="min-w-100 mb-32"
+                    >
                       <ReactQuill
                         modules={{
                           toolbar: {
@@ -155,23 +137,24 @@ export default function PostAnucios({ user }: { user: User }) {
                         style={{ minWidth: "auto", minHeight: "auto" }}
                       />
                     </motion.div>
-                    <br />
-                    <br />
-                    <br />
-                    <div className="mb-4">
-                    <h2 className="text-lg font-bold mb-2 block">Tipo do Postagem</h2>
-                    <div>
-                    <select name="Tipo do anúncio" id="opcoes" className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 transition-colors sm:px-4 sm:py-2" required>
-                      <option value={anuncio}>Announcements</option>
-                      <option value={atualizacao}>Updates</option>
-                      <option value={configs}>Configs</option>
-                    </select>
+                    <div className="mb-12">
+                      <h2 className="text-lg font-bold mb-2 block">
+                        Tipo do Postagem
+                      </h2>
+                      <div>
+                        <select
+                          name="Tipo do anúncio"
+                          id="opcoes"
+                          className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 transition-colors sm:px-4 sm:py-2"
+                          required
+                        >
+                          <option value={anuncio}>Announcements</option>
+                          <option value={atualizacao}>Updates</option>
+                          <option value={configs}>Configs</option>
+                        </select>
+                      </div>
                     </div>
-                   
                   </div>
-                  </div>
-                  <br />
-                  <br />
                   <motion.button
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -183,10 +166,10 @@ export default function PostAnucios({ user }: { user: User }) {
                   </motion.button>
                 </div>
               </motion.form>
-                </div>
             </div>
           </div>
-        </main>
+        </div>
+      </main>
       <Aside />
     </div>
   );
