@@ -43,9 +43,9 @@ export const api = {
     axiosInstance.delete<T>(url, config),
 };
 
-export const handleApiError = (error: any): string => {
-  if (axios.isAxiosError(error) && error.response) {
-    return error.response.data.message || "Ocorreu um erro. Por favor, tente novamente.";
+export function handleApiError(error: any): string {
+  if (error.response && error.response.data && error.response.data.error) {
+    return error.response.data.error;
   }
-  return "Ocorreu um erro ao se conectar ao servidor.";
-};
+  return "Ocorreu um erro. Por favor, tente novamente.";
+}
