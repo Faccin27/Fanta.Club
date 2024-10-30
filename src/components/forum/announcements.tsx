@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Bell as AnnouncementsIcon } from "lucide-react";
 import pfp from "@/assets/images/pfp.png";
+import { checkLoginStatus, User as AuthUser } from "@/utils/auth"; // Renomeado para evitar conflito
 
 interface Author {
   name: string;
@@ -65,19 +66,23 @@ interface Order {
   userId: number;
   expirationDate: string;
 }
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  photo: string | null;
-  registeredDate: string;
-  role: string;
-}
 
-export default function Announcements({ user }: { user: User }) {
+export default function Announcements() {
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const { isLoggedIn, user } = await checkLoginStatus();
+      setIsLoggedIn(isLoggedIn);
+      setUser(user);
+    };
+    fetchUserData();
+  }, []);
+
+  const canPostAnnouncement = user && (user.role === 'FANTA' || user.role === 'Moderator');
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -90,7 +95,7 @@ export default function Announcements({ user }: { user: User }) {
             throw new Error("Failed to fetch orders");
           }
           const data = await response.json();
-          setOrders(data);
+          setOrders(data); // Definindo as ordens corretamente
         } catch (error) {
           console.error("Error fetching orders:", error);
         }
@@ -98,6 +103,7 @@ export default function Announcements({ user }: { user: User }) {
     };
     fetchOrders();
   }, [user]);
+
   return (
     <div className="p-4">
       <div className="flex items-center justify-between mb-6">
@@ -105,12 +111,14 @@ export default function Announcements({ user }: { user: User }) {
           <AnnouncementsIcon className="mr-2" />
           <h1 className="text-2xl font-bold">Anúncios</h1>
         </div>
-        <button
-          className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
-          onClick={() => router.push("/post")}
-        >
-          Postar novo anúncio
-        </button>
+        {canPostAnnouncement && (
+          <button
+            className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
+            onClick={() => router.push("/post")}
+          >
+            Postar novo anúncio
+          </button>
+        )}
       </div>
       <div className="space-y-4">
         {announcements.map((announcement) => (
