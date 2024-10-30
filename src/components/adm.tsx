@@ -2,8 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import React, { useState } from "react"
-import Data1 from "@/data/atividade.json"
+import React, { useState, useEffect } from "react"
 import { UserIcon, X, Trash2 } from "lucide-react"
 
 interface User {
@@ -13,13 +12,7 @@ interface User {
   photo: string | null
   registeredDate: string
   role: string
-}
-
-interface Atividade {
-  nome: string
-  user_id: string
-  email: string
-  plano: string
+  isActive: boolean
 }
 
 interface Coupon {
@@ -44,7 +37,10 @@ const getRoleStyles = (role: string) => {
 }
 
 export default function AdmComponent({ user }: { user: User }) {
-  const atividade: Atividade[] = Data1
+  const [users, setUsers] = useState<User[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  
   const [coupons, setCoupons] = useState<Coupon[]>([
     { id: "1", name: "SUMMER2023", discount: 20, createdAt: "2023-06-01T12:00", expiresAt: "2023-08-31T23:59" },
     { id: "2", name: "WELCOME10", discount: 10, createdAt: "2023-05-15T09:00", expiresAt: "2023-12-31T23:59" },
@@ -67,13 +63,32 @@ export default function AdmComponent({ user }: { user: User }) {
     { id: "19", name: "FATHER25", discount: 25, createdAt: "2024-06-01T00:00", expiresAt: "2024-06-16T23:59" },
     { id: "20", name: "BACKSCHOOL40", discount: 40, createdAt: "2024-08-01T00:00", expiresAt: "2024-09-15T23:59" },
     { id: "21", name: "HALLOWEEN20", discount: 20, createdAt: "2024-10-15T00:00", expiresAt: "2024-10-31T23:59" },
-    { id: "22", name: "BLACKFRI60", discount: 60, createdAt: "2024-11-29T00:00", expiresAt: "2024-11-29T23:59" },
+    { id: "22", name: "BLACKFRI60", discount: 60, createdAt: "2024-11-29T00:00", expiresAt: "2024-11-29T23:59" }
   ])
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('http://localhost:3535/users')
+        if (!response.ok) {
+          throw new Error('Failed to fetch users')
+        }
+        const data = await response.json()
+        setUsers(data)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch users')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchUsers()
+  }, [])
 
   const itensPerPage: number = 7
   const [userPage, setUserPage] = useState<number>(1)
   const [couponPage, setCouponPage] = useState<number>(1)
-  const totalUserPages = Math.ceil(atividade.length / itensPerPage)
+  const totalUserPages = Math.ceil((users?.length || 0) / itensPerPage)
   const totalCouponPages = Math.ceil(coupons.length / itensPerPage)
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -83,7 +98,7 @@ export default function AdmComponent({ user }: { user: User }) {
     expiresAt: "",
   })
 
-  const currentUsers = atividade.slice(
+  const currentUsers = users.slice(
     (userPage - 1) * itensPerPage,
     userPage * itensPerPage
   )
@@ -146,6 +161,22 @@ export default function AdmComponent({ user }: { user: User }) {
     setCoupons(coupons.filter(coupon => coupon.id !== id))
   }
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-zinc-900 text-zinc-100 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-zinc-900 text-zinc-100 flex items-center justify-center">
+        <div className="text-red-500">Error: {error}</div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100">
       <div className="p-8 font-sans">
@@ -167,30 +198,40 @@ export default function AdmComponent({ user }: { user: User }) {
                 <th className="px-4 py-2 border-b border-zinc-800">Id</th>
                 <th className="px-4 py-2 border-b border-zinc-800">Nome</th>
                 <th className="px-4 py-2 border-b border-zinc-800">Email</th>
-                <th className="px-4 py-2 border-b border-zinc-800">Plano</th>
+                <th className="px-4 py-2 border-b border-zinc-800">Role</th>
+                <th className="px-4 py-2 border-b border-zinc-800">Registrado em</th>
+                <th className="px-4 py-2 border-b border-zinc-800">Status</th>
                 <th className="px-4 py-2 border-b border-zinc-800">Ação</th>
               </tr>
             </thead>
             <tbody>
-              {currentUsers.map(({ nome, user_id, email, plano }, index) => (
-                <tr key={index} className="bg-zinc-800 transition-colors">
+              {currentUsers.map((userData) => (
+                <tr key={userData.id} className="bg-zinc-800 transition-colors">
                   <td className="px-4 py-2 border-b border-zinc-800">
-                    {user_id}
+                    {userData.id}
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
                     <Link
-                      href={`/me/:${user?.id}`}
+                      href={`/me/${userData.id}`}
                       target="_blank"
                       className="text-orange-600 font-medium hover:text-orange-700 transition-colors"
                     >
-                      {nome}
+                      {userData.name}
                     </Link>
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
-                    {email}
+                    {userData.email}
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
-                    <span className="text-green-400 font-medium">{plano}</span>
+                    <span className={getRoleStyles(userData.role)}>{userData.role}</span>
+                  </td>
+                  <td className="px-4 py-2 border-b border-zinc-800">
+                    {new Date(userData.registeredDate).toLocaleDateString()}
+                  </td>
+                  <td className="px-4 py-2 border-b border-zinc-800">
+                    <span className={`font-medium ${userData.isActive ? 'text-green-400' : 'text-red-400'}`}>
+                      {userData.isActive ? 'Ativo' : 'Inativo'}
+                    </span>
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
                     <button className="bg-red-600 text-white font-medium px-3 py-1 rounded hover:bg-red-700 transition-colors">
