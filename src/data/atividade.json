@@ -1,0 +1,1244 @@
+[
+    {
+        "nome": "Avelino Amasso",
+        "user_id": "987651",
+        "current_activity": "Among Us",
+        "start_time": "2024-10-27T13:00:00Z",
+        "duration": "3h",
+        "email": "avelino@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Patrícia Purpurina",
+        "user_id": "987652",
+        "current_activity": "Minecraft",
+        "start_time": "2024-10-27T15:30:00Z",
+        "duration": "2h",
+        "email": "patricia@example.com",
+        "plano": "Premium"
+    },
+    {
+        "nome": "João Grandão",
+        "user_id": "987653",
+        "current_activity": "League of Legends",
+        "start_time": "2024-10-27T16:00:00Z",
+        "duration": "4h",
+        "email": "joao@example.com",
+        "plano": "Pro"
+    },
+    {
+        "nome": "Beto Brecha",
+        "user_id": "987654",
+        "current_activity": "Fortnite",
+        "start_time": "2024-10-27T17:00:00Z",
+        "duration": "3h30min",
+        "email": "beto@example.com",
+        "plano": "Unban"
+    },
+    {
+        "nome": "Ana Sorriso",
+        "user_id": "987655",
+        "current_activity": "Overwatch",
+        "start_time": "2024-10-27T17:30:00Z",
+        "duration": "5h",
+        "email": "ana@example.com",
+        "plano": "Free"
+    },
+    {
+        "nome": "Fernando Intrépido",
+        "user_id": "987656",
+        "current_activity": "Valorant",
+        "start_time": "2024-10-27T18:00:00Z",
+        "duration": "2h15min",
+        "email": "fernando@example.com",
+        "plano": "Basic"
+    },
+    {
+        "nome": "Renata Radiante",
+        "user_id": "987657",
+        "current_activity": "CS: GO",
+        "start_time": "2024-10-27T18:30:00Z",
+        "duration": "6h",
+        "email": "renata@example.com",
+        "plano": "Ultra"
+    },
+    {
+        "nome": "Luiz Laser",
+        "user_id": "987658",
+        "current_activity": "GTA V",
+        "start_time": "2024-10-27T19:00:00Z",
+        "duration": "1h45min",
+        "email": "luiz@example.com",
+        "plano": "VIP"
+    },
+    {
+        "nome": "Estela Explosiva",
+        "user_id": "987659",
+        "current_activity": "Rocket League",
+        "start_time": "2024-10-27T19:30:00Z",
+        "duration": "4h10min",
+        "email": "estela@example.com",
+        "plano": "Pro"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    },
+    {
+        "nome": "Paulo Passagem",
+        "user_id": "987660",
+        "current_activity": "The Sims",
+        "start_time": "2024-10-27T20:00:00Z",
+        "duration": "2h50min",
+        "email": "paulo@example.com",
+        "plano": "Standard"
+    }
+]
