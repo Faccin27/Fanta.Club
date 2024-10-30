@@ -14,6 +14,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import Aside from "./Aside";
+import PasswordChangeModal from "@/components/PasswordChangeModal"
 
 interface User {
   id: number;
@@ -59,6 +60,7 @@ const products: Product[] = [
 
 export default function Component({ user }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -143,6 +145,10 @@ export default function Component({ user }: MeProps) {
           <div className="mt-8 flex flex-wrap justify-center space-x-4">
             <Link
               href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsPasswordModalOpen(true);
+              }}
               className="text-zinc-400 hover:text-orange-400 transition-colors"
             >
               <Lock className="inline mr-1 h-4 w-4" /> Change Password
@@ -220,6 +226,11 @@ export default function Component({ user }: MeProps) {
             })}
           </div>
         </div>
+        <PasswordChangeModal
+          isOpen={isPasswordModalOpen}
+          onClose={() => setIsPasswordModalOpen(false)}
+          userId={user?.id || 0}
+        />
       </main>
 
       <Aside />

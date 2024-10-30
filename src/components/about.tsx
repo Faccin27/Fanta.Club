@@ -1,16 +1,23 @@
 'use client'
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 export default function About() {
   const [showSecret, setShowSecret] = useState(false)
   const [openFaq, setOpenFaq] = useState<string | null>(null)
 
   const timelineEvents = [
-    { year: 2021, event: "Born as 'ValorantPro'" },
-    { year: 2022, event: "Reached 5,000 badass users" },
+    { year: 2021, event: "Born as 'Fifty aim'" },
+    { year: 2022, event: "Reached 1,000 badass users" },
     { year: 2023, event: "Expanded to new games" },
     { year: 2024, event: "Rebranded to fanta.club" },
+  ]
+
+  const teamMembers = [
+    { id: '2', name: 'Pozinho' },
+    { id: '3', name: 'Lkzin' },
+    { id: '1', name: 'Faccin' }
   ]
 
   const faqItems = [
@@ -69,12 +76,18 @@ export default function About() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {['Pozinho', 'Lkzin', 'Faccin'].map((name, index) => (
           <div key={index} className="bg-zinc-800 p-4 rounded-lg cursor-pointer">
+        {teamMembers.map((member) => (
+          <Link 
+            href={`/user/${member.id}`} 
+            key={member.id}
+            className="bg-zinc-800 p-4 rounded-lg transition-transform hover:scale-105 cursor-pointer"
+          >
             <div className="w-12 h-12 bg-orange-500 rounded-full mb-2 flex items-center justify-center text-2xl">
             👤
             </div>
-            <h3 className="text-lg font-semibold">{name}</h3>
+            <h3 className="text-lg font-semibold">{member.name}</h3>
             <p className="text-sm text-zinc-400">Co-founder</p>
-          </div>
+          </Link>
         ))}
       </div>
 
