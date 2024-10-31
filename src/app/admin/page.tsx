@@ -38,7 +38,7 @@ export default function AdministradorPage() {
 
   return (
     <>
-      <AdmComponent />
+      <AdmComponent LogedUser={user} />
     </>
   );
 }
