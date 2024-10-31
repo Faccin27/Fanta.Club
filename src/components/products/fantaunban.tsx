@@ -23,6 +23,15 @@ interface PaymentRequest {
   descricao: string;
 }
 
+interface Coupon {
+  id: number;
+  name: string;
+  discount: number;
+  createdAt: string;
+  expiryDate: string;
+  createdById: number;
+}
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -116,12 +125,15 @@ const PaymentModalContent: React.FC<PaymentModalContentProps> = ({
 );
 
 export default function ProductPage() {
-  const [selectedImage, setSelectedImage] = useState(0)
-  const [selectedPlan, setSelectedPlan] = useState(plans[0])
-  const [coupon, setCoupon] = useState('')
+  const [selectedImage, setSelectedImage] = useState<number>(0);
+  const [selectedPlan, setSelectedPlan] = useState<Plan>(plans[1]);
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
+  const [coupon, setCoupon] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [couponError, setCouponError] = useState<string | null>(null);
   const [paymentData, setPaymentData] = useState<PaymentResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [couponLoading, setCouponLoading] = useState<boolean>(false);
 
   const images = [
     img1,
@@ -140,11 +152,64 @@ export default function ProductPage() {
     }
   };
 
-  const handleAddToCart = async () => {
+  const handleCouponApply = async (): Promise<void> => {
+    if (!coupon.trim()) {
+      setCouponError("Por favor, insira um código de cupom");
+      return;
+    }
+
+    setCouponLoading(true);
+    setCouponError(null);
+
+    try {
+      const response = await fetch(`http://localhost:3535/coupons/name/${coupon}`);
+      
+      if (response.status === 404) {
+        setCouponError("Cupom não encontrado");
+        setAppliedCoupon(null);
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const couponData: Coupon = await response.json();
+      
+      // Check if coupon is expired
+      const expiryDate = new Date(couponData.expiryDate);
+      const now = new Date();
+
+      if (expiryDate < now) {
+        setCouponError("Cupom expirado");
+        setAppliedCoupon(null);
+        return;
+      }
+
+      // Coupon is valid
+      setAppliedCoupon(couponData);
+      setCouponError(null);
+    } catch (error) {
+      console.error("Erro ao verificar cupom:", error);
+      setCouponError("Erro ao processar cupom");
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const calculateDiscountedPrice = (): number => {
+    if (!appliedCoupon) return selectedPlan.price;
+    
+    const discountAmount = selectedPlan.price * (appliedCoupon.discount / 100);
+    return selectedPlan.price - discountAmount;
+  };
+
+
+  const handleAddToCart = async (): Promise<void> => {
     setLoading(true);
     try {
       const paymentRequest: PaymentRequest = {
-        valor: selectedPlan.price,
+        valor: calculateDiscountedPrice(),
         descricao: "Fanta Unban"
       };
 
@@ -168,6 +233,16 @@ export default function ProductPage() {
       alert("Erro ao processar pagamento.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handlePlanChange = (planId: string): void => {
+    const newPlan = plans.find((plan) => plan.id === planId);
+    if (newPlan) {
+      setSelectedPlan(newPlan);
+      setAppliedCoupon(null);
+      setCoupon('');
+      setCouponError(null);
     }
   };
 
@@ -220,7 +295,8 @@ export default function ProductPage() {
               <select
                 id="plan-select"
                 className="w-full bg-zinc-700 border-zinc-600 rounded-md p-2 text-white"
-                onChange={(e) => setSelectedPlan(plans.find(plan => plan.id === e.target.value) || plans[0])}
+                onChange={(e) => handlePlanChange(e.target.value)}
+                value={selectedPlan.id}
               >
                 {plans.map((plan) => (
                   <option key={plan.id} value={plan.id}>
@@ -229,20 +305,47 @@ export default function ProductPage() {
                 ))}
               </select>
             </div>
-            <div className="flex items-center space-x-2">
-              <input 
-                type="text"
-                placeholder="Cupom de desconto" 
-                className="flex-grow bg-zinc-700 border-zinc-600 rounded-md p-2 text-white"
-                value={coupon}
-                onChange={(e) => setCoupon(e.target.value)}
-              />
-              <button className="px-4 py-2 bg-zinc-700 border border-zinc-600 rounded-md hover:bg-zinc-600 transition-colors">
-                Aplicar
-              </button>
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <input
+                  type="text"
+                  placeholder="Cupom de desconto"
+                  className="flex-grow bg-zinc-700 border-zinc-600 rounded-md p-2 text-white"
+                  value={coupon}
+                  onChange={(e) => {
+                    setCoupon(e.target.value);
+                    setCouponError(null);
+                  }}
+                  disabled={couponLoading}
+                />
+                <button
+                  className="px-4 py-2 bg-zinc-700 border border-zinc-600 rounded-md hover:bg-zinc-600 transition-colors disabled:opacity-50"
+                  onClick={handleCouponApply}
+                  disabled={couponLoading}
+                >
+                  {couponLoading ? "Verificando..." : "Aplicar"}
+                </button>
+              </div>
+              {couponError && (
+                <p className="text-red-500 text-sm">{couponError}</p>
+              )}
+              {appliedCoupon && (
+                <p className="text-green-500 text-sm">
+                  Cupom {appliedCoupon.name} aplicado: {appliedCoupon.discount}% de desconto
+                </p>
+              )}
             </div>
             <div className="text-2xl font-bold">
-              R$ {selectedPlan.price.toFixed(2)}
+              {appliedCoupon ? (
+                <>
+                  <span className="line-through text-gray-500 mr-2">
+                    R$ {selectedPlan.price.toFixed(2)}
+                  </span>
+                  R$ {calculateDiscountedPrice().toFixed(2)}
+                </>
+              ) : (
+                `R$ ${selectedPlan.price.toFixed(2)}`
+              )}
             </div>
             <button 
               className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
@@ -286,7 +389,7 @@ export default function ProductPage() {
         {paymentData && (
           <PaymentModalContent
             paymentData={paymentData}
-            selectedPlanPrice={selectedPlan.price}
+            selectedPlanPrice={calculateDiscountedPrice()}
             onCopyPix={copyToClipboard}
           />
         )}

@@ -246,7 +246,7 @@ export default function AdmComponent({ LogedUser }: AdmComponentProps){
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
                     <Link
-                      href={`/me/${userData.id}`}
+                      href={`/user/${userData.id}`}
                       target="_blank"
                       className="text-orange-600 font-medium hover:text-orange-700 transition-colors"
                     >
