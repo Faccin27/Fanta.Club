@@ -9,6 +9,7 @@ import Logo from "@/assets/images/logo.png";
 import LoginModal from "@/components/LoginModal";
 import { User } from "@/utils/auth";
 import pfp from "@/assets/images/pfp.png";
+import { usePathname } from "next/navigation";
 
 interface HeaderProps {
   isLoggedIn: boolean;
@@ -25,6 +26,8 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [clickAbout, setClickAbout] = useState(false);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
   const userButtonRef = useRef<HTMLButtonElement>(null);
+
+  const pathName = usePathname()
 
   const toggleLanguageOptions = () => {
     setShowLanguageOptions((prev) => !prev);
@@ -44,30 +47,7 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
     setIsLoginModalOpen(false);
   };
 
-  const handleClickMain = () => {
-    setClick(true);
-    setClickForum(false);
-    setClickShowcases(false);
-    setClickAbout(false);
-  }
-  const handleClickForum = () => {
-    setClickForum(true);
-    setClickShowcases(false);
-    setClickAbout(false);
-    setClick(false);
-  }
-  const handleClickShowcase = () => {
-    setClickShowcases(true);
-    setClickForum(false);
-    setClickAbout(false);
-    setClick(false);
-  }
-  const handleClickAbout = () => {
-    setClickAbout(true);
-    setClickShowcases(false);
-    setClickForum(false);
-    setClick(false);
-  }
+  
 
   const handleLogout = useCallback(() => {
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -87,29 +67,26 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
         <nav className="hidden md:flex space-x-4 text-white/70">
           <Link
            href="/" 
-           className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-200 active:text-orange-400 transition-colors duration-200 ${clickMain ? "text-orange-400 hover:text-orange-600 animate-pulse": "text-white/70"}`}
-           onClick={handleClickMain}
+           className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-400 active:text-orange-400 transition-colors duration-200 ${pathName == "/" ? 'text-orange-400 hover:text-orange-600 animate-pulse': 'text-white/70'}`}
            >
             Main
           </Link>
           <Link 
           href="/forum" 
-          className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-200 active:text-orange-400 transition-colors duration-200 ${clickForum ? "text-orange-400 hover:text-orange-600 animate-pulse": "text-white/70"}`}
-           onClick={handleClickForum}
+          className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-400 active:text-orange-400 transition-colors duration-200 ${pathName == "/forum" ? 'text-orange-400 hover:text-orange-600 animate-pulse': 'text-white/70'}`}
           >
             Forum
           </Link>
           <Link 
           href="/showcase" 
-          onClick={handleClickShowcase}
-          className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-200 active:text-orange-400 transition-colors duration-200 ${clickShowcases ? "text-orange-400 hover:text-orange-600 animate-pulse": "text-white/70"}`}
+
+          className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-400 active:text-orange-400 transition-colors duration-200 ${pathName == "/showcase" ? 'text-orange-400 hover:text-orange-600 animate-pulse': 'text-white/70'}`}         
           >
-            Showcases
+        Showcases
           </Link>
           <Link 
-          onClick={handleClickAbout}
           href="/about" 
-          className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-200 active:text-orange-400 transition-colors duration-200 ${clickAbout ? "text-orange-400 hover:text-orange-600 animate-pulse": "text-white/70"}`}>
+          className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-400 active:text-orange-400 transition-colors duration-200 ${pathName == "/about" ? 'text-orange-400 hover:text-orange-600 animate-pulse': 'text-white/70'}`}>
             About
           </Link>
         </nav>

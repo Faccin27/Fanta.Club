@@ -72,8 +72,8 @@ export default function AdmComponent({ LogedUser }: AdmComponentProps,{ user }: 
   useEffect(() => {
     const fetchOrders = async () => {
       if (user) {
-        if (user.role != "FANTA"){
-          rota.push("/")
+        if (user.role != "FANTA" && "Moderator"){
+          rota.back();
         }
         try {
           const response = await fetch(

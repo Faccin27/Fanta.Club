@@ -75,25 +75,30 @@ export default function About() {
       <h2 className="text-2xl font-semibold mb-4">Meet the Cheat Masterminds</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
        
-        {['Pozinho', 'Lkzin', 'Faccin'].map((name, index) => (
+
+       {['Pozinho', 'Lkzin', 'Faccin'].map((name,index)=>(
+         <div key={index} className="bg-zinc-800 p-4 rounded-lg cursor-pointer">
+          
+        
           <div key={index} className="bg-zinc-800 p-4 rounded-lg cursor-pointer">
-          <div key={index} className="bg-zinc-800 p-4 rounded-lg cursor-pointer">
-        {teamMembers.map((member) => (
-          <Link 
-          href={`/user/${member.id}`} 
-          key={member.id}
-          className="bg-zinc-800 p-4 rounded-lg transition-transform hover:scale-105 cursor-pointer"
-          >
-            
-            <div className="w-12 h-12 bg-orange-500 rounded-full mb-2 flex items-center justify-center text-2xl">
-            
-            👤
-            </div>
-            <h3 className="text-lg font-semibold">{member.name}</h3>
-            <p className="text-sm text-zinc-400">Co-founder</p>
-          </Link>
-        ))}}
-      </div>
+            {teamMembers.map((member)=>(
+              <Link 
+              href={`/user/${member.id}`} 
+              key={member.id}
+              className="bg-zinc-800 p-4 rounded-lg transition-transform hover:scale-105 cursor-pointer"
+              >
+                
+                <div className="w-12 h-12 bg-orange-500 rounded-full mb-2 flex items-center justify-center text-2xl">
+                
+                👤
+                </div>
+                <h3 className="text-lg font-semibold">{member.name}</h3>
+                <p className="text-sm text-zinc-400">Co-founder</p>
+              </Link>
+            ))}
+          </div>
+          </div>
+       ))}
 
       <h2 
       className="text-2xl font-semibold mb-4">Why fanta.club Kicks Ass</h2>
@@ -135,7 +140,7 @@ export default function About() {
             Psst... Use code "FANTACHEATS" for a sick 20% discount on your first purchase! 🎉
           </motion.p>
         )}
-      </div>
+        </div>
 
       <div className="text-center">
         <h2 className="text-2xl font-semibold mb-4">Ready to Crush Your Opponents?</h2>
@@ -145,7 +150,6 @@ export default function About() {
       </div>
       </div>
       </div>
-     </div>
       
     )
   }

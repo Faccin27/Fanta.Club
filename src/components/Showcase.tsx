@@ -43,7 +43,7 @@ const SocialMediaButton: React.FC<{
         transition-all duration-300 ease-in-out
         ${isActive ? 'bg-orange-500' : 'bg-zinc-900'}
         text-white hover:shadow-md
-        hover:bg-orange-500
+        hover:bg-orange-400
         min-w-[3rem]
         ${name === 'YouTube' ? 'rounded-l-md' : 'rounded-r-md'}
       `}
@@ -135,18 +135,12 @@ const Home: React.FC<HomeProps> = ({ videos }) => {
             transition={{ delay: 0.1, duration: 0.5 }}
             className="text-left text-3xl font-bold tracking-tighter sm:text-3xl"
           >
-            <Link
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
+            <span
               className="relative text-orange-400 font-semibold 
-                after:absolute after:left-0 after:-bottom-1 
-                after:h-[2px] after:bg-orange-400 after:w-0 
-                after:transition-all after:duration-[1000ms] 
                 hover:after:w-full"
             >
               Social Media
-            </Link>
+            </span>
             <br />
             <span className="text-orange-400">Showcases</span>
           </motion.h1>
