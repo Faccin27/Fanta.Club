@@ -19,6 +19,10 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [clickMain, setClick] = useState(false);
+  const [clickForum, setClickForum] = useState(false);
+  const [clickShowcases, setClickShowcases] = useState(false);
+  const [clickAbout, setClickAbout] = useState(false);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
   const userButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -40,6 +44,31 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
     setIsLoginModalOpen(false);
   };
 
+  const handleClickMain = () => {
+    setClick(true);
+    setClickForum(false);
+    setClickShowcases(false);
+    setClickAbout(false);
+  }
+  const handleClickForum = () => {
+    setClickForum(true);
+    setClickShowcases(false);
+    setClickAbout(false);
+    setClick(false);
+  }
+  const handleClickShowcase = () => {
+    setClickShowcases(true);
+    setClickForum(false);
+    setClickAbout(false);
+    setClick(false);
+  }
+  const handleClickAbout = () => {
+    setClickAbout(true);
+    setClickShowcases(false);
+    setClickForum(false);
+    setClick(false);
+  }
+
   const handleLogout = useCallback(() => {
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     window.location.reload();
@@ -56,16 +85,31 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
           className="h-16 w-auto"
         />
         <nav className="hidden md:flex space-x-4 text-white/70">
-          <Link href="/" className="hover:text-orange-400">
+          <Link
+           href="/" 
+           className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-200 active:text-orange-400 transition-colors duration-200 ${clickMain ? "text-orange-400 hover:text-orange-600 animate-pulse": "text-white/70"}`}
+           onClick={handleClickMain}
+           >
             Main
           </Link>
-          <Link href="/forum" className="hover:text-orange-400">
+          <Link 
+          href="/forum" 
+          className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-200 active:text-orange-400 transition-colors duration-200 ${clickForum ? "text-orange-400 hover:text-orange-600 animate-pulse": "text-white/70"}`}
+           onClick={handleClickForum}
+          >
             Forum
           </Link>
-          <Link href="/showcase" className="hover:text-orange-400">
+          <Link 
+          href="/showcase" 
+          onClick={handleClickShowcase}
+          className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-200 active:text-orange-400 transition-colors duration-200 ${clickShowcases ? "text-orange-400 hover:text-orange-600 animate-pulse": "text-white/70"}`}
+          >
             Showcases
           </Link>
-          <Link href="/about" className="hover:text-orange-400">
+          <Link 
+          onClick={handleClickAbout}
+          href="/about" 
+          className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-200 active:text-orange-400 transition-colors duration-200 ${clickAbout ? "text-orange-400 hover:text-orange-600 animate-pulse": "text-white/70"}`}>
             About
           </Link>
         </nav>
@@ -143,6 +187,15 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
                     >
                       Logout
                     </button>
+                    {user.role === "FANTA" && "Moderator" ? (
+                    <Link
+                    href="/admin"
+                    className="block px-4 py-2 hover:bg-orange-500"
+                  >
+                    Adm Page
+                  </Link>
+                    ): null}
+
                   </motion.div>
                 )}
               </AnimatePresence>
