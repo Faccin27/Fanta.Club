@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Bell as AnnouncementsIcon } from "lucide-react";
 import pfp from "@/assets/images/pfp.png";
@@ -122,7 +123,13 @@ export default function Announcements() {
       </div>
       <div className="space-y-4">
         {announcements.map((announcement) => (
-          <div
+          <motion.div
+          initial={{ opacity: 2, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+           duration: 0.5,
+           delay: 0.1
+         }}
             key={announcement.id}
             className="bg-zinc-700 shadow rounded-lg p-4"
           >
@@ -150,7 +157,7 @@ export default function Announcements() {
                 Clique para ver mais detalhes sobre "{announcement.title}"
               </p>
             </Link>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

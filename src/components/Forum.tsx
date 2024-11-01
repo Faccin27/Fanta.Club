@@ -2,6 +2,7 @@
 import AnnouncementsContent from "@/components/forum/announcements";
 import QuestionsContent from "@/components/forum/questions";
 import ConfigsContent from "@/components/forum/settings";
+import { motion, AnimatePresence } from "framer-motion";
 import UpdatesContent from "@/components/forum/updates";
 import {
   Bell,
@@ -52,7 +53,8 @@ const ForumPage: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div 
+    className="min-h-screen bg-zinc-950 text-zinc-100">
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-orange-400">Fórum Fanta</h1>
@@ -69,7 +71,14 @@ const ForumPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <motion.div
+       initial={{ opacity: 0, y: -40 }}
+       animate={{ opacity: 1, y: 0 }}
+       transition={{
+        duration: 0.8,
+        delay: 0.5
+      }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {categories.map((cat) => (
             <ForumCategory
               key={cat.label}
@@ -77,7 +86,7 @@ const ForumPage: React.FC = () => {
               onClick={() => setActiveCategory(cat.label)}
             />
           ))}
-        </div>
+        </motion.div>
 
         {activeCategory && (
           <div className="bg-zinc-800 p-6 rounded-lg">
