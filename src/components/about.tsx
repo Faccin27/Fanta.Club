@@ -74,13 +74,8 @@ export default function About() {
 
       <h2 className="text-2xl font-semibold mb-4">Meet the Cheat Masterminds</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-       
-
-       {['Pozinho', 'Lkzin', 'Faccin'].map((name,index)=>(
-         <div key={index} className="bg-zinc-800 p-4 rounded-lg cursor-pointer">
-          
-        
-          <div key={index} className="bg-zinc-800 p-4 rounded-lg cursor-pointer">
+      
+         <div className="bg-zinc-800 p-4 rounded-lg cursor-pointer flex space-x-4 justify-center w-full">
             {teamMembers.map((member)=>(
               <Link 
               href={`/user/${member.id}`} 
@@ -97,8 +92,7 @@ export default function About() {
               </Link>
             ))}
           </div>
-          </div>
-       ))}
+       </div>
 
       <h2 
       className="text-2xl font-semibold mb-4">Why fanta.club Kicks Ass</h2>
@@ -147,7 +141,6 @@ export default function About() {
         <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded text-lg font-bold">
           Join fanta.club now!
         </button>
-      </div>
       </div>
       </div>
       
