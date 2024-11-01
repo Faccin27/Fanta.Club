@@ -1,7 +1,9 @@
 'use client'
+
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { ChevronDown, ChevronUp, User } from 'lucide-react'
 
 export default function About() {
   const [showSecret, setShowSecret] = useState(false)
@@ -74,8 +76,6 @@ export default function About() {
 
       <h2 className="text-2xl font-semibold mb-4">Meet the Cheat Masterminds</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        {['Pozinho', 'Lkzin', 'Faccin'].map((name, index) => (
-          <div key={index} className="bg-zinc-800 p-4 rounded-lg cursor-pointer">
         {teamMembers.map((member) => (
           <Link 
             href={`/user/${member.id}`} 
@@ -83,7 +83,7 @@ export default function About() {
             className="bg-zinc-800 p-4 rounded-lg transition-transform hover:scale-105 cursor-pointer"
           >
             <div className="w-12 h-12 bg-orange-500 rounded-full mb-2 flex items-center justify-center text-2xl">
-            👤
+              <User className="w-6 h-6 text-zinc-900" />
             </div>
             <h3 className="text-lg font-semibold">{member.name}</h3>
             <p className="text-sm text-zinc-400">Co-founder</p>
@@ -91,23 +91,26 @@ export default function About() {
         ))}
       </div>
 
-      <h2 
-      className="text-2xl font-semibold mb-4">Why fanta.club Kicks Ass</h2>
+      <h2 className="text-2xl font-semibold mb-4">Why fanta.club Kicks Ass</h2>
       <div className="mb-8">
         {faqItems.map((item, index) => (
           <div key={index} className="mb-4">
             <button
               onClick={() => setOpenFaq(openFaq === item.question ? null : item.question)}
-              className="w-full text-left p-4 bg-zinc-800 rounded-lg focus:outline-none"
+              className="w-full text-left p-4 bg-zinc-800 rounded-lg focus:outline-none flex justify-between items-center"
+              aria-expanded={openFaq === item.question}
+              aria-controls={`faq-answer-${index}`}
             >
               <span className="font-semibold">{item.question}</span>
-              <span className="float-right">{openFaq === item.question ? '▲' : '▼'}</span>
+              {openFaq === item.question ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
             </button>
             {openFaq === item.question && (
               <motion.div 
-              initial={{ opacity: 2, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="p-4 bg-zinc-700 rounded-b-lg mt-1">
+                id={`faq-answer-${index}`}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 bg-zinc-700 rounded-b-lg mt-1"
+              >
                 {item.answer}
               </motion.div>
             )}
@@ -119,6 +122,7 @@ export default function About() {
         <button 
           onClick={() => setShowSecret(!showSecret)}
           className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded"
+          aria-expanded={showSecret}
         >
           {showSecret ? "Hide the Secret" : "Reveal the Secret"}
         </button>
