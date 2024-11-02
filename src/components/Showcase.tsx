@@ -1,101 +1,129 @@
 "use client";
+
 import showcaseData from "@/data/showcase.json";
 import { motion } from "framer-motion";
 import { GetStaticProps } from "next";
 import Head from "next/head";
+import Link from 'next/link';
 import React from "react";
 import { FaTiktok, FaYoutube } from "react-icons/fa";
 import Aside from "./Aside";
-import Link from 'next/link'
+import { VideoCard } from "./youtube/youtube";
+import Tiktok from "./titok/titok";
 
-interface Video {
+interface VideoProps {
   id: string;
   title: string;
   author: string;
+  thumbnail?: string;
+  url?: string;
 }
 
 interface HomeProps {
-  videos: Video[];
+  videos: VideoProps[];
 }
 
-const VideoCard: React.FC<{ video: Video }> = ({ video }) => (
-  <motion.div
-  initial={{ opacity: 0, scale: 0.5 }}
-  animate={{ opacity: 1, scale: 1 }}
-  transition={{
-    duration: 0.8,
-    delay: 0.5,
-    ease: [0, 0.71, 0.2, 1.01],
-  }}
-    className="bg-zinc-800 p-4 rounded-lg shadow-md mb-4"
-  >
-    <iframe
-      width="100%"
-      height="315"
-      src={`https://www.youtube.com/embed/${video.id}`}
-      title={video.title}
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    ></iframe>
-    <h2 className="text-xl font-bold mt-2">{video.title}</h2>
-    <p className="text-zinc-400">
-      Postado por:{" "}
-      <span className="font-bold text-orange-400 hover:underline cursor-pointer">
-        {video.author}
+type SocialTab = 'youtube' | 'tiktok';
+
+const SocialMediaButton: React.FC<{
+  name: string;
+  icon: React.ElementType;
+  isActive: boolean;
+  onClick: () => void;
+  ariaLabel: string;
+}> = ({ name, icon: Icon, isActive, onClick, ariaLabel }) => {
+  return (
+    <button
+      onClick={onClick}
+      aria-label={ariaLabel}
+      className={`
+        group
+        flex items-center justify-center
+        py-2 px-4 text-sm font-medium
+        transition-all duration-300 ease-in-out
+        ${isActive ? 'bg-orange-500' : 'bg-zinc-900'}
+        text-white hover:shadow-md
+        hover:bg-orange-400
+        min-w-[3rem]
+        ${name === 'YouTube' ? 'rounded-l-md' : 'rounded-r-md'}
+      `}
+    >
+      <Icon className="text-xl" />
+      <span className="max-w-0 overflow-hidden whitespace-nowrap transition-all duration-300 group-hover:max-w-xs group-hover:ml-2">
+        {name}
       </span>
-    </p>
-  </motion.div>
-);
+    </button>
+  );
+};
 
-const SocialMediaButtons: React.FC = () => {
-  const [hoveredButton, setHoveredButton] = React.useState<string | null>(null);
-
+const SocialMediaButtons: React.FC<{
+  activeTab: SocialTab;
+  onTabChange: (tab: SocialTab) => void;
+}> = ({ activeTab, onTabChange }) => {
   const buttons = [
-    { name: "YouTube", icon: FaYoutube, color: "red" },
-    { name: "TikTok", icon: FaTiktok, color: "pink" },
+    {
+      name: "YouTube",
+      icon: FaYoutube,
+      tab: 'youtube' as const,
+      ariaLabel: "Mostrar vídeos do YouTube"
+    },
+    {
+      name: "TikTok",
+      icon: FaTiktok,
+      tab: 'tiktok' as const,
+      ariaLabel: "Mostrar vídeos do TikTok"
+    }
   ];
 
   return (
-    <div className="flex">
-      {buttons.map((button, index) => (
-        <button
+    <div className="flex" role="tablist">
+      {buttons.map((button) => (
+        <SocialMediaButton
           key={button.name}
-          onMouseEnter={() => setHoveredButton(button.name)}
-          onMouseLeave={() => setHoveredButton(null)}
-          className={`
-            flex items-center justify-center
-            py-2 px-4 text-sm font-medium
-            transition-all duration-300 ease-in-out
-            ${
-              hoveredButton === button.name
-                ? `bg-${button.color}-500 w-32`
-                : `bg-zinc-900 w-12`
-            }
-            text-white hover:shadow-md
-            ${index === 0 ? "rounded-l-md" : ""}
-            ${index === buttons.length - 1 ? "rounded-r-md" : ""}
-            hover:bg-orange-500
-          `}
-        >
-          <button.icon className="text-xl" />
-          {hoveredButton === button.name && (
-            <span className="ml-2 whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out">
-              {button.name}
-            </span>
-          )}
-        </button>
+          name={button.name}
+          icon={button.icon}
+          isActive={activeTab === button.tab}
+          onClick={() => onTabChange(button.tab)}
+          ariaLabel={button.ariaLabel}
+        />
       ))}
     </div>
   );
 };
 
+const EmptyState: React.FC<{ message: string }> = ({ message }) => (
+  <div className="flex justify-center items-center h-64 text-zinc-400">
+    <p>{message}</p>
+  </div>
+);
+
+const VideoGrid: React.FC<{ videos: VideoProps[] }> = ({ videos }) => (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {videos.map((video) => (
+      <VideoCard key={video.id} video={video} />
+    ))}
+  </div>
+);
+
 const Home: React.FC<HomeProps> = ({ videos }) => {
+  const [activeTab, setActiveTab] = React.useState<SocialTab>('youtube');
+
+  const content = React.useMemo(() => {
+    if (activeTab === 'youtube') {
+      return videos && videos.length > 0 ? (
+        <VideoGrid videos={videos} />
+      ) : (
+        <EmptyState message="Nenhum vídeo do YouTube disponível" />
+      );
+    }
+    return <Tiktok />;
+  }, [activeTab, videos]);
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <Head>
-        <title>YouTube Showcase</title>
-        <meta name="description" content="Showcase of YouTube videos" />
+        <title>Social Media Showcase</title>
+        <meta name="description" content="Showcase of social media content" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -105,19 +133,25 @@ const Home: React.FC<HomeProps> = ({ videos }) => {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1, duration: 0.5 }}
-            className="text-left text-3xl font-bold tracking-tighter sm:text-3xl text-orange-400"
+            className="text-left text-3xl font-bold tracking-tighter sm:text-3xl"
           >
-            <strong className="text-red-600"><Link href="https://youtube.com" target="_blank"  className="relative text-red-600 font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-red-500 after:w-0 after:transition-all after:duration-[1000ms] hover:after:w-full">Youtube</Link></strong>
+            <span
+              className="relative text-orange-400 font-semibold 
+                hover:after:w-full"
+            >
+              Social Media
+            </span>
             <br />
-            Showcases
+            <span className="text-orange-400">Showcases</span>
           </motion.h1>
-          <SocialMediaButtons />
+
+          <SocialMediaButtons
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {videos.map((video) => (
-            <VideoCard key={video.id} video={video} />
-          ))}
-        </div>
+
+        {content}
       </main>
       <Aside />
     </div>
@@ -125,11 +159,26 @@ const Home: React.FC<HomeProps> = ({ videos }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {
-      videos: showcaseData.videos,
-    },
-  };
+  try {
+    if (!showcaseData?.videos?.length) {
+      throw new Error('No videos found');
+    }
+
+    return {
+      props: {
+        videos: showcaseData.videos,
+      },
+      revalidate: 3600, // Revalidate every hour
+    };
+  } catch (error) {
+    console.error('Error loading videos:', error);
+    return {
+      props: {
+        videos: [],
+      },
+      revalidate: 60, // Retry sooner if there was an error
+    };
+  }
 };
 
 export default Home;

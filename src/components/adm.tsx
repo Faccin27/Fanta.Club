@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { Gavel, X, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface AdmComponentProps {
   LogedUser: User | null;
@@ -19,6 +20,11 @@ interface User {
   isActive: boolean;
 }
 
+interface MeProps {
+  user: User | null;
+}
+
+
 interface Coupon {
   id: number;
   name: string;
@@ -26,6 +32,16 @@ interface Coupon {
   createdAt: string;
   expiryDate: string;
   createdById: number;
+}
+
+interface Order {
+  id: number;
+  name: string;
+  price: number;
+  expiration: string;
+  createdAt: string;
+  userId: number;
+  expirationDate: string;
 }
 
 const getRoleStyles = (role: string) => {
@@ -41,12 +57,47 @@ const getRoleStyles = (role: string) => {
   }
 };
 
-export default function AdmComponent({ LogedUser }: AdmComponentProps){
+export default function AdmComponent({ LogedUser }: AdmComponentProps,{ user }: MeProps ){
   const [users, setUsers] = useState<User[]>([]);
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const rota = useRouter()
+
+
+  // User Fetch /////////////////////////
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (user) {
+        if (user.role != "FANTA" || "Moderator"){
+          rota.back();
+        }
+        try {
+          const response = await fetch(
+            `http://localhost:3535/users/orders/${user.id}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch orders");
+          }
+          const data = await response.json();
+          setOrders(data);
+        } catch (error) {
+          console.error("Error fetching orders:", error);
+        }
+      }
+    };
+    fetchOrders();
+    console.log(orders);
+  }, []);
+/////////////////////////////////////////
+
+
+
+
+  // Users Fetch /////////////////////////
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -77,6 +128,7 @@ export default function AdmComponent({ LogedUser }: AdmComponentProps){
 
     fetchData();
   }, []);
+  ////////////////////////////
 
   const itensPerPage: number = 7;
   const [userPage, setUserPage] = useState<number>(1);

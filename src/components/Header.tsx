@@ -27,6 +27,7 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const languageButtonRef = useRef<HTMLButtonElement>(null);
   const userButtonRef = useRef<HTMLButtonElement>(null);
 
+
   const pathName = usePathname();
 
   const toggleLanguageOptions = () => {
@@ -46,6 +47,8 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
   };
+
+  
 
   const handleLogout = useCallback(() => {
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -187,6 +190,15 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
                     >
                       Logout
                     </button>
+                    {user.role === "FANTA" && "Moderator" ? (
+                    <Link
+                    href="/admin"
+                    className="block px-4 py-2 hover:bg-orange-500"
+                  >
+                    Adm Page
+                  </Link>
+                    ): null}
+
                   </motion.div>
                 )}
               </AnimatePresence>

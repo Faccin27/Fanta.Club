@@ -90,7 +90,6 @@ export default function About() {
           </Link>
         ))}
       </div>
-
       <h2 className="text-2xl font-semibold mb-4">Why fanta.club Kicks Ass</h2>
       <div className="mb-8">
         {faqItems.map((item, index) => (
@@ -115,9 +114,9 @@ export default function About() {
               </motion.div>
             )}
           </div>
+          
         ))}
       </div>
-
       <div className="text-center mb-8">
         <button 
           onClick={() => setShowSecret(!showSecret)}
@@ -135,7 +134,7 @@ export default function About() {
             Psst... Use code "FANTACHEATS" for a sick 20% discount on your first purchase! 🎉
           </motion.p>
         )}
-      </div>
+        </div>
 
       <div className="text-center">
         <h2 className="text-2xl font-semibold mb-4">Ready to Crush Your Opponents?</h2>
@@ -143,6 +142,7 @@ export default function About() {
           Join fanta.club now!
         </button>
       </div>
-    </div>
-  )
-}
+      </div>
+      
+    )
+  }
