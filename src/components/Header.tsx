@@ -25,12 +25,21 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
-  const [BanModal, setIsopenBanModal] = useState<boolean>(false)
+  const [BanModal, setIsopenBanModal] = useState<boolean>(false);
+  const [isInPortugese, setIsInPortugese] = useState<boolean>(false);
   const userButtonRef = useRef<HTMLButtonElement>(null);
 
 
   const pathName = usePathname();
 
+
+  const handleChangeLangBr = () =>{
+    setIsInPortugese(true)
+  }
+  const handleChangeLangEn = () =>{
+    setIsInPortugese(false)
+  }
+  
 
   const toggleLanguageOptions = () => {
     setShowLanguageOptions((prev) => !prev);
@@ -123,7 +132,7 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
               className="flex items-center hover:text-orange-400"
               onClick={toggleLanguageOptions}
             >
-              EN <ChevronDown className="ml-1 h-4 w-4" />
+              Ln <ChevronDown className="ml-1 h-4 w-4" />
             </button>
             <AnimatePresence>
               {showLanguageOptions && (
@@ -138,12 +147,18 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
                     minWidth: languageButtonRef.current?.offsetWidth,
                   }}
                 >
-                  <Link
-                    href="#"
+                  <button
+                  onClick={handleChangeLangBr}
                     className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap"
                   >
                     pt-BR
-                  </Link>
+                  </button>
+                  <button
+                  onClick={handleChangeLangEn}
+                    className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap w-full"
+                  >
+                    EN
+                  </button>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -182,9 +197,9 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
                     {user.role === "FANTA" || user.role == "Moderator" ? (
                     <Link
                     href="/admin"
-                    className="block px-4 py-2 hover:bg-orange-500"
+                    className={`block px-4 py-2 hover:bg-orange-500 ${pathName == "/admin" ? "text-orange-400 hover:bg-orange-600 animate-pulse": ""}`}
                   >
-                    Adm Page
+                    ADM
                   </Link>
                     ): null}
                     {!user?.isActive ? (
@@ -197,7 +212,7 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
                     ):(
                       <Link
                       href="/me"
-                      className="block px-4 py-2 hover:bg-orange-500"
+                      className={`block px-4 py-2 hover:bg-orange-500 ${pathName == "/me" ? "text-orange-400 hover:bg-orange-600 animate-pulse": ""}`}
                       >
                       Profile
                       </Link>

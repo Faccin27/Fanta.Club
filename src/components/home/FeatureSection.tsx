@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import { motion } from "framer-motion";
+
 
 const getColor = (color: string) => {
   switch (color) {
@@ -19,21 +20,21 @@ const FeatureSection: React.FC = () => {
     {
       title: "Fanta pro",
       description:
-        "A elite dos cheats, para voce usuario que quer bater em todo radiante sem se preocupar em ter a minima habilidade necessaria. Agora voce consegue.",
+       "The elite of cheats, for you, the user who wants to dominate everyone in Radiant without worrying about having the slightest necessary skill. Now you can.",
       videoUrl: "/videos/show.mp4",
       accentColor: "orange",
     },
     {
       title: "Fanta light",
       description:
-        "Para voce, usuario que quer aperfeiçoar as suas habilidades, tendo consistencia e liderança em suas partidas, fanta light suprira suas necessidades.",
+        "For you, the user who wants to refine your skills, achieving consistency and leadership in your matches, Fanta Light will meet your needs.",
       videoUrl: "/videos/show.mp4",
       accentColor: "purple",
     },
     {
       title: "Fanta unban",
       description:
-        "Foi de vasco? A fanta resolve, nosso spoofer remove o banimento de seu valorant e quaisquer outros jogos, facil rapido e funcional.",
+        "Lost your account? Fanta has the solution. Our spoofer removes the ban from your Valorant and any other games, easy, quick, and functional.",
       videoUrl: "/videos/show.mp4",
       accentColor: "green",
     },

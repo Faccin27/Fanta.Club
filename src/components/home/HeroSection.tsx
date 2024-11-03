@@ -1,12 +1,22 @@
-import React from "react";
+import React, {useState} from "react";
 import ArrowWIcon from "@/assets/icons/arrow-w.svg";
 import cursorImage from "@/assets/images/cursor.png";
 import messageImage from "@/assets/images/message.png";
 import Image from "next/image";
 import { motion} from "framer-motion";
+import { useTranslation } from 'react-i18next';
+import '@/lib/i18n'; 
 
-
+  
 const Hero: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
+
+  const handleChangeLanguage = () => {
+      const newLang = currentLang === "en" ? "pt" : "en";
+      i18n.changeLanguage(newLang);
+      setCurrentLang(newLang);
+  };
     return (
       <main className="flex justify-center items-center">
         <section className="relative overflow-hidden bg-zinc-900 py-[72px] text-white sm:py-24 w-full">
@@ -26,7 +36,7 @@ const Hero: React.FC = () => {
                     alt="Arrow"
                     width={20}
                     height={20}
-                    className="invert"
+                    className="invert mix-w-full"
                   />
                 </span>
               </a>
@@ -68,8 +78,7 @@ const Hero: React.FC = () => {
             </div>
             <div className="flex justify-center w-full">
               <p className="mt-8 max-w-md text-center text-xl text-orange-200">
-                Bem-vindo ao nosso site de cheats! Entre com suas credenciais para
-                acessar conteúdos exclusivos. Divirta-se e jogue com inteligência!
+               {t('inicial')}      
               </p>
             </div>
             <div className="mt-8 flex justify-center">

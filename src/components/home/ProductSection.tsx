@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef,useState } from "react";
 import appScreen from "@/assets/images/app-screen.png";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -23,12 +23,12 @@ const ProductShowcase: React.FC = () => {
           </h2>
           <div className="mt-5 max-w-xl text-center">
             <p className="text-xl text-white/70">
-              Nosso melhor e mais promissor produto.{" "}
+            Our best and most promising product. Fanta PRO is the solution for you, the player who wants to crush everyone in Radiant with ease.
+              {" "}
               <span className="text-orange-500 text-2xl font-bold">
                 Fanta PRO
-              </span>{" "}
-              a solução para voce, o pratinha que quer amassar todo mundo no
-              radiante sem dificuldade alguma.
+              </span>{", "}
+              the solution for you, the silver-ranked player who wants to crush everyone in Radiant with no difficulty.
             </p>
           </div>
         </div>
