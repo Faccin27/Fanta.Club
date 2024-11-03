@@ -24,7 +24,6 @@ interface MeProps {
   user: User | null;
 }
 
-
 interface Coupon {
   id: number;
   name: string;
@@ -57,7 +56,10 @@ const getRoleStyles = (role: string) => {
   }
 };
 
-export default function AdmComponent({ LogedUser }: AdmComponentProps,{ user }: MeProps ){
+export default function AdmComponent(
+  { LogedUser }: AdmComponentProps,
+  { user }: MeProps
+) {
   const [users, setUsers] = useState<User[]>([]);
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [loading, setLoading] = useState(true);
@@ -65,14 +67,13 @@ export default function AdmComponent({ LogedUser }: AdmComponentProps,{ user }: 
 
   const [orders, setOrders] = useState<Order[]>([]);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
-  const rota = useRouter()
-
+  const rota = useRouter();
 
   // User Fetch /////////////////////////
   useEffect(() => {
     const fetchOrders = async () => {
       if (user) {
-        if (user.role != "FANTA" || "Moderator"){
+        if (user.role != "FANTA" || "Moderator") {
           rota.back();
         }
         try {
@@ -92,10 +93,7 @@ export default function AdmComponent({ LogedUser }: AdmComponentProps,{ user }: 
     fetchOrders();
     console.log(orders);
   }, []);
-/////////////////////////////////////////
-
-
-
+  /////////////////////////////////////////
 
   // Users Fetch /////////////////////////
   useEffect(() => {
@@ -209,7 +207,7 @@ export default function AdmComponent({ LogedUser }: AdmComponentProps,{ user }: 
         },
         body: JSON.stringify({
           ...newCoupon,
-          createdById: LogedUser != null ? LogedUser.id : 'n logado',
+          createdById: LogedUser != null ? LogedUser.id : "n logado",
           createdAt: new Date().toISOString(),
         }),
       });
@@ -242,6 +240,37 @@ export default function AdmComponent({ LogedUser }: AdmComponentProps,{ user }: 
     } catch (err) {
       console.error("Error deleting coupon:", err);
       alert("Failed to delete coupon");
+    }
+  };
+
+  const handleToggleUserStatus = async (userId: number) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3535/users/toggle-status/${userId}`,
+        {
+          method: "PATCH",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to toggle user status");
+      }
+
+      // Atualiza a lista de usuários com o novo status
+      setUsers(
+        users.map((user) => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              isActive: !user.isActive,
+            };
+          }
+          return user;
+        })
+      );
+    } catch (error) {
+      console.error("Error toggling user status:", error);
+      alert("Failed to toggle user status");
     }
   };
 
@@ -326,9 +355,16 @@ export default function AdmComponent({ LogedUser }: AdmComponentProps,{ user }: 
                     </span>
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
-                    <button className="bg-red-600 text-white font-medium px-3 py-1 rounded hover:bg-red-700 transition-colors flex items-center">
+                    <button
+                      onClick={() => handleToggleUserStatus(userData.id)}
+                      className={`${
+                        userData.isActive
+                          ? "bg-red-600 hover:bg-red-700 text-white"
+                          : "bg-green-600 hover:bg-green-700 text-white"
+                      } text-white font-medium px-3 py-[6px] rounded hover:bg-red-700 transition-colors flex items-center`}
+                    >
                       <Gavel size={22} className="mr-2" />
-                      Banir
+                      {userData.isActive ? "Banir" : "Unban"}
                     </button>
                   </td>
                 </tr>
