@@ -51,7 +51,7 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   }, []);
 
   return (
-    <header className="bg-zinc-900 p-4 border-b border-orange-600">
+    <header className="bg-zinc-900 p-4 border-b border-orange-600 fixed z-50 w-full">
       <div className="container mx-auto flex justify-between items-center">
         <Image
           src={Logo}

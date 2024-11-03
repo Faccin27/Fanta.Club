@@ -19,6 +19,10 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={`${inter.className} min-h-screen`}>
         <ClientAuthWrapper>
+          <br />
+          <br />
+          <br />
+          <br />
           {children}
         </ClientAuthWrapper>
       </body>
