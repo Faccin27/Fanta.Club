@@ -10,6 +10,7 @@ import LoginModal from "@/components/LoginModal";
 import { User } from "@/utils/auth";
 import pfp from "@/assets/images/pfp.png";
 import { usePathname } from "next/navigation";
+import Scroll from "./scroll-bar/scroll";
 
 interface HeaderProps {
   isLoggedIn: boolean;
@@ -20,10 +21,6 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [clickMain, setClick] = useState(false);
-  const [clickForum, setClickForum] = useState(false);
-  const [clickShowcases, setClickShowcases] = useState(false);
-  const [clickAbout, setClickAbout] = useState(false);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
   const userButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -100,15 +97,16 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
             href="/about"
             className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-400 active:text-orange-400 transition-colors duration-200 ${
               pathName == "/about"
-                ? "text-orange-400 hover:text-orange-600 animate-pulse"
-                : "text-white/70"
+              ? "text-orange-400 hover:text-orange-600 animate-pulse"
+              : "text-white/70"
             }`}
-          >
+            >
             About
           </Link>
         </nav>
         <div className="relative flex items-center space-x-4 text-white/70">
           <div className="relative">
+            
             <button
               ref={languageButtonRef}
               className="flex items-center hover:text-orange-400"
@@ -215,6 +213,9 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
         </div>
       </div>
       <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
+      <div>
+      <Scroll/>
+      </div>
     </header>
   );
 }
