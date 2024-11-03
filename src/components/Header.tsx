@@ -11,21 +11,26 @@ import { User } from "@/utils/auth";
 import pfp from "@/assets/images/pfp.png";
 import { usePathname } from "next/navigation";
 import Scroll from "./scroll-bar/scroll";
-
+import { FaDiscord } from "react-icons/fa";
 interface HeaderProps {
   isLoggedIn: boolean;
-  user: User | null;
+  user: 
+  User | null;
 }
+
+
 
 export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
+  const [BanModal, setIsopenBanModal] = useState<boolean>(false)
   const userButtonRef = useRef<HTMLButtonElement>(null);
 
 
   const pathName = usePathname();
+
 
   const toggleLanguageOptions = () => {
     setShowLanguageOptions((prev) => !prev);
@@ -44,6 +49,12 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
   };
+  const OpenbanModal = () => {
+    setIsopenBanModal(true)
+  }
+  const ClosebanModal = () => {
+    setIsopenBanModal(false)
+  }
 
   
 
@@ -158,37 +169,17 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
               <AnimatePresence>
                 {showUserOptions && (
                   <motion.div
-                    className="absolute right-0 mt-2 bg-zinc-800 text-white border border-gray-600 rounded shadow-lg z-50"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    style={{
-                      width: userButtonRef.current?.offsetWidth,
-                    }}
+                  className="absolute right-0 mt-2 bg-zinc-800 text-white border border-gray-600 rounded shadow-lg z-50"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  style={{
+                    width: userButtonRef.current?.offsetWidth,
+                  }}
                   >
-                    {user.role === "FANTA" && "Moderator" ? (
-                      <Link
-                        href="/admin"
-                        className="block px-4 py-2 hover:bg-orange-500"
-                      >
-                        Admin
-                      </Link>
-                    ) : null}
-                    <Link
-                      href="/me"
-                      className="block px-4 py-2 hover:bg-orange-500"
-                    >
-                      Profile
-                    </Link>
-
-                    <button
-                      onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 hover:bg-orange-500"
-                    >
-                      Logout
-                    </button>
-                    {user.role === "FANTA" && "Moderator" ? (
+                    
+                    {user.role === "FANTA" || user.role == "Moderator" ? (
                     <Link
                     href="/admin"
                     className="block px-4 py-2 hover:bg-orange-500"
@@ -196,26 +187,122 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
                     Adm Page
                   </Link>
                     ): null}
+                    {!user?.isActive ? (
+                              <p
+                              onClick={()=>OpenbanModal()}
+                              className="block px-4 py-2 hover:bg-orange-500 cursor-pointer"
+                              >
+                              Profile
+                              </p>
+                    ):(
+                      <Link
+                      href="/me"
+                      className="block px-4 py-2 hover:bg-orange-500"
+                      >
+                      Profile
+                      </Link>
+                    )}
+                    <button
+                      onClick={handleLogout}
+                      className="block w-full text-left px-4 py-2 hover:bg-orange-500"
+                    >
+                      Logout
+                    </button>
 
                   </motion.div>
                 )}
               </AnimatePresence>
+              <div>
+                {BanModal && <BanModalFunction closeModal={ClosebanModal}/>}
+              </div>
             </div>
           ) : (
-            <Link
-              href="#"
-              onClick={openLoginModal}
-              className="px-4 py-2 bg-orange-500 rounded hover:bg-orange-400 text-white"
-            >
-              Login
-            </Link>
-          )}
+              (<Link
+            href="#"
+            onClick={openLoginModal}
+            className="px-4 py-2 bg-orange-500 rounded hover:bg-orange-400 text-white"
+          >
+            Login
+          </Link>))}
         </div>
       </div>
       <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
+      <div>
+      </div>
       <div>
       <Scroll/>
       </div>
     </header>
   );
+}
+
+interface ModalBan{
+  closeModal: () => void
+}
+
+function BanModalFunction({closeModal}:ModalBan) {
+  const [BanModal, setIsopenBanModal] = useState<boolean>(false)
+  return(  
+      <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 z-50 w-full"
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ type: "spring", damping: 25, stiffness: 120 }}
+        className="bg-[#121214] text-white max-w-5xl w-full rounded-2xl overflow-hidden flex border border-orange-400"
+      >
+        {/* Left Column */}
+        <div className="relative w-1/2 hidden md:flex md:flex-col">
+          <div className="absolute inset-0 flex flex-col">
+            <div className="p-8">
+              <h2 className="text-3xl font-bold mb-4">
+                Sua conta está <span className="text-orange-400">BANIDA</span>
+              </h2>
+              <p className="text-sm">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Magni inventore tempore cumque labore, libero, voluptatibus 
+                fuga, voluptatem odit tempora facere aliquam unde veritatis 
+                recusandae suscipit. Expedita facere cum veritatis enim.
+              </p>
+            </div>
+            </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="w-full md:w-1/2 p-10 relative">
+          <button
+            onClick={closeModal}
+            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+          >
+            <div>
+
+               <p className="text-2xl">X</p>
+            </div>
+          </button>
+            <motion.div
+              initial={{ x: 20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -20, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <h3 className="text-3xl font-bold mb-8">Acesse nosso <strong className="text-orange-400">DISCORD</strong> para entender o motivo</h3>
+      </motion.div>
+          <div className="mt-10">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full py-3 bg-[#1A1A1C] text-white border border-gray-700 rounded-lg hover:bg-[#2A2A2C] hover:text-orange-300 transition-colors flex items-center justify-center"
+            >
+              <FaDiscord className="mr-2 h-5 w-5" /> Acesse nosso Discord
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
 }

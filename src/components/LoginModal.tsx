@@ -178,7 +178,7 @@ export default function EnhancedLoginModal({
                   {!isRegistering && (
                     <a
                       href="#"
-                      className="absolute right-0 top-0 text-xs text-orange-400 hover:underline"
+                      className="absolute right-0 top-14 text-xs text-orange-400 hover:underline"
                     >
                       Esqueceu sua senha?
                     </a>

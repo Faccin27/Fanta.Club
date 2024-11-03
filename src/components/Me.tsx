@@ -48,6 +48,19 @@ interface Product {
   link: string;
 }
 
+const getRoleStyles = (role: string) => {
+  switch (role) {
+    case "FANTA":
+      return "font-bold animate-pulse bg-gradient-to-r from-red-500 via-yellow-500 to-orange-500 text-transparent bg-clip-text";
+    case "Moderator":
+      return "text-purple-400 font-bold";
+    case "Premium":
+      return "text-orange-400 font-bold";
+    default:
+      return "text-zinc-400 font-bold";
+  }
+};
+
 interface MeProps {
   user: User | null;
 }
@@ -129,6 +142,7 @@ export default function Component({ user }: MeProps) {
               <h1 className="text-3xl font-bold text-orange-400">
                 {user?.name}
               </h1>
+              <br />
               <button className="ml-2 p-1 rounded-full hover:text-orange-400 transition-colors">
                 <Edit className="mr-2 h-4 w-4" />
                 <span className="sr-only">Edit Profile</span>
@@ -137,6 +151,9 @@ export default function Component({ user }: MeProps) {
             <div className="mt-2 flex items-center justify-center text-zinc-400">
               <Mail className="mr-2 h-4 w-4" />
               <span>{user?.email || "email@example.com"}</span>
+            </div>
+            <div className="mt-2 flex items-center justify-center">
+            <span className={user?.role ? getRoleStyles(user.role):""}>{user?.role || "N/A"}</span>
             </div>
             <button className="mt-8 bg-orange-400 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition-colors flex items-center justify-center mx-auto">
               <Download className="inline mr-1 h-4 w-4" /> Download Loader
