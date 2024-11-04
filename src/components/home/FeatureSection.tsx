@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 
 const getColor = (color: string) => {
@@ -16,25 +17,27 @@ const getColor = (color: string) => {
 }
 
 const FeatureSection: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
   const features = [
     {
       title: "Fanta pro",
       description:
-       "The elite of cheats, for you, the user who wants to dominate everyone in Radiant without worrying about having the slightest necessary skill. Now you can.",
+       t("translation.fantaPro_v3"),
       videoUrl: "/videos/show.mp4",
       accentColor: "orange",
     },
     {
       title: "Fanta light",
       description:
-        "For you, the user who wants to refine your skills, achieving consistency and leadership in your matches, Fanta Light will meet your needs.",
+      t("translation.fanta_light"),
       videoUrl: "/videos/show.mp4",
       accentColor: "purple",
     },
     {
       title: "Fanta unban",
       description:
-        "Lost your account? Fanta has the solution. Our spoofer removes the ban from your Valorant and any other games, easy, quick, and functional.",
+      t("translation.fanta_unban"),
       videoUrl: "/videos/show.mp4",
       accentColor: "green",
     },

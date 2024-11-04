@@ -1,6 +1,11 @@
 {
-    "translation": {
-        "inicial": "Welcome to our cheats website! Log in with your credentials to access exclusive content. Have fun and play smart!",
-        "fantaPro_v1": "Our best and most promising product. Fanta PRO is the solution for you, the player who wants to crush everyone in Radiant with ease."
+    "translation":{
+        "inicial":"Welcome to our cheats website! Log in with your credentials to access exclusive content. Have fun and play smart!",
+        "fantaPro_v1":"Our best and most promising product. is ",
+        "fantaPro_v2":"the solution for you, the silver-ranked player who wants to crush everyone in Radiant with no difficulty.",
+        "fantaPro_v3":"The elite of cheats, for you, the user who wants to dominate everyone in Radiant without worrying about having the slightest necessary skill. Now you can.",
+        "fanta_light": "For you, the user who wants to refine your skills, achieving consistency and leadership in your matches, Fanta Light will meet your needs.",
+        "fanta_unban":"Lost your account? Fanta has the solution. Our spoofer removes the ban from your Valorant and any other games, easy, quick, and functional."
+        
     }
 }

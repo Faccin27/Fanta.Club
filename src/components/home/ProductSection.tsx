@@ -2,11 +2,20 @@ import React, { useRef,useState } from "react";
 import appScreen from "@/assets/images/app-screen.png";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 
 const ProductShowcase: React.FC = () => {
     const refImage = useRef<HTMLImageElement>(null);
   
+  const { t, i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
+
+  const handleChangeLanguage = () => {
+      const newLang = currentLang === "en" ? "pt" : "en";
+      i18n.changeLanguage(newLang);
+      setCurrentLang(newLang);
+  };
     const { scrollYProgress } = useScroll({
       target: refImage,
       offset: ["start end", "end end"],
@@ -23,12 +32,12 @@ const ProductShowcase: React.FC = () => {
           </h2>
           <div className="mt-5 max-w-xl text-center">
             <p className="text-xl text-white/70">
-            Our best and most promising product. Fanta PRO is the solution for you, the player who wants to crush everyone in Radiant with ease.
+           {t("translation.fantaPro_v1")}
               {" "}
               <span className="text-orange-500 text-2xl font-bold">
                 Fanta PRO
               </span>{", "}
-              the solution for you, the silver-ranked player who wants to crush everyone in Radiant with no difficulty.
+              {t("translation.fantaPro_v2")}
             </p>
           </div>
         </div>

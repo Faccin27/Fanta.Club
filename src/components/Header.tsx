@@ -12,6 +12,7 @@ import pfp from "@/assets/images/pfp.png";
 import { usePathname } from "next/navigation";
 import Scroll from "./scroll-bar/scroll";
 import { FaDiscord } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 interface HeaderProps {
   isLoggedIn: boolean;
   user: 
@@ -26,19 +27,25 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
   const [BanModal, setIsopenBanModal] = useState<boolean>(false);
-  const [isInPortugese, setIsInPortugese] = useState<boolean>(false);
+  const { t, i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
+  
+  
   const userButtonRef = useRef<HTMLButtonElement>(null);
-
+  
 
   const pathName = usePathname();
 
-
-  const handleChangeLangBr = () =>{
-    setIsInPortugese(true)
-  }
-  const handleChangeLangEn = () =>{
-    setIsInPortugese(false)
-  }
+  const handleChangeLanguagePtBr = () => {
+    const newLang = currentLang === "en" ? "pt" : "pt";
+    i18n.changeLanguage(newLang);
+    setCurrentLang(newLang);
+};
+  const handleChangeLanguageEn = () => {
+    const newLang = currentLang === "pt" ? "en" : "en";
+    i18n.changeLanguage(newLang);
+    setCurrentLang(newLang);
+};
   
 
   const toggleLanguageOptions = () => {
@@ -148,16 +155,16 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
                   }}
                 >
                   <button
-                  onClick={handleChangeLangBr}
+                  onClick={handleChangeLanguagePtBr}
                     className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap"
                   >
                     pt-BR
                   </button>
                   <button
-                  onClick={handleChangeLangEn}
+                  onClick={handleChangeLanguageEn}
                     className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap w-full"
                   >
-                    EN
+                    En
                   </button>
                 </motion.div>
               )}

@@ -78,7 +78,7 @@ const Hero: React.FC = () => {
             </div>
             <div className="flex justify-center w-full">
               <p className="mt-8 max-w-md text-center text-xl text-orange-200">
-               {t('inicial')}      
+               {t('translation.inicial')}      
               </p>
             </div>
             <div className="mt-8 flex justify-center">
