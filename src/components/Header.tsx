@@ -27,14 +27,12 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
   const [BanModal, setIsopenBanModal] = useState<boolean>(false);
-
-  
   const { t, i18n } = useTranslation();
   const [currentLang, setCurrentLang] = useState(i18n.language);
   
   
   const userButtonRef = useRef<HTMLButtonElement>(null);
-
+  
 
   const pathName = usePathname();
 
@@ -42,13 +40,11 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
     const newLang = currentLang === "en" ? "pt" : "pt";
     i18n.changeLanguage(newLang);
     setCurrentLang(newLang);
-    localStorage.setItem("USER_LANG", newLang)
 };
   const handleChangeLanguageEn = () => {
     const newLang = currentLang === "pt" ? "en" : "en";
     i18n.changeLanguage(newLang);
     setCurrentLang(newLang);
-    localStorage.setItem("USER_LANG", newLang)
 };
   
 
@@ -69,6 +65,12 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
   };
+  const OpenbanModal = () => {
+    setIsopenBanModal(true)
+  }
+  const ClosebanModal = () => {
+    setIsopenBanModal(false)
+  }
 
   
 
@@ -137,7 +139,11 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
               className="flex items-center hover:text-orange-400"
               onClick={toggleLanguageOptions}
             >
-              {currentLang}<ChevronDown className="ml-1 h-4 w-4" />
+              <p className={`${currentLang == "pt" ? "text-orange-400 hover:text-orange-600":"text-orange-400 hover:text-orange-600"}`}>
+
+              {currentLang} 
+              </p>
+              <ChevronDown className="ml-1 h-4 w-4" />
             </button>
             <AnimatePresence>
               {showLanguageOptions && (
@@ -207,35 +213,18 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
                     ADM
                   </Link>
                     ): null}
-                    {!user?.isActive ? (
-                              <p
-                              onClick={()=>OpenbanModal()}
-                              className="block px-4 py-2 hover:bg-orange-500 cursor-pointer"
-                              >
-                              Profile
-                              </p>
-                    ):(
-                      <Link
+                    <Link
                       href="/me"
                       className={`block px-4 py-2 hover:bg-orange-500 ${pathName == "/me" ? "text-orange-400 hover:bg-orange-600 animate-pulse": ""}`}
                       >
                       Profile
-                    </Link>
-
+                      </Link>
                     <button
                       onClick={handleLogout}
                       className="block w-full text-left px-4 py-2 hover:bg-orange-500"
                     >
                       Logout
                     </button>
-                    {user.role === "FANTA" && "Moderator" ? (
-                    <Link
-                    href="/admin"
-                    className="block px-4 py-2 hover:bg-orange-500"
-                  >
-                    Adm Page
-                  </Link>
-                    ): null}
 
                   </motion.div>
                 )}
