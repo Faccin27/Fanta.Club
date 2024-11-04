@@ -46,6 +46,7 @@ interface Product {
   image: any;
   price: number;
   link: string;
+  downloadLink: string;
 }
 
 const getRoleStyles = (role: string) => {
@@ -66,9 +67,27 @@ interface MeProps {
 }
 
 const products: Product[] = [
-  { name: "FANTA_UNBAN", image: B2, price: 50, link: "fantaunban" },
-  { name: "FANTA_PRO", image: B1, price: 60, link: "fantapro" },
-  { name: "FANTA_LIGHT", image: B2, price: 25, link: "fantalight" },
+  { 
+    name: "FANTA_UNBAN", 
+    image: B2, 
+    price: 50, 
+    link: "fantaunban",
+    downloadLink: "https://easyupload.io/yvoix2"
+  },
+  { 
+    name: "FANTA_PRO", 
+    image: B1, 
+    price: 60, 
+    link: "fantapro",
+    downloadLink: "https://easyupload.io/x1bb47"
+  },  
+  { 
+    name: "FANTA_LIGHT", 
+    image: B2, 
+    price: 25, 
+    link: "fantalight",
+    downloadLink: "https://easyupload.io/x1bb47"
+  },
 ];
 
 export default function Component({ user }: MeProps) {
@@ -93,8 +112,7 @@ export default function Component({ user }: MeProps) {
       }
     };
     fetchOrders();
-    console.log(orders);
-  }, []);
+  }, [user]);
 
   const isProductActive = (productName: string) => {
     const order = orders.find((order) => order.name === productName);
@@ -121,6 +139,10 @@ export default function Component({ user }: MeProps) {
       return diffDays;
     }
     return null;
+  };
+
+  const handleDownload = (downloadLink: string) => {
+    window.open(downloadLink)  ;
   };
 
   return (
@@ -177,7 +199,6 @@ export default function Component({ user }: MeProps) {
               <ShieldCheck className="inline mr-1 h-4 w-4" /> Enable 2FA
             </Link>
           </div>
-          {/* SEÇÃO DO BANNER DO PRODUTO */}
           <div className="mt-16 space-y-5 pb-32">
             {products.map((product, index) => {
               const isActive = isProductActive(product.name);
@@ -220,7 +241,13 @@ export default function Component({ user }: MeProps) {
                           </span>
                         </p>
                         <div className="absolute bottom-3 left-3 flex space-x-2">
-                          <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDownload(product.downloadLink);
+                            }}
+                            className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center"
+                          >
                             <Download className="mr-1 h-4 w-4" /> Download
                           </button>
                           <button className="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded transition-colors flex items-center">

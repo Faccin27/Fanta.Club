@@ -34,7 +34,7 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   
   
   const userButtonRef = useRef<HTMLButtonElement>(null);
-  
+
 
   const pathName = usePathname();
 
@@ -69,12 +69,6 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
   };
-  const OpenbanModal = () => {
-    setIsopenBanModal(true)
-  }
-  const ClosebanModal = () => {
-    setIsopenBanModal(false)
-  }
 
   
 
@@ -226,14 +220,22 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
                       className={`block px-4 py-2 hover:bg-orange-500 ${pathName == "/me" ? "text-orange-400 hover:bg-orange-600 animate-pulse": ""}`}
                       >
                       Profile
-                      </Link>
-                    )}
+                    </Link>
+
                     <button
                       onClick={handleLogout}
                       className="block w-full text-left px-4 py-2 hover:bg-orange-500"
                     >
                       Logout
                     </button>
+                    {user.role === "FANTA" && "Moderator" ? (
+                    <Link
+                    href="/admin"
+                    className="block px-4 py-2 hover:bg-orange-500"
+                  >
+                    Adm Page
+                  </Link>
+                    ): null}
 
                   </motion.div>
                 )}
