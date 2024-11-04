@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ChevronDown, ChevronUp, User } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export default function About() {
   const [showSecret, setShowSecret] = useState(false)
@@ -21,6 +22,9 @@ export default function About() {
     { id: '3', name: 'Lkzin' },
     { id: '1', name: 'Faccin' }
   ]
+
+  const { t, i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
 
   const faqItems = [
     { 
@@ -45,7 +49,7 @@ export default function About() {
         transition={{ duration: 0.5 }}
         className="text-4xl font-bold text-orange-500 mb-6"
       >
-        Welcome to the fanta.club
+        {t("translation.about_title")}
       </motion.h1>
 
       <motion.p 

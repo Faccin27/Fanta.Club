@@ -27,6 +27,8 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
   const [BanModal, setIsopenBanModal] = useState<boolean>(false);
+
+  
   const { t, i18n } = useTranslation();
   const [currentLang, setCurrentLang] = useState(i18n.language);
   
@@ -40,11 +42,13 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
     const newLang = currentLang === "en" ? "pt" : "pt";
     i18n.changeLanguage(newLang);
     setCurrentLang(newLang);
+    localStorage.setItem("USER_LANG", newLang)
 };
   const handleChangeLanguageEn = () => {
     const newLang = currentLang === "pt" ? "en" : "en";
     i18n.changeLanguage(newLang);
     setCurrentLang(newLang);
+    localStorage.setItem("USER_LANG", newLang)
 };
   
 
@@ -139,7 +143,7 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
               className="flex items-center hover:text-orange-400"
               onClick={toggleLanguageOptions}
             >
-              Ln <ChevronDown className="ml-1 h-4 w-4" />
+              {currentLang}<ChevronDown className="ml-1 h-4 w-4" />
             </button>
             <AnimatePresence>
               {showLanguageOptions && (
