@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Bell as AnnouncementsIcon } from "lucide-react";
 import pfp from "@/assets/images/pfp.png";
+import { useTranslation } from "react-i18next";
 import { checkLoginStatus, User as AuthUser } from "@/utils/auth"; // Renomeado para evitar conflito
 
 interface Author {
@@ -72,6 +73,8 @@ export default function Announcements() {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const {t} = useTranslation();
   const router = useRouter();
 
   useEffect(() => {
@@ -117,7 +120,7 @@ export default function Announcements() {
             className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
             onClick={() => router.push("/post")}
           >
-            Postar novo anúncio
+            {t("translation.Post")}
           </button>
         )}
       </div>

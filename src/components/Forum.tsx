@@ -13,25 +13,13 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import Aside from "./Aside";
+import { useTranslation } from "react-i18next";
 interface ForumCategory {
   icon: React.ElementType;
   label: string;
   color: string;
 }
 
-const categories: ForumCategory[] = [
-  { icon: Bell, label: "Announcements", color: "text-yellow-500" },
-  { icon: RefreshCw, label: "Updates", color: "text-blue-500" },
-  { icon: Settings, label: "Configs", color: "text-green-500" },
-  { icon: HelpCircle, label: "Questions", color: "text-purple-500" },
-];
-
-const categoryComponents = {
-  Announcements: AnnouncementsContent,
-  Updates: UpdatesContent,
-  Configs: ConfigsContent,
-  Questions: QuestionsContent,
-};
 
 const ForumCategory: React.FC<ForumCategory & { onClick: () => void }> = ({
   icon: Icon,
@@ -49,7 +37,21 @@ const ForumCategory: React.FC<ForumCategory & { onClick: () => void }> = ({
 );
 
 const ForumPage: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<string>("Announcements");
+const [activeCategory, setActiveCategory] = useState<string>("Announcements");
+const {t} = useTranslation();
+const categories: ForumCategory[] = [
+  { icon: Bell, label: t("translation.Announcements"), color: "text-yellow-500" },
+  { icon: RefreshCw, label: t("translation.Updates"), color: "text-blue-500" },
+  { icon: Settings, label: t("translation.Configs"), color: "text-green-500" },
+  { icon: HelpCircle, label: t("translation.Questions"), color: "text-purple-500" },
+];
+
+const categoryComponents = {
+  Announcements: AnnouncementsContent,
+  Updates: UpdatesContent,
+  Configs: ConfigsContent,
+  Questions: QuestionsContent,
+};
 
 
   return (

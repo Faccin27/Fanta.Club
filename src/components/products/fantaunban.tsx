@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Check, ShoppingCart, Copy, X } from 'lucide-react'
 import img1 from '@/assets/images/app-screen.png'
+import  {useTranslation}  from "react-i18next";
 import img2 from '@/assets/images/logo.png'
 
 interface Plan {
@@ -43,6 +44,8 @@ interface PaymentModalContentProps {
   selectedPlanPrice: number;
   onCopyPix: (text: string) => Promise<void>;
 }
+
+
 
 const plans: Plan[] = [
   { id: 'daily', name: 'Diário', price: 9.99 },

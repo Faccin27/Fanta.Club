@@ -12,7 +12,7 @@ import pfp from "@/assets/images/pfp.png";
 import { usePathname } from "next/navigation";
 import Scroll from "./scroll-bar/scroll";
 import { FaDiscord } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
+import  {useTranslation}  from "react-i18next";
 interface HeaderProps {
   isLoggedIn: boolean;
   user: 
@@ -20,21 +20,21 @@ interface HeaderProps {
 }
 
 
-
 export default function Component({ isLoggedIn, user }: HeaderProps) {
+  const { i18n } = useTranslation();
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
   const [BanModal, setIsopenBanModal] = useState<boolean>(false);
-  const { t, i18n } = useTranslation();
-  const [currentLang, setCurrentLang] = useState(i18n.language);
-  
-  
   const userButtonRef = useRef<HTMLButtonElement>(null);
   
-
   const pathName = usePathname();
+  
+
+  const [currentLang, setCurrentLang] = useState(i18n.language);
+  
+
 
   const handleChangeLanguagePtBr = () => {
     const newLang = currentLang === "en" ? "pt" : "pt";
@@ -46,7 +46,8 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
     i18n.changeLanguage(newLang);
     setCurrentLang(newLang);
 };
-  
+
+
 
   const toggleLanguageOptions = () => {
     setShowLanguageOptions((prev) => !prev);
@@ -160,15 +161,15 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
                 >
                   <button
                   onClick={handleChangeLanguagePtBr}
-                    className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap"
+                    className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap w-full"
                   >
-                    pt-BR
+                    pt
                   </button>
                   <button
                   onClick={handleChangeLanguageEn}
                     className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap w-full"
                   >
-                    En
+                    en
                   </button>
                 </motion.div>
               )}

@@ -7,14 +7,15 @@ import { ChevronDown, ChevronUp, User } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 export default function About() {
+  const { t, i18n } = useTranslation();
   const [showSecret, setShowSecret] = useState(false)
   const [openFaq, setOpenFaq] = useState<string | null>(null)
 
   const timelineEvents = [
-    { year: 2021, event: "Born as 'Fifty aim'" },
-    { year: 2022, event: "Reached 1,000 badass users" },
-    { year: 2023, event: "Expanded to new games" },
-    { year: 2024, event: "Rebranded to fanta.club" },
+    { year: 2021, event: t("translation.history_v1") },
+    { year: 2022, event: t("translation.history_v2") },
+    { year: 2023, event: t("translation.history_v3") },
+    { year: 2024, event: t("translation.history_v4") },
   ]
 
   const teamMembers = [
@@ -23,21 +24,20 @@ export default function About() {
     { id: '1', name: 'Faccin' }
   ]
 
-  const { t, i18n } = useTranslation();
   const [currentLang, setCurrentLang] = useState(i18n.language);
 
   const faqItems = [
     { 
-      question: "Unmatched Performance", 
-      answer: "Our cheats are optimized for speed and efficiency. You'll feel like you're playing with god mode on!" 
+      question: t("translation.questions1"), 
+      answer: t("translation.answer1") 
     },
     { 
-      question: "Stealth Mode", 
-      answer: "We've mastered the art of staying undetected. Cheat with confidence, knowing you're invisible to anti-cheat systems." 
+      question: t("translation.questions2"), 
+      answer: t("translation.answer2") 
     },
     { 
-      question: "Badass Community", 
-      answer: "Join our Discord and be part of a thriving community of elite cheaters. Share exploits, tricks, and dominate together!" 
+      question: t("translation.questions3"), 
+      answer: t("translation.answer3") 
     },
   ]
 
@@ -58,10 +58,10 @@ export default function About() {
         transition={{ delay: 0.2, duration: 0.5 }}
         className="text-xl mb-8"
       >
-        Yo, Valorant cheater! 👋 We're not just another cheat provider - we're your secret weapon in the Valorant battleground. Born from the twisted minds of three hardcore gamers in 2021, we're on a mission to turn your gameplay into pure domination.
+        {t("translation.about_description")}
       </motion.p>
 
-      <h2 className="text-2xl font-semibold mb-4">Our Badass Journey</h2>
+      <h2 className="text-2xl font-semibold mb-4">{t("translation.badass")}</h2>
       <div className="space-y-4 mb-8">
         {timelineEvents.map((event, index) => (
           <motion.div 
@@ -78,7 +78,7 @@ export default function About() {
         ))}
       </div>
 
-      <h2 className="text-2xl font-semibold mb-4">Meet the Cheat Masterminds</h2>
+      <h2 className="text-2xl font-semibold mb-4">{t("translation.master_minds")}</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {teamMembers.map((member) => (
           <Link 
@@ -94,7 +94,7 @@ export default function About() {
           </Link>
         ))}
       </div>
-      <h2 className="text-2xl font-semibold mb-4">Why fanta.club Kicks Ass</h2>
+      <h2 className="text-2xl font-semibold mb-4">{t("translation.why")}</h2>
       <div className="mb-8">
         {faqItems.map((item, index) => (
           <div key={index} className="mb-4">
@@ -127,7 +127,7 @@ export default function About() {
           className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded"
           aria-expanded={showSecret}
         >
-          {showSecret ? "Hide the Secret" : "Reveal the Secret"}
+          {showSecret ? t("translation.hidden") : t("translation.show")}
         </button>
         {showSecret && (
           <motion.p 
@@ -141,9 +141,9 @@ export default function About() {
         </div>
 
       <div className="text-center">
-        <h2 className="text-2xl font-semibold mb-4">Ready to Crush Your Opponents?</h2>
+        <h2 className="text-2xl font-semibold mb-4">{t("translation.oppenents")}</h2>
         <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded text-lg font-bold">
-          Join fanta.club now!
+          {t("translation.join")}
         </button>
       </div>
       </div>
