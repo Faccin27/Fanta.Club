@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { Gavel, X, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 interface AdmComponentProps {
   LogedUser: User | null;
@@ -95,28 +96,24 @@ export default function AdmComponent(
   }, []);
   /////////////////////////////////////////
 
-  // Users Fetch /////////////////////////
+  //// Users Fetch /////////////////////////
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [usersResponse, couponsResponse] = await Promise.all([
+        const [usersResponse] = await Promise.all([
           fetch("http://localhost:3535/users"),
-          fetch("http://localhost:3535/coupons"),
         ]);
 
         if (!usersResponse.ok) {
           throw new Error("Failed to fetch users");
         }
 
-        if (!couponsResponse.ok) {
-          throw new Error("Failed to fetch coupons");
-        }
+
 
         const userData = await usersResponse.json();
-        const couponData = await couponsResponse.json();
 
         setUsers(userData);
-        setCoupons(couponData);
+
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to fetch data");
       } finally {
@@ -129,6 +126,7 @@ export default function AdmComponent(
   ////////////////////////////
 
   const itensPerPage: number = 7;
+  const {t} = useTranslation()
   const [userPage, setUserPage] = useState<number>(1);
   const [couponPage, setCouponPage] = useState<number>(1);
   const totalUserPages = Math.ceil((users?.length || 0) / itensPerPage);
@@ -185,8 +183,8 @@ export default function AdmComponent(
           onClick={() => onPageChange(i)}
           className={`px-3 py-2 rounded-lg transition-colors ${
             currentPage === i
-              ? "bg-orange-500 text-white"
-              : "bg-gray-600 text-zinc-100 hover:bg-orange-600"
+            ? "bg-orange-500 text-white"
+            : "bg-gray-600 text-zinc-100 hover:bg-orange-600"
           }`}
         >
           {i}
@@ -289,7 +287,7 @@ export default function AdmComponent(
       </div>
     );
   }
-
+  
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100">
       <div className="p-8 font-sans">
@@ -299,24 +297,24 @@ export default function AdmComponent(
           transition={{ delay: 0.1, duration: 0.5 }}
           className="text-left text-3xl font-bold tracking-tighter sm:text-3xl text-orange-400"
         >
-          Área de Administração
+          {t("translation.adm")}
         </motion.h1>
       </div>
       <section className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-4 text-orange-400">Usuarios</h2>
+        <h2 className="text-2xl font-bold mb-4 text-orange-400">{t("translation.user")}</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full border-collapse rounded-lg overflow-hidden shadow-xl text-left">
             <thead className="bg-gradient-to-r from-orange-500 via-orange-700 to-orange-400 text-white font-semibold">
               <tr>
                 <th className="px-4 py-2 border-b border-zinc-800">Id</th>
-                <th className="px-4 py-2 border-b border-zinc-800">Nome</th>
+                <th className="px-4 py-2 border-b border-zinc-800">{t("translation.name_admin")}</th>
                 <th className="px-4 py-2 border-b border-zinc-800">Email</th>
-                <th className="px-4 py-2 border-b border-zinc-800">Role</th>
+                <th className="px-4 py-2 border-b border-zinc-800">{t("translation.role")}</th>
                 <th className="px-4 py-2 border-b border-zinc-800">
-                  Registrado em
+                {t("translation.regis")}
                 </th>
                 <th className="px-4 py-2 border-b border-zinc-800">Status</th>
-                <th className="px-4 py-2 border-b border-zinc-800">Ação</th>
+                <th className="px-4 py-2 border-b border-zinc-800">{t("translation.action_admin")}</th>
               </tr>
             </thead>
             <tbody>
@@ -351,7 +349,7 @@ export default function AdmComponent(
                         userData.isActive ? "text-green-400" : "text-red-400"
                       }`}
                     >
-                      {userData.isActive ? "Ativo" : "Inativo"}
+                      {userData.isActive ? t("translation.admin_ativo") : t("translation.admin_nao_ativo")}
                     </span>
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
@@ -364,7 +362,7 @@ export default function AdmComponent(
                       } text-white font-medium px-3 py-[6px] rounded hover:bg-red-700 transition-colors flex items-center`}
                     >
                       <Gavel size={22} className="mr-2" />
-                      {userData.isActive ? "Banir" : "Unban"}
+                      {userData.isActive ? t("translation.ban") : t("translation.unban")}
                     </button>
                   </td>
                 </tr>
@@ -383,20 +381,20 @@ export default function AdmComponent(
       </section>
 
       <section className="container mx-auto px-4 mt-8">
-        <h2 className="text-2xl font-bold mb-4 text-orange-400">Cupons</h2>
+        <h2 className="text-2xl font-bold mb-4 text-orange-400">{t("translation.cupom")}</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full border-collapse rounded-lg overflow-hidden shadow-xl text-left">
             <thead className="bg-gradient-to-r from-orange-500 via-orange-700 to-orange-400 text-white font-semibold">
               <tr>
-                <th className="px-4 py-2 border-b border-zinc-800">Nome</th>
-                <th className="px-4 py-2 border-b border-zinc-800">Desconto</th>
+                <th className="px-4 py-2 border-b border-zinc-800">{t("translation.cupom_name")}</th>
+                <th className="px-4 py-2 border-b border-zinc-800">{t("translation.cupom_discount")}</th>
                 <th className="px-4 py-2 border-b border-zinc-800">
-                  Criado em
+                {t("translation.cupom_created_at")}
                 </th>
                 <th className="px-4 py-2 border-b border-zinc-800">
-                  Expira em
+                {t("translation.cupom_expire_in")}
                 </th>
-                <th className="px-4 py-2 border-b border-zinc-800">Ação</th>
+                <th className="px-4 py-2 border-b border-zinc-800">{t("translation.action")}</th>
               </tr>
             </thead>
             <tbody>

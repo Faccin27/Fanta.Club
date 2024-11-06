@@ -55,7 +55,7 @@ const getRoleStyles = (role: string) => {
 //{loggedUser}:PostProps
 ////////////////////////////////
 
-  export default function Post() {
+  export default function PostConfigs() {
   //Funcionalidades do Quill:
   const toolbarOptions = [
     ["bold", "italic", "underline"], // toggled buttons
@@ -101,7 +101,7 @@ const getRoleStyles = (role: string) => {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="text-left text-3xl font-bold tracking-tighter sm:text-3xl text-orange-400"
         >
-        {t("translation.posts_header")}
+        {t("translation.config_title")}
         </motion.h1>
       </div>
       <main>
@@ -163,23 +163,6 @@ const getRoleStyles = (role: string) => {
                         style={{ minWidth: "auto", minHeight: "auto" }}
                       />
                     </motion.div>
-                    <div className="mb-12">
-                      <h2 className="text-lg font-bold mb-2 block">
-                      {t("translation.posts_type")}
-                      </h2>
-                      <div>
-                        <select
-                          name="Tipo do anúncio"
-                          id="opcoes"
-                          className="rounded-lg bg-zinc-900 px-5 py-3 font-medium text-white transition-colors sm:px-4 sm:py-2"
-                          required
-                        >
-                          <option value={anuncio}>Announcements</option>
-                          <option value={atualizacao}>Updates</option>
-                          <option value={configs}>Configs</option>
-                        </select>
-                      </div>
-                    </div>
                   </div>
                   <motion.button
                     initial={{ opacity: 0, y: -50 }}

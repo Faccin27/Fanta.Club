@@ -70,11 +70,10 @@ interface Order {
 }
 
 export default function Announcements() {
+  const {t} = useTranslation()
   const [user, setUser] = useState<AuthUser | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const {t} = useTranslation();
   const router = useRouter();
 
   useEffect(() => {
@@ -87,6 +86,7 @@ export default function Announcements() {
   }, []);
 
   const canPostAnnouncement = user && (user.role === 'FANTA' || user.role === 'Moderator');
+  const canPostConfig = user && (user.role === "Premium");
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -107,21 +107,23 @@ export default function Announcements() {
     };
     fetchOrders();
   }, [user]);
-
   return (
     <div className="p-4">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <AnnouncementsIcon className="mr-2" />
-          <h1 className="text-2xl font-bold">Anúncios</h1>
+          <h1 className="text-2xl font-bold">{t("translation.anuncios")}</h1>
         </div>
         {canPostAnnouncement && (
+          <div className="flex justify-between gap-4">
+          
           <button
             className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
             onClick={() => router.push("/post")}
           >
             {t("translation.Post")}
           </button>
+          </div>
         )}
       </div>
       <div className="space-y-4">

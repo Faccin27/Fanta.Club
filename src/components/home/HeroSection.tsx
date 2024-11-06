@@ -27,10 +27,10 @@ const Hero: React.FC = () => {
                 className="inline-flex gap-3 rounded-lg border border-orange-300/30 px-2 py-1 hover:bg-orange-900/20 transition-colors"
               >
                 <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-                  Version 2.0 is here
+                  {t("translation.version")}
                 </span>
                 <span className="inline-flex items-center gap-1 text-orange-300">
-                  <span>Read More</span>
+                  <span>{t("translation.more")}</span>
                   <Image
                     src={ArrowWIcon}
                     alt="Arrow"
@@ -83,7 +83,7 @@ const Hero: React.FC = () => {
             </div>
             <div className="mt-8 flex justify-center">
               <button className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors">
-                Get for free
+                {t("translation.free")}
               </button>
             </div>
           </div>

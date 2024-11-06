@@ -2,7 +2,7 @@
 import AnnouncementsContent from "@/components/forum/announcements";
 import QuestionsContent from "@/components/forum/questions";
 import ConfigsContent from "@/components/forum/settings";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import UpdatesContent from "@/components/forum/updates";
 import {
   Bell,
@@ -51,6 +51,10 @@ const categoryComponents = {
   Updates: UpdatesContent,
   Configs: ConfigsContent,
   Questions: QuestionsContent,
+  Anúncios: AnnouncementsContent,
+  Atualizações:UpdatesContent,
+  Configurações:ConfigsContent,
+  Perguntas: QuestionsContent
 };
 
 
@@ -59,11 +63,11 @@ const categoryComponents = {
     className="min-h-screen bg-zinc-950 text-zinc-100">
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-orange-400">Fórum Fanta</h1>
+          <h1 className="text-4xl font-bold text-orange-400">{t("translation.fanta_forum")}</h1>
           <div className="relative">
             <input
               type="text"
-              placeholder="Pesquisar no fórum..."
+              placeholder={t("translation.pesquisar")}
               className="bg-zinc-800 text-zinc-100 pl-10 pr-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
             <Search

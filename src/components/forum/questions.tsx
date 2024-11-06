@@ -1,5 +1,7 @@
 import React from 'react';
 import { HelpCircle as FaqIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { motion } from "framer-motion";
 
 interface Faq {
   id: number;
@@ -41,20 +43,27 @@ const faqs: Faq[] = [
 ];
 
 const Faq: React.FC = () => {
+  const {t} = useTranslation()
   return (
     <div className="p-4">
       <div className="flex items-center mb-6">
         <FaqIcon className="mr-2" />
-        <h1 className="text-2xl font-bold">Perguntas Frequentes</h1>
+        <h1 className="text-2xl font-bold">{t("translation.frequently_asked_questions")}</h1>
       </div>
-      <div className="space-y-4">
+      <motion.div
+      initial={{ opacity: 2, x: 60 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{
+       duration: 0.5,
+       delay: 0.1
+      }} className="space-y-4">
         {faqs.map((faq) => (
           <div key={faq.id} className="bg-zinc-700 shadow rounded-lg p-4">
             <h2 className="text-lg text-orange-500 font-semibold">{faq.question}</h2>
             <p className="text-sm text-gray-300 mt-2">{faq.answer}</p>
           </div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };

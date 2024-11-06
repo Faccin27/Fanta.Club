@@ -36,7 +36,43 @@
         "join":"Join fanta.club now!",
         "daily":"Daily",
         "weekly":"Weekly",
-        "month":"Monthly"
+        "month":"Monthly",
+        "adm":"Administration Area",
+        "user":"User",
+        "cupom":"Coupom",
+        "ban":"Ban",
+        "unban":"Cancel the Ban",
+        "name_admin":"Name",
+        "role":"Role",
+        "regis":"Registraded in",
+        "action_admin":"Action",
+        "admin_ativo":"Active",
+        "admin_nao_ativo":"indicative",
+        "cupom_name":"Name",
+        "cupom_discount":"Discount",
+        "cupom_created_at":"Created at",
+        "cupom_expire_in":"Expires in",
+        "action":"Action",
+        "posts_header":"New Publication",
+        "posts_title":"Title",
+        "posts_content":"Content",
+        "posts_type":"Type",
+        "posts_post":"Post",
+        "posts_place":"Type the title here",
+        "version":"Version 2.0 is here",
+        "free":"Get for free",
+        "more":"Read More",
+        "config":"Post Config",
+        "config_title":"New Config",
+        "updates_title":"Updates",
+        "fanta_forum":"Fanta Forum",
+        "frequently_asked_questions":"Frequently Asked Questions",
+        "configs_title":"Configs",
+        "anuncios":"Announcements",
+        "pesquisar":"Search in Forum"
+        
+
+
         
     }
 }

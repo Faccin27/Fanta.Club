@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "@/assets/images/logo.png";
 import LoginModal from "@/components/LoginModal";
@@ -21,7 +21,6 @@ interface HeaderProps {
 
 
 export default function Component({ isLoggedIn, user }: HeaderProps) {
-  const { i18n } = useTranslation();
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -31,22 +30,24 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   
   const pathName = usePathname();
   
-
-  const [currentLang, setCurrentLang] = useState(i18n.language);
   
-
-
+  
+  
+  
+  const { i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
   const handleChangeLanguagePtBr = () => {
-    const newLang = currentLang === "en" ? "pt" : "pt";
-    i18n.changeLanguage(newLang);
-    setCurrentLang(newLang);
-};
+    i18n.changeLanguage("pt");
+    setCurrentLang("pt");
+  };
   const handleChangeLanguageEn = () => {
-    const newLang = currentLang === "pt" ? "en" : "en";
-    i18n.changeLanguage(newLang);
-    setCurrentLang(newLang);
+    i18n.changeLanguage("en");
+    setCurrentLang("en");
 };
 
+useEffect(()=>{
+  setCurrentLang(i18n.language)
+},[currentLang])
 
 
   const toggleLanguageOptions = () => {
