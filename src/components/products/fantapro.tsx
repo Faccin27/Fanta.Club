@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Check, ShoppingCart, Copy, X } from 'lucide-react'
 import img1 from '@/assets/images/app-screen.png'
+import  {useTranslation}  from "react-i18next";
 import img2 from '@/assets/images/logo.png'
 
 interface Plan {
@@ -44,11 +45,6 @@ interface PaymentModalContentProps {
   onCopyPix: (text: string) => Promise<void>;
 }
 
-const plans: Plan[] = [
-  { id: 'daily', name: 'Diário', price: 9.99 },
-  { id: 'weekly', name: 'Semanal', price: 49.99 },
-  { id: 'monthly', name: 'Mensal', price: 149.99 },
-]
 
 const features = [
   'Aimbot',
@@ -91,7 +87,7 @@ const PaymentModalContent: React.FC<PaymentModalContentProps> = ({
         src={paymentData.qrcode}
         alt="QR Code PIX"
         className="w-64 h-64"
-      />
+        />
       <p className="text-sm text-gray-300">
         Escaneie o QR Code acima com seu aplicativo do banco
       </p>
@@ -125,6 +121,12 @@ const PaymentModalContent: React.FC<PaymentModalContentProps> = ({
 );
 
 export default function ProductPage() {
+  const {t} = useTranslation()
+  const plans: Plan[] = [
+    { id: 'daily', name: t("translation.daily"), price: 9.99 },
+    { id: 'weekly', name: t("translation.weekly"), price: 49.99 },
+    { id: 'monthly', name: t("translation.month"), price: 149.99 },
+  ]
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedPlan, setSelectedPlan] = useState<Plan>(plans[1]);
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
@@ -289,7 +291,7 @@ export default function ProductPage() {
             </div>
             <div className="space-y-2">
               <label htmlFor="plan-select" className="block text-sm font-medium text-gray-300">
-                Selecione o plano
+                {t("translation.plan")}
               </label>
               <select
                 id="plan-select"
@@ -308,7 +310,7 @@ export default function ProductPage() {
               <div className="flex items-center space-x-2">
                 <input
                   type="text"
-                  placeholder="Cupom de desconto"
+                  placeholder={t("translation.desconto")}
                   className="flex-grow bg-zinc-700 border-zinc-600 rounded-md p-2 text-white"
                   value={coupon}
                   onChange={(e) => {
@@ -322,7 +324,7 @@ export default function ProductPage() {
                   onClick={handleCouponApply}
                   disabled={couponLoading}
                 >
-                  {couponLoading ? "Verificando..." : "Aplicar"}
+                  {couponLoading ? t("translation.Verificando") : t("translation.Aplicar")}
                 </button>
               </div>
               {couponError && (
@@ -356,20 +358,18 @@ export default function ProductPage() {
               ) : (
                 <>
                   <ShoppingCart className="w-4 h-4 mr-2" />
-                  Comprar Agora
+                  {t("translation.agora")}
                 </>
               )}
             </button>
             <p className="text-gray-300">
-              O Fanta pro é a solução definitiva para elevar seu jogo ao próximo nível. 
-              Com tecnologia de ponta e atualizações constantes, garantimos que você sempre esteja 
-              um passo à frente da concorrência.
+              {t("translation.pro_fanta")}
             </p>
           </div>
         </div>
 
         <div className="mt-16 bg-zinc-800 rounded-lg p-8">
-          <h2 className="text-2xl font-bold mb-6 text-center">Recursos do Fanta pro</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">{t("translation.pro_fanta_features")}</h2>
           <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
             {features.map((feature, index) => (
               <div key={index} className="flex items-center space-x-2">
