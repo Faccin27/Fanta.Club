@@ -121,7 +121,7 @@ const getRoleStyles = (role: string) => {
                 }}
                 onSubmit={handleSubmitForm}
               >
-                <div className="mt-6 bg-gradient-to-b from-orange-600 via-orange-400 to-zinc-900 rounded-xl shadow-2xl p-6">
+                <div className="mt-6 bg-gradient-to-r from-orange-400 to-orange-600 rounded-xl shadow-lg p-6">
                   <div className="mb-4">
                     <h2 className="text-lg font-bold mb-2 block">{t("translation.posts_title")}</h2>
                     <input
@@ -159,7 +159,7 @@ const getRoleStyles = (role: string) => {
                         theme="snow"
                         value={anuncioP}
                         onChange={setAnuncioP}
-                        className="quill-editor custom-toolbar text-white h-auto border-orange-500 bg-zinc-900 z-50"
+                        className="quill-editor custom-toolbar text-white h-auto border-orange-500 bg-zinc-900"
                         style={{ minWidth: "auto", minHeight: "auto" }}
                       />
                     </motion.div>
@@ -186,7 +186,7 @@ const getRoleStyles = (role: string) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 3 }}
                     type="submit"
-                    className="bg-gradient-to-b from-orange-600 via-orange-400 to-orange-500 shadow-2xl rounded-lg sm:px-4 sm:py-2 hover:bg-orange-400"
+                    className="bg-zinc-900 shadow-2xl rounded-lg sm:px-4 sm:py-2 hover:bg-orange-400"
                   >
                     {t("translation.posts_post")}
                   </motion.button>
