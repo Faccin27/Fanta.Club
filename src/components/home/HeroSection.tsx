@@ -6,17 +6,22 @@ import Image from "next/image";
 import { motion} from "framer-motion";
 import { useTranslation } from 'react-i18next';
 import '@/lib/i18n'; 
+import ModalProducts from "../modalmyProducts/modalProducts";
 
   
 const Hero: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [currentLang, setCurrentLang] = useState(i18n.language);
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleChangeLanguage = () => {
-      const newLang = currentLang === "en" ? "pt" : "en";
-      i18n.changeLanguage(newLang);
-      setCurrentLang(newLang);
-  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true)
+  }
+
     return (
       <main className="flex justify-center items-center">
         <section className="relative overflow-hidden bg-zinc-900 py-[72px] text-white sm:py-24 w-full">
@@ -82,9 +87,14 @@ const Hero: React.FC = () => {
               </p>
             </div>
             <div className="mt-8 flex justify-center">
-              <button className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors">
+              <button 
+              onClick={handleOpenModal}
+              className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors">
                 {t("translation.free")}
               </button>
+              <div>
+              {isModalOpen && <ModalProducts onClose={handleCloseModal}/>}
+              </div>
             </div>
           </div>
           <div className="absolute left-1/2 top-[calc(100%-92px)] h-[375px] w-[750px] -translate-x-1/2 rounded-[100%] border border-orange-300 bg-[radial-gradient(closest-side,#18181b_92%,#f97316)] sm:top-[calc(100%-120px)] sm:h-[768px] sm:w-[1536px] lg:h-[1200px] lg:w-[2400px]"></div>
