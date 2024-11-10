@@ -1,11 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
-import ReactQuill from "react-quill";
-import React, { useRef, useState } from "react";
-import Image from "next/image";
-import { User as UserIcon } from "lucide-react";
-import PFP from "@/assets/images/pfp.png";
 import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // ou o tema que você está usando
 import Aside from "./Aside";
 
@@ -95,7 +92,7 @@ export default function PostAnucios({ user }: { user: User }) {
                 }}
                 onSubmit={handleSubmitForm}
               >
-                <div className="mt-6 bg-gradient-to-b from-orange-500 via-zinc-800 to-zinc-900 rounded-xl shadow-2xl p-6">
+                <div className="mt-6 bg-gradient-to-b from-orange-500 via-zinc-900 from-0% via-25% to-zinc-900 rounded-xl shadow-2xl p-6">
                   <div className="mb-4">
                     <h2 className="text-lg font-bold mb-2 block">Título</h2>
                     <input
