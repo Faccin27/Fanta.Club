@@ -210,20 +210,20 @@ useEffect(()=>{
                     {user.role === "FANTA" || user.role == "Moderator" ? (
                     <Link
                     href="/admin"
-                    className={`block px-4 py-2 hover:bg-orange-500 ${pathName == "/admin" ? "text-orange-400 hover:bg-orange-600 animate-pulse": ""}`}
+                    className={`block px-4 py-2 ${pathName == "/admin" ? "text-orange-400 hover:bg-zinc-700": "hover:bg-zinc-700"}`}
                   >
                     ADM
                   </Link>
                     ): null}
                     <Link
                       href="/me"
-                      className={`block px-4 py-2 hover:bg-orange-500 ${pathName == "/me" ? "text-orange-400 hover:bg-orange-600 animate-pulse": ""}`}
+                      className={`block px-4 py-2 ${pathName == "/me" ? "text-orange-400 hover:bg-zinc-700": "hover:bg-zinc-700"}`}
                       >
                       Profile
                       </Link>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 hover:bg-orange-500"
+                      className="block w-full text-left px-4 py-2 hover:bg-zinc-700"
                     >
                       Logout
                     </button>
