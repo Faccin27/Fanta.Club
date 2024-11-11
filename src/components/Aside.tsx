@@ -15,7 +15,7 @@ export default function Aside() {
           <FaYoutube className="h-6 w-6" />
           <span className="sr-only">Youtube</span>
         </Link>
-        <Link href="https://www.tiktok.com/fiftycheat" className="block hover:text-orange-400 transition-colors" target="_blank">
+        <Link href="https://www.tiktok.com/@fiftycheat" className="block hover:text-orange-400 transition-colors" target="_blank">
           <FaTiktok className="h-6 w-6" />
           <span className="sr-only">Tiktok</span>
         </Link>
