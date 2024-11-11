@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "@/assets/images/logo.png";
-import LoginModal from "@/components/LoginModal";
+import LoginModal from "@/components/Modais/Login/LoginModal";
 import { User } from "@/utils/auth";
 import pfp from "@/assets/images/pfp.png";
 import { usePathname } from "next/navigation";

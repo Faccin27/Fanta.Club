@@ -6,7 +6,7 @@ import Image from "next/image";
 import { motion} from "framer-motion";
 import { useTranslation } from 'react-i18next';
 import '@/lib/i18n'; 
-import ModalProducts from "../modal-Products/modalProducts";
+import ModalProducts from "../Modais/Products/modalProducts";
 
   
 const Hero: React.FC = () => {

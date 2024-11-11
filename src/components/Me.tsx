@@ -16,6 +16,7 @@ import Link from "next/link";
 import Aside from "./Aside";
 import PasswordChangeModal from "@/components/PasswordChangeModal"
 import { useTranslation } from "react-i18next";
+import ModalLoader from "./Modais/Download/modal-loader";
 
 interface User {
   id: number;
@@ -94,6 +95,7 @@ const products: Product[] = [
 export default function Component({ user }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   
   const audioRefComponent = useRef<HTMLAudioElement | null>(null) 
   
@@ -157,6 +159,14 @@ export default function Component({ user }: MeProps) {
   };
 
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true)
+  }
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+
   const {t} = useTranslation();
 
   return (
@@ -192,12 +202,12 @@ export default function Component({ user }: MeProps) {
             <span className={user?.role ? getRoleStyles(user.role):""}>{user?.role || "N/A"}</span>
             </div>
             <button 
-            onClick={playAudio}
+            onClick={handleOpenModal}
             className="mt-8 bg-orange-400 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition-colors flex items-center justify-center mx-auto">
               <Download className="inline mr-1 h-4 w-4" /> {t("translation.forje")}
-              <audio src="../assets/sounds/soda-can.mp3" ref={audioRefComponent}/>
             </button>
           </div>
+          <div>{isModalOpen && <ModalLoader onClose={handleCloseModal}/>}</div>
           <div className="mt-8 flex flex-wrap justify-center space-x-4">
             <Link
               href="#"
