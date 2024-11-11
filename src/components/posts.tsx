@@ -1,7 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
+{ useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import ReactQuill from "react-quill";
-import React, { useEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css"; // ou o tema que você está usando
 import Aside from "./Aside";
 import { useTranslation } from "react-i18next";
@@ -47,9 +49,6 @@ const getRoleStyles = (role: string) => {
 };
 
 
-//Depois colocar isso: ////////////////////////////////
-//{loggedUser}:PostProps
-////////////////////////////////
 
   export default function Post() {
   //Funcionalidades do Quill:
@@ -117,7 +116,7 @@ const getRoleStyles = (role: string) => {
                 }}
                 onSubmit={handleSubmitForm}
               >
-                <div className="mt-6 bg-gradient-to-r from-orange-400 to-orange-600 rounded-xl shadow-lg p-6">
+                <div className="mt-6 bg-gradient-to-b from-orange-500 via-zinc-900 from-0% via-25% to-zinc-900 rounded-xl shadow-2xl p-6">
                   <div className="mb-4">
                     <h2 className="text-lg font-bold mb-2 block">{t("translation.posts_title")}</h2>
                     <input

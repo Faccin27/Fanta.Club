@@ -15,11 +15,8 @@ import { FaDiscord } from "react-icons/fa";
 import  {useTranslation}  from "react-i18next";
 interface HeaderProps {
   isLoggedIn: boolean;
-  user: 
-  User | null;
+  user: User | null;
 }
-
-
 export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
   const [showUserOptions, setShowUserOptions] = useState(false);
@@ -28,6 +25,19 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [BanModal, setIsopenBanModal] = useState<boolean>(false);
   const userButtonRef = useRef<HTMLButtonElement>(null);
   
+
+  const OpenbanModal = () => {
+    setIsopenBanModal(true);
+  };
+
+  const ClosebanModal = () => {
+    setIsopenBanModal(false);
+  };
+
+  const { t, i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
+
+  const userButtonRef = useRef<HTMLButtonElement>(null);
   const pathName = usePathname();
   
   
@@ -49,7 +59,6 @@ useEffect(()=>{
   setCurrentLang(i18n.language)
 },[currentLang])
 
-
   const toggleLanguageOptions = () => {
     setShowLanguageOptions((prev) => !prev);
     setShowUserOptions(false);
@@ -67,14 +76,6 @@ useEffect(()=>{
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
   };
-  const OpenbanModal = () => {
-    setIsopenBanModal(true)
-  }
-  const ClosebanModal = () => {
-    setIsopenBanModal(false)
-  }
-
-  
 
   const handleLogout = useCallback(() => {
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -126,25 +127,21 @@ useEffect(()=>{
             href="/about"
             className={`relative  font-semibold after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-orange-600 after:w-0 after:transition-all after:duration-[700ms] hover:after:w-full hover:text-orange-400 active:text-orange-400 transition-colors duration-200 ${
               pathName == "/about"
-              ? "text-orange-400 hover:text-orange-600 animate-pulse"
-              : "text-white/70"
+                ? "text-orange-400 hover:text-orange-600 animate-pulse"
+                : "text-white/70"
             }`}
-            >
+          >
             About
           </Link>
         </nav>
         <div className="relative flex items-center space-x-4 text-white/70">
           <div className="relative">
-            
             <button
               ref={languageButtonRef}
               className="flex items-center hover:text-orange-400"
               onClick={toggleLanguageOptions}
             >
-              <p className={`${currentLang == "pt" ? "text-orange-400 hover:text-orange-600":"text-orange-400 hover:text-orange-600"}`}>
-
-              {currentLang} 
-              </p>
+              {currentLang}
               <ChevronDown className="ml-1 h-4 w-4" />
             </button>
             <AnimatePresence>
@@ -167,7 +164,7 @@ useEffect(()=>{
                     pt
                   </button>
                   <button
-                  onClick={handleChangeLanguageEn}
+                    onClick={handleChangeLanguageEn}
                     className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap w-full"
                   >
                     en
@@ -197,72 +194,88 @@ useEffect(()=>{
               <AnimatePresence>
                 {showUserOptions && (
                   <motion.div
-                  className="absolute right-0 mt-2 bg-zinc-800 text-white border border-gray-600 rounded shadow-lg z-50"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  style={{
-                    width: userButtonRef.current?.offsetWidth,
-                  }}
+                    className="absolute right-0 mt-2 bg-zinc-800 text-white border border-gray-600 rounded shadow-lg z-50"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    style={{
+                      width: userButtonRef.current?.offsetWidth,
+                    }}
                   >
-                    
                     {user.role === "FANTA" || user.role == "Moderator" ? (
-                    <Link
-                    href="/admin"
-                    className={`block px-4 py-2 ${pathName == "/admin" ? "text-orange-400 hover:bg-zinc-700": "hover:bg-zinc-700"}`}
-                  >
-                    ADM
-                  </Link>
-                    ): null}
-                    <Link
-                      href="/me"
-                      className={`block px-4 py-2 ${pathName == "/me" ? "text-orange-400 hover:bg-zinc-700": "hover:bg-zinc-700"}`}
+                      <Link
+                        href="/admin"
+                        className={`block px-4 py-2 hover:bg-orange-500 ${
+                          pathName == "/admin"
+                            ? "text-orange-400 hover:bg-orange-600 animate-pulse"
+                            : ""
+                        }`}
                       >
-                      Profile
+                        Admin
                       </Link>
+                    ) : null}
+                    {!user?.isActive ? (
+                      <p
+                        onClick={() => OpenbanModal()}
+                        className="block px-4 py-2 hover:bg-orange-500 cursor-pointer"
+                      >
+                        Profile
+                      </p>
+                    ) : (
+                      <Link
+                        href="/me"
+                        className={`block px-4 py-2 hover:bg-orange-500 ${
+                          pathName == "/me"
+                            ? "text-orange-400 hover:bg-orange-600 animate-pulse"
+                            : ""
+                        }`}
+                      >
+                        Profile
+                      </Link>
+                    )}
+
                     <button
                       onClick={handleLogout}
                       className="block w-full text-left px-4 py-2 hover:bg-zinc-700"
                     >
                       Logout
                     </button>
-
                   </motion.div>
                 )}
-              </AnimatePresence>
+              </AnimatePresence>  
               <div>
-                {BanModal && <BanModalFunction closeModal={ClosebanModal}/>}
+                {BanModal && <BanModalFunction closeModal={ClosebanModal} />}
               </div>
             </div>
           ) : (
-              (<Link
-            href="#"
-            onClick={openLoginModal}
-            className="px-4 py-2 bg-orange-500 rounded hover:bg-orange-400 text-white"
-          >
-            Login
-          </Link>))}
+            <Link
+              href="#"
+              onClick={openLoginModal}
+              className="px-4 py-2 bg-orange-500 rounded hover:bg-orange-400 text-white"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
       <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
+      <div></div>
       <div>
-      </div>
-      <div>
-      <Scroll/>
+        <Scroll />
       </div>
     </header>
   );
 }
 
-interface ModalBan{
-  closeModal: () => void
+interface ModalBan {
+  closeModal: () => void;
 }
 
-function BanModalFunction({closeModal}:ModalBan) {
-  const [BanModal, setIsopenBanModal] = useState<boolean>(false)
-  return(  
-      <motion.div
+function BanModalFunction({ closeModal }: ModalBan) {
+  const [BanModal, setIsopenBanModal] = useState<boolean>(false);
+  return (
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -283,13 +296,13 @@ function BanModalFunction({closeModal}:ModalBan) {
                 Sua conta está <span className="text-orange-400">BANIDA</span>
               </h2>
               <p className="text-sm">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                Magni inventore tempore cumque labore, libero, voluptatibus 
-                fuga, voluptatem odit tempora facere aliquam unde veritatis 
-                recusandae suscipit. Expedita facere cum veritatis enim.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
+                inventore tempore cumque labore, libero, voluptatibus fuga,
+                voluptatem odit tempora facere aliquam unde veritatis recusandae
+                suscipit. Expedita facere cum veritatis enim.
               </p>
             </div>
-            </div>
+          </div>
         </div>
 
         {/* Right Column */}
@@ -299,18 +312,20 @@ function BanModalFunction({closeModal}:ModalBan) {
             className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
           >
             <div>
-
-               <p className="text-2xl">X</p>
+              <p className="text-2xl">X</p>
             </div>
           </button>
-            <motion.div
-              initial={{ x: 20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -20, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <h3 className="text-3xl font-bold mb-8">Acesse nosso <strong className="text-orange-400">DISCORD</strong> para entender o motivo</h3>
-      </motion.div>
+          <motion.div
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -20, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <h3 className="text-3xl font-bold mb-8">
+              Acesse nosso <strong className="text-orange-400">DISCORD</strong>{" "}
+              para entender o motivo
+            </h3>
+          </motion.div>
           <div className="mt-10">
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -323,5 +338,5 @@ function BanModalFunction({closeModal}:ModalBan) {
         </div>
       </motion.div>
     </motion.div>
-  )
+  );
 }
