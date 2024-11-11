@@ -24,8 +24,8 @@ const tiktokVideos = [
   },
   {
     id: "7425364718480657670",
-    username: "kidbengalaoriginal1",
-    postedBy: "fiftycheat",
+    username: "estouraxota",
+    postedBy: "estouraxota",
   },
 ];
 

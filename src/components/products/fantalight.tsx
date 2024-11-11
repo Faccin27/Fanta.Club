@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Check, ShoppingCart, Copy, X } from 'lucide-react'
 import img1 from '@/assets/images/app-screen.png'
-import img2 from '@/assets/images/logo.png'
+import { motion } from "framer-motion";
 import { useTranslation } from 'react-i18next'
 
 interface Plan {
@@ -244,7 +244,8 @@ export default function ProductPage(): JSX.Element {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-white">
+    <div
+    className="min-h-screen bg-zinc-900 text-white">
       <div className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="space-y-4">
@@ -282,12 +283,12 @@ export default function ProductPage(): JSX.Element {
               <span className="font-semibold">Status:</span>
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-green-500 border border-green-500">
                 <Check className="w-4 h-4 mr-2" />
-                Undetected
+                {t("translation.detect")}
               </span>
             </div>
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-300">
-                Selecione o plano
+                {t("translation.selecione")}
               </label>
               <select
                 className="w-full bg-zinc-700 border-zinc-600 rounded-md p-2 text-white"
@@ -353,7 +354,7 @@ export default function ProductPage(): JSX.Element {
               ) : (
                 <>
                   <ShoppingCart className="w-4 h-4 mr-2" />
-                  Comprar Agora
+                  {t("translation.agora")}
                 </>
               )}
             </button>
@@ -375,8 +376,7 @@ export default function ProductPage(): JSX.Element {
           </div>
         </div>
       </div>
-
-      <Modal 
+                  <Modal 
         isOpen={showPaymentModal} 
         onClose={() => setShowPaymentModal(false)}
       >

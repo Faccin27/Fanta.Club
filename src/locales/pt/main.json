@@ -81,8 +81,14 @@
          "pro_fanta_features":"Recursos do Fanta pro",
          "light_fanta":" O Fanta light é a solução definitiva para elevar seu jogo ao próximo nível. Com tecnologia de ponta e atualizações constantes, garantimos que você sempre esteja um passo à frente da concorrência.",
          "pro_light_features":"Recursos do Fanta Light",
-         "produtos_les":"Nossos Produtos"
-
+         "produtos_les":"Nossos Produtos",
+         "selecione":"Selecione o Plano",
+         "detect":"Indetectável",
+         "work":"Funcionando",
+         "fanta_light_modal":"Fanta Light é o produto feito para você que quer destruir seus adversários no Valorant, mas tá com pouco dinheiro.",
+        "fanta_pro_modal":"Fanta Pro é ideal para você acabar com seus adversários de rank alto apenas com poucos click, você consegue.",
+        "fanta_unban_modal":"Fanta Unban permiete com que vocÊ chegue no mais auto nível com nossa ajuda e sem ser banido."
+        
  
  
     }

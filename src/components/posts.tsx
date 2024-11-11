@@ -2,10 +2,6 @@
 import { motion } from "framer-motion";
 import ReactQuill from "react-quill";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { User as UserIcon } from "lucide-react";
-import PFP from "@/assets/images/pfp.png";
-import { useRouter } from "next/navigation";
 import "react-quill/dist/quill.snow.css"; // ou o tema que você está usando
 import Aside from "./Aside";
 import { useTranslation } from "react-i18next";

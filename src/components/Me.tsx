@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import B1 from "@/assets/images/b-1.png";
 import B2 from "@/assets/images/b-2.jpg";
 import PFP from "@/assets/images/pfp.png";
@@ -71,7 +71,7 @@ const products: Product[] = [
   { 
     name: "FANTA_UNBAN", 
     image: B2, 
-    price: 50, 
+    price: 90, 
     link: "fantaunban",
     downloadLink: "https://easyupload.io/yvoix2"
   },
@@ -94,7 +94,17 @@ const products: Product[] = [
 export default function Component({ user }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
-
+  
+  const audioRefComponent = useRef<HTMLAudioElement | null>(null) 
+  
+  const playAudio = () => {
+    if (audioRefComponent.current){
+      audioRefComponent.current.play();
+    }
+  }
+  
+  
+  
   useEffect(() => {
     const fetchOrders = async () => {
       if (user) {
@@ -181,8 +191,11 @@ export default function Component({ user }: MeProps) {
             <div className="mt-2 flex items-center justify-center">
             <span className={user?.role ? getRoleStyles(user.role):""}>{user?.role || "N/A"}</span>
             </div>
-            <button className="mt-8 bg-orange-400 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition-colors flex items-center justify-center mx-auto">
+            <button 
+            onClick={playAudio}
+            className="mt-8 bg-orange-400 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition-colors flex items-center justify-center mx-auto">
               <Download className="inline mr-1 h-4 w-4" /> {t("translation.forje")}
+              <audio src="../assets/sounds/soda-can.mp3" ref={audioRefComponent}/>
             </button>
           </div>
           <div className="mt-8 flex flex-wrap justify-center space-x-4">

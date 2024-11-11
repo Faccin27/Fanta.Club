@@ -286,7 +286,7 @@ export default function ProductPage() {
               <span className="font-semibold">Status:</span>
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-green-500 border border-green-500 shadow-md transition-all duration-300 hover:shadow-lg hover:bg-green-500 hover:text-black">
                 <Check className="w-4 h-4 mr-2" />
-                Undetected
+                {t("translation.detect")}
               </span>
             </div>
             <div className="space-y-2">
