@@ -384,8 +384,7 @@ export default function AdmComponent(
                       onClick={() => handleToggleUserStatus(userData.id)}
                       disabled={
                         (usere?.role !== "FANTA" &&
-                          userData.role === "FANTA") ||
-                        userData.role === "Moderator"
+                          userData.role !== "FANTA")
                           ? true
                           : false
                       }
