@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 export default function Scroll() {
     const [scrollPercentage, setScrollPercentage] = useState(0);
 
-    // Cálculo para ver a pocentagem //////////////////////////////
+    // Função para caluclar a quantidade da págian já visitada //////////////////////////////
     const handleScrollPercent = () => {
       const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;

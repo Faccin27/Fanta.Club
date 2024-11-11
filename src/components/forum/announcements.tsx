@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Bell as AnnouncementsIcon } from "lucide-react";
 import pfp from "@/assets/images/pfp.png";
+import { useTranslation } from "react-i18next";
 import { checkLoginStatus, User as AuthUser } from "@/utils/auth"; // Renomeado para evitar conflito
 
 interface Author {
@@ -69,6 +70,7 @@ interface Order {
 }
 
 export default function Announcements() {
+  const {t} = useTranslation()
   const [user, setUser] = useState<AuthUser | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -84,6 +86,7 @@ export default function Announcements() {
   }, []);
 
   const canPostAnnouncement = user && (user.role === 'FANTA' || user.role === 'Moderator');
+  const canPostConfig = user && (user.role === "Premium");
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -104,21 +107,23 @@ export default function Announcements() {
     };
     fetchOrders();
   }, [user]);
-
   return (
     <div className="p-4">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <AnnouncementsIcon className="mr-2" />
-          <h1 className="text-2xl font-bold">Anúncios</h1>
+          <h1 className="text-2xl font-bold">{t("translation.anuncios")}</h1>
         </div>
         {canPostAnnouncement && (
+          <div className="flex justify-between gap-4">
+          
           <button
             className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
             onClick={() => router.push("/post")}
           >
-            Postar novo anúncio
+            {t("translation.Post")}
           </button>
+          </div>
         )}
       </div>
       <div className="space-y-4">

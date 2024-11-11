@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useEffect, useState } from 'react';
 import { checkLoginStatus, User } from '@/utils/auth';
 import AdmComponent from "@/components/adm";

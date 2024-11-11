@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import B1 from "@/assets/images/b-1.png";
 import B2 from "@/assets/images/b-2.jpg";
 import PFP from "@/assets/images/pfp.png";
@@ -15,6 +15,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Aside from "./Aside";
 import PasswordChangeModal from "@/components/PasswordChangeModal"
+import { useTranslation } from "react-i18next";
+import ModalLoader from "./Modais/Download/modal-loader";
 
 interface User {
   id: number;
@@ -70,7 +72,7 @@ const products: Product[] = [
   { 
     name: "FANTA_UNBAN", 
     image: B2, 
-    price: 50, 
+    price: 90, 
     link: "fantaunban",
     downloadLink: "https://easyupload.io/yvoix2"
   },
@@ -93,7 +95,18 @@ const products: Product[] = [
 export default function Component({ user }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
-
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  
+  const audioRefComponent = useRef<HTMLAudioElement | null>(null) 
+  
+  const playAudio = () => {
+    if (audioRefComponent.current){
+      audioRefComponent.current.play();
+    }
+  }
+  
+  
+  
   useEffect(() => {
     const fetchOrders = async () => {
       if (user) {
@@ -145,6 +158,17 @@ export default function Component({ user }: MeProps) {
     window.open(downloadLink)  ;
   };
 
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true)
+  }
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+
+  const {t} = useTranslation();
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <main>
@@ -177,10 +201,13 @@ export default function Component({ user }: MeProps) {
             <div className="mt-2 flex items-center justify-center">
             <span className={user?.role ? getRoleStyles(user.role):""}>{user?.role || "N/A"}</span>
             </div>
-            <button className="mt-8 bg-orange-400 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition-colors flex items-center justify-center mx-auto">
-              <Download className="inline mr-1 h-4 w-4" /> Download Loader
+            <button 
+            onClick={handleOpenModal}
+            className="mt-8 bg-orange-400 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition-colors flex items-center justify-center mx-auto">
+              <Download className="inline mr-1 h-4 w-4" /> {t("translation.forje")}
             </button>
           </div>
+          <div>{isModalOpen && <ModalLoader onClose={handleCloseModal}/>}</div>
           <div className="mt-8 flex flex-wrap justify-center space-x-4">
             <Link
               href="#"
@@ -190,13 +217,13 @@ export default function Component({ user }: MeProps) {
               }}
               className="text-zinc-400 hover:text-orange-400 transition-colors"
             >
-              <Lock className="inline mr-1 h-4 w-4" /> Change Password
+              <Lock className="inline mr-1 h-4 w-4" /> {t("translation.password")}
             </Link>
             <Link
               href="#"
               className="text-zinc-400 hover:text-orange-400 transition-colors"
             >
-              <ShieldCheck className="inline mr-1 h-4 w-4" /> Enable 2FA
+              <ShieldCheck className="inline mr-1 h-4 w-4" /> {t("translation.Enable")} 2FA
             </Link>
           </div>
           <div className="mt-16 space-y-5 pb-32">

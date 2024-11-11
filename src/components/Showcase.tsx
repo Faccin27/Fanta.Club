@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import React from "react";
+import { useTranslation } from "react-i18next";
+import React, {useState} from "react";
 import { FaTiktok, FaYoutube } from "react-icons/fa";
 import Aside from "./Aside";
 import { VideoCard } from "./youtube/youtube";
@@ -32,6 +33,10 @@ const SocialMediaButton: React.FC<{
   onClick: () => void;
   ariaLabel: string;
 }> = ({ name, icon: Icon, isActive, onClick, ariaLabel }) => {
+
+
+
+
   return (
     <button
       onClick={onClick}
@@ -74,6 +79,8 @@ const SocialMediaButtons: React.FC<{
       ariaLabel: "Mostrar vídeos do TikTok",
     },
   ];
+
+
 
   return (
     <div className="flex" role="tablist">
@@ -119,6 +126,11 @@ const Home: React.FC<HomeProps> = ({ videos }) => {
     return <Tiktok />;
   }, [activeTab, videos]);
 
+
+    
+  const { t, i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <Head>
@@ -135,7 +147,7 @@ const Home: React.FC<HomeProps> = ({ videos }) => {
             transition={{ delay: 0.1, duration: 0.5 }}
             className="text-left text-3xl font-bold tracking-tighter sm:text-3xl"
           >
-            <span className="text-orange-400">Showcases</span>
+            <span className="text-orange-400">{t("translation.showcase")}</span>
           </motion.h1>
 
           <SocialMediaButtons

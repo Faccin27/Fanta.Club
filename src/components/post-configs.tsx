@@ -1,9 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
-{ useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
 import ReactQuill from "react-quill";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { User as UserIcon } from "lucide-react";
+import PFP from "@/assets/images/pfp.png";
+import { useRouter } from "next/navigation";
 import "react-quill/dist/quill.snow.css"; // ou o tema que você está usando
 import Aside from "./Aside";
 import { useTranslation } from "react-i18next";
@@ -49,8 +51,11 @@ const getRoleStyles = (role: string) => {
 };
 
 
+//Depois colocar isso: ////////////////////////////////
+//{loggedUser}:PostProps
+////////////////////////////////
 
-  export default function Post() {
+  export default function PostConfigs() {
   //Funcionalidades do Quill:
   const toolbarOptions = [
     ["bold", "italic", "underline"], // toggled buttons
@@ -96,7 +101,7 @@ const getRoleStyles = (role: string) => {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="text-left text-3xl font-bold tracking-tighter sm:text-3xl text-orange-400"
         >
-        {t("translation.posts_header")}
+        {t("translation.config_title")}
         </motion.h1>
       </div>
       <main>
@@ -116,7 +121,7 @@ const getRoleStyles = (role: string) => {
                 }}
                 onSubmit={handleSubmitForm}
               >
-                <div className="mt-6 bg-gradient-to-b from-orange-500 via-zinc-900 from-0% via-25% to-zinc-900 rounded-xl shadow-2xl p-6">
+                <div className="mt-6 bg-gradient-to-b from-orange-600 via-orange-400 to-zinc-900 rounded-xl shadow-2xl p-6">
                   <div className="mb-4">
                     <h2 className="text-lg font-bold mb-2 block">{t("translation.posts_title")}</h2>
                     <input
@@ -154,34 +159,17 @@ const getRoleStyles = (role: string) => {
                         theme="snow"
                         value={anuncioP}
                         onChange={setAnuncioP}
-                        className="quill-editor custom-toolbar text-white h-auto border-orange-500 bg-zinc-900"
+                        className="quill-editor custom-toolbar text-white h-auto border-orange-500 bg-zinc-900 z-50"
                         style={{ minWidth: "auto", minHeight: "auto" }}
                       />
                     </motion.div>
-                    <div className="mb-12">
-                      <h2 className="text-lg font-bold mb-2 block">
-                      {t("translation.posts_type")}
-                      </h2>
-                      <div>
-                        <select
-                          name="Tipo do anúncio"
-                          id="opcoes"
-                          className="rounded-lg bg-zinc-900 px-5 py-3 font-medium text-white transition-colors sm:px-4 sm:py-2"
-                          required
-                        >
-                          <option value={anuncio}>Announcements</option>
-                          <option value={atualizacao}>Updates</option>
-                          <option value={configs}>Configs</option>
-                        </select>
-                      </div>
-                    </div>
                   </div>
                   <motion.button
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 3 }}
                     type="submit"
-                    className="bg-zinc-900 shadow-2xl rounded-lg sm:px-4 sm:py-2 hover:bg-orange-400"
+                    className="bg-gradient-to-b from-orange-600 via-orange-400 to-orange-500 shadow-2xl rounded-lg sm:px-4 sm:py-2 hover:bg-orange-400"
                   >
                     {t("translation.posts_post")}
                   </motion.button>

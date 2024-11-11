@@ -3,27 +3,28 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "@/assets/images/logo.png";
-import LoginModal from "@/components/LoginModal";
+import LoginModal from "@/components/Modais/Login/LoginModal";
 import { User } from "@/utils/auth";
 import pfp from "@/assets/images/pfp.png";
 import { usePathname } from "next/navigation";
 import Scroll from "./scroll-bar/scroll";
 import { FaDiscord } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
+import  {useTranslation}  from "react-i18next";
 interface HeaderProps {
   isLoggedIn: boolean;
   user: User | null;
 }
-
 export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
   const [BanModal, setIsopenBanModal] = useState<boolean>(false);
+  const userButtonRef = useRef<HTMLButtonElement>(null);
+  
 
   const OpenbanModal = () => {
     setIsopenBanModal(true);
@@ -37,21 +38,26 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const [currentLang, setCurrentLang] = useState(i18n.language);
 
   const userButtonRef = useRef<HTMLButtonElement>(null);
-
   const pathName = usePathname();
-
+  
+  
+  
+  
+  
+  const { i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
   const handleChangeLanguagePtBr = () => {
-    const newLang = currentLang === "en" ? "pt" : "pt";
-    i18n.changeLanguage(newLang);
-    setCurrentLang(newLang);
-    localStorage.setItem("USER_LANG", newLang);
+    i18n.changeLanguage("pt");
+    setCurrentLang("pt");
   };
   const handleChangeLanguageEn = () => {
-    const newLang = currentLang === "pt" ? "en" : "en";
-    i18n.changeLanguage(newLang);
-    setCurrentLang(newLang);
-    localStorage.setItem("USER_LANG", newLang);
-  };
+    i18n.changeLanguage("en");
+    setCurrentLang("en");
+};
+
+useEffect(()=>{
+  setCurrentLang(i18n.language)
+},[currentLang])
 
   const toggleLanguageOptions = () => {
     setShowLanguageOptions((prev) => !prev);
@@ -152,16 +158,16 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
                   }}
                 >
                   <button
-                    onClick={handleChangeLanguagePtBr}
-                    className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap"
+                  onClick={handleChangeLanguagePtBr}
+                    className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap w-full"
                   >
-                    pt-BR
+                    pt
                   </button>
                   <button
                     onClick={handleChangeLanguageEn}
                     className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap w-full"
                   >
-                    En
+                    en
                   </button>
                 </motion.div>
               )}
@@ -231,7 +237,7 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
 
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 hover:bg-orange-500"
+                      className="block w-full text-left px-4 py-2 hover:bg-zinc-700"
                     >
                       Logout
                     </button>
