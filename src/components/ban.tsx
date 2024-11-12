@@ -8,7 +8,7 @@ export default function BanComponent() {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
     const handleCloseModalANdRedirect = () => {
-        window.location.href = '/'; 
+        window.history.back(); 
     }
 
 

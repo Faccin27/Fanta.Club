@@ -1,4 +1,4 @@
-import BanPage from "@/components/ban-page/ban";
+import BanPage from "@/components/ban";
 
 export default function BanPageApp(){
     return(
