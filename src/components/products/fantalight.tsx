@@ -4,8 +4,9 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Check, ShoppingCart, Copy, X } from 'lucide-react'
 import img1 from '@/assets/images/app-screen.png'
-import { motion } from "framer-motion";
+import { BanModalFunction } from "@/components/Header";
 import { useTranslation } from 'react-i18next'
+import { User } from '@/utils/auth'
 
 interface Plan {
   id: 'daily' | 'weekly' | 'monthly';
@@ -121,13 +122,22 @@ const PaymentModalContent: React.FC<PaymentModalContentProps> = ({
   </div>
 );
 
-export default function ProductPage(): JSX.Element {
+export interface MeProps {
+  user: User | null;
+}
+export interface ProductsComponentes {
+  LogedUser: User | null;
+}
+
+export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user }: MeProps): JSX.Element {
   const {t} = useTranslation()
+  
   const plans: Plan[] = [
     { id: 'daily', name: t("translation.daily"), price: 9.99 },
     { id: 'weekly', name: t("translation.weekly"), price: 49.99 },
     { id: 'monthly', name: t("translation.month"), price: 149.99 },
   ]
+
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedPlan, setSelectedPlan] = useState<Plan>(plans[1]);
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
@@ -243,6 +253,7 @@ export default function ProductPage(): JSX.Element {
     }
   };
 
+
   return (
     <div
     className="min-h-screen bg-zinc-900 text-white">
@@ -346,7 +357,12 @@ export default function ProductPage(): JSX.Element {
             </div>
             <button 
               className="w-full bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={handleAddToCart}
+              onClick={()=> {if(user?.isActive === false) {       
+                window.location.href = "/ban"
+              } else {
+                handleAddToCart();
+              }  
+              }}
               disabled={loading}
             >
               {loading ? (

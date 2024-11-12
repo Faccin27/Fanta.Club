@@ -200,47 +200,37 @@ useEffect(()=>{
                     {user.role === "FANTA" || user.role == "Moderator" ? (
                       <Link
                         href="/admin"
-                        className={`block px-4 py-2 hover:bg-orange-500 ${
+                        className={`block px-4 py-2 hover:bg-zinc-600 ${
                           pathName == "/admin"
-                            ? "text-orange-400 hover:bg-orange-600 animate-pulse"
+                            ? "text-orange-400 hover:bg-zinc-600"
                             : ""
                         }`}
                       >
                         Admin
                       </Link>
                     ) : null}
-                    {!user?.isActive ? (
-                      <p
-                        onClick={() => OpenbanModal()}
-                        className="block px-4 py-2 hover:bg-orange-500 cursor-pointer"
-                      >
-                        Profile
-                      </p>
-                    ) : (
+                    
                       <Link
                         href="/me"
-                        className={`block px-4 py-2 hover:bg-orange-500 ${
+                        className={`block px-4 py-2 hover:bg-zinc-600 ${
                           pathName == "/me"
-                            ? "text-orange-400 hover:bg-orange-600 animate-pulse"
+                            ? "text-orange-400 hover:bg-zinc-600"
                             : ""
                         }`}
                       >
                         Profile
                       </Link>
-                    )}
+                    
 
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 hover:bg-zinc-700"
+                      className="block w-full text-left px-4 py-2 hover:bg-zinc-600"
                     >
                       Logout
                     </button>
                   </motion.div>
                 )}
               </AnimatePresence>  
-              <div>
-                {BanModal && <BanModalFunction closeModal={ClosebanModal} />}
-              </div>
             </div>
           ) : (
             <Link
@@ -266,7 +256,7 @@ interface ModalBan {
   closeModal: () => void;
 }
 
-function BanModalFunction({ closeModal }: ModalBan) {
+export function BanModalFunction({ closeModal }: ModalBan) {
   const [BanModal, setIsopenBanModal] = useState<boolean>(false);
   return (
     <motion.div

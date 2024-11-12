@@ -33,7 +33,7 @@ const ProductShowcase: React.FC = () => {
           <div className="mt-5 max-w-xl text-center">
             <p className="text-xl text-white/70">
            {t("translation.fantaPro_v1")}
-              {" "}
+              {"  "}
               <span className="text-orange-500 text-2xl font-bold">
                 Fanta PRO
               </span>{", "}

@@ -14,7 +14,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import Aside from "./Aside";
-import PasswordChangeModal from "@/components/PasswordChangeModal"
+import PasswordChangeModal from "@/components/Modais/Password/PasswordChangeModal"
 import { useTranslation } from "react-i18next";
 import ModalLoader from "./Modais/Download/modal-loader";
 
@@ -199,13 +199,24 @@ export default function Component({ user }: MeProps) {
               <span>{user?.email || "email@example.com"}</span>
             </div>
             <div className="mt-2 flex items-center justify-center">
-            <span className={user?.role ? getRoleStyles(user.role):""}>{user?.role || "N/A"}</span>
+              {user?.isActive === false ? (
+                <span className={"text-red-500 font-bold"}>{t("translation.banned")}</span>
+              ):(
+                <span className={user?.role ? getRoleStyles(user.role):""}>{user?.role || "N/A"}</span>
+              )}
             </div>
+            <br />
+            <div>
+              <span className={"text-red-500 font-bold"}>Agora você não pode mais comprar nenhum de nossos produtos e/ou se aventurar junto de nossa comunidade</span>
+            </div>
+            {user?.isActive === false ? "": (
+
             <button 
             onClick={handleOpenModal}
             className="mt-8 bg-orange-400 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition-colors flex items-center justify-center mx-auto">
               <Download className="inline mr-1 h-4 w-4" /> {t("translation.forje")}
             </button>
+            )}
           </div>
           <div>{isModalOpen && <ModalLoader onClose={handleCloseModal}/>}</div>
           <div className="mt-8 flex flex-wrap justify-center space-x-4">
