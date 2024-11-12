@@ -7,7 +7,7 @@ export default function EmailChangeModal({
   onClose,
   userId
 }: {
-  isOpen: boolean;
+  isOpen: ()=> void;
   onClose: () => void;
   userId: number;
 }) {

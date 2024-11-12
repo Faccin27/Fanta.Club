@@ -17,6 +17,7 @@ import Aside from "./Aside";
 import PasswordChangeModal from "@/components/Modais/Password/PasswordChangeModal"
 import { useTranslation } from "react-i18next";
 import ModalLoader from "./Modais/Download/modal-loader";
+import EmailChangeModal from "./Modais/Email/EmailChangeModal";
 
 interface User {
   id: number;
@@ -168,6 +169,14 @@ export default function Component({ user }: MeProps) {
   }
 
 
+  const handleOpenEmailModal = () => {
+    setIsEmailModalOpen(true);
+  }
+  const handleCloseEmailModal = () => {
+    setIsEmailModalOpen(false);
+  }
+
+
   const {t} = useTranslation();
 
   return (
@@ -199,12 +208,15 @@ export default function Component({ user }: MeProps) {
             <Mail className="mr-2 h-4 w-4" />
               <span>{user?.email || "email@example.com"}</span>
               <button
-                onClick={() => setIsEmailModalOpen(true)}
+                onClick={handleOpenEmailModal}
                 className="ml-2 p-1 rounded-full hover:text-orange-400 transition-colors"
               >
                 <Edit className="mr-2 h-4 w-4" />
                 <span className="sr-only">{t("translation.email")}</span>
               </button>
+            </div>
+            <div>
+              {isEmailModalOpen && <EmailChangeModal isOpen={handleOpenEmailModal} onClose={handleCloseEmailModal} userId={Number(user?.id)}/>}
             </div>
             <div className="mt-2 flex items-center justify-center">
               {user?.isActive === false ? (
@@ -213,13 +225,15 @@ export default function Component({ user }: MeProps) {
                 <span className={user?.role ? getRoleStyles(user.role):""}>{user?.role || "N/A"}</span>
               )}
             </div>
-            <br />
             <div>
             {user?.isActive === false ? (
+            <>
+            <br />
               <span className={"text-red-500 font-bold"}>Agora você não pode mais comprar nenhum de nossos produtos e/ou se aventurar junto de nossa comunidade</span>
+            </>
             ): null}
             </div>
-            {user?.isActive === false ? "": (
+            {user?.isActive === false ? null: (
 
             <button 
             onClick={handleOpenModal}
