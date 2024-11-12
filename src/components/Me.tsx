@@ -74,21 +74,21 @@ const products: Product[] = [
     image: B2, 
     price: 90, 
     link: "fantaunban",
-    downloadLink: "https://easyupload.io/yvoix2"
+    downloadLink: "https://easyupload.io/yvoix2",
   },
   { 
     name: "FANTA_PRO", 
     image: B1, 
     price: 60, 
     link: "fantapro",
-    downloadLink: "https://easyupload.io/x1bb47"
+    downloadLink: "https://easyupload.io/x1bb47",
   },  
   { 
     name: "FANTA_LIGHT", 
     image: B2, 
     price: 25, 
     link: "fantalight",
-    downloadLink: "https://easyupload.io/x1bb47"
+    downloadLink: "https://easyupload.io/x1bb47",
   },
 ];
 
@@ -96,8 +96,10 @@ export default function Component({ user }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
   
-  const audioRefComponent = useRef<HTMLAudioElement | null>(null) 
+  
+  const audioRefComponent = useRef<HTMLAudioElement | null>(null) ;
   
   const playAudio = () => {
     if (audioRefComponent.current){
@@ -153,9 +155,8 @@ export default function Component({ user }: MeProps) {
     }
     return null;
   };
-
   const handleDownload = (downloadLink: string) => {
-    window.open(downloadLink)  ;
+    window.open(downloadLink);
   };
 
 
@@ -195,8 +196,15 @@ export default function Component({ user }: MeProps) {
               </button>
             </div>
             <div className="mt-2 flex items-center justify-center text-zinc-400">
-              <Mail className="mr-2 h-4 w-4" />
+            <Mail className="mr-2 h-4 w-4" />
               <span>{user?.email || "email@example.com"}</span>
+              <button
+                onClick={() => setIsEmailModalOpen(true)}
+                className="ml-2 p-1 rounded-full hover:text-orange-400 transition-colors"
+              >
+                <Edit className="mr-2 h-4 w-4" />
+                <span className="sr-only">{t("translation.email")}</span>
+              </button>
             </div>
             <div className="mt-2 flex items-center justify-center">
               {user?.isActive === false ? (
@@ -207,7 +215,9 @@ export default function Component({ user }: MeProps) {
             </div>
             <br />
             <div>
+            {user?.isActive === false ? (
               <span className={"text-red-500 font-bold"}>Agora você não pode mais comprar nenhum de nossos produtos e/ou se aventurar junto de nossa comunidade</span>
+            ): null}
             </div>
             {user?.isActive === false ? "": (
 
