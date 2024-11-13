@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Check, ShoppingCart, Copy, X } from 'lucide-react'
 import img1 from '@/assets/images/app-screen.png'
 import  {useTranslation}  from "react-i18next";
 import img2 from '@/assets/images/logo.png'
 import { MeProps, ProductsComponentes } from './fantalight'
+import { checkLoginStatus, User } from '@/utils/auth'
 
 interface Plan {
   id: 'daily' | 'weekly' | 'monthly';
@@ -137,6 +138,7 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
   const [couponError, setCouponError] = useState<string | null>(null);
   const [paymentData, setPaymentData] = useState<PaymentResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [usere, setUser] = useState<User | null>(null)
   const [couponLoading, setCouponLoading] = useState<boolean>(false);
 
   const images = [
@@ -145,6 +147,21 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
     img1,
     img1,
   ]
+
+
+  useEffect(()=>{
+    async function fetchUserData() {
+      try{
+        const {user} = await checkLoginStatus();
+        setUser(user)
+      }
+      catch{
+        alert("error to fetch user data")
+      }
+    }
+    fetchUserData()
+  },[])
+
 
   const copyToClipboard = async (text: string): Promise<void> => {
     try {
@@ -364,10 +381,10 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
               } else {
                 handleAddToCart();
               }}}
-              disabled={loading}
+              disabled={usere?.isActive === false ? true : loading}
             >
               {loading ? (
-                "Processando..."
+                t("translation.processando")
               ) : (
                 <>
                   <ShoppingCart className="w-4 h-4 mr-2" />

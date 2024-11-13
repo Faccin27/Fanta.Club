@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Check, ShoppingCart, Copy, X } from 'lucide-react'
 import img1 from '@/assets/images/app-screen.png'
 import  {useTranslation}  from "react-i18next";
 import img2 from '@/assets/images/logo.png'
 import { MeProps, ProductsComponentes } from './fantalight'
+import { checkLoginStatus, User } from '@/utils/auth'
 
 interface Plan {
   id: 'daily' | 'weekly' | 'monthly';
@@ -130,6 +131,7 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
   ]
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedPlan, setSelectedPlan] = useState<Plan>(plans[1]);
+  const [usere, setUser] = useState<User | null>(null)
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
   const [coupon, setCoupon] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
@@ -144,6 +146,24 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
     img1,
     img1,
   ]
+
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const { isLoggedIn, user } = await checkLoginStatus();
+        setUser(user);
+      } catch (err) {
+        alert("Failed to fetch user data");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchUserData();
+  }, []);
+
+
 
   const copyToClipboard = async (text: string): Promise<void> => {
     try {
@@ -350,16 +370,16 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
               )}
             </div>
             <button 
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+               className={`w-full bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 ${user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"} disabled:cursor-not-allowed`}
               onClick={()=> {if(user?.isActive === false) {       
                 window.location.href = "/ban"
               } else {
                 handleAddToCart();
               }}}
-              disabled={loading}
+              disabled={usere?.isActive === false ? true : loading}
             >
               {loading ? (
-                "Processando..."
+                t("translation.processando")
               ) : (
                 <>
                   <ShoppingCart className="w-4 h-4 mr-2" />

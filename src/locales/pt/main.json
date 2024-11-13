@@ -76,7 +76,7 @@
         "desconto":"Cupom de desconto",
          "Verificando":"Verificando...",
          "Aplicar":"Aplicar",
-         "agora":"Buy Now",
+         "agora":"Comprar",
          "pro_fanta":"O Fanta pro é a solução definitiva para elevar seu jogo ao próximo nível. Com tecnologia de ponta e atualizações constantes, garantimos que você sempre esteja um passo à frente da concorrência.",
          "pro_fanta_features":"Recursos do Fanta pro",
          "light_fanta":" O Fanta light é a solução definitiva para elevar seu jogo ao próximo nível. Com tecnologia de ponta e atualizações constantes, garantimos que você sempre esteja um passo à frente da concorrência.",
@@ -97,7 +97,8 @@
         "thanks5":"Obrigado!!",
         "gera":"Crair Cupom",
         "banned":"BANIDO",
-        "email":"Editar Email"
+        "email":"Editar Email",
+        "processando":"Processando..."
         
  
  
