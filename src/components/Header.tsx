@@ -32,9 +32,10 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
 
   const ClosebanModal = () => {
     setIsopenBanModal(false);
-  };  
-  
-  
+  };
+
+  const pathName = usePathname();
+
   
   const { i18n } = useTranslation();
   const [currentLang, setCurrentLang] = useState(i18n.language);

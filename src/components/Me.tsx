@@ -98,7 +98,6 @@ export default function Component({ user }: MeProps) {
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
-
   const audioRefComponent = useRef<HTMLAudioElement | null>(null);
 
   const playAudio = () => {
@@ -348,6 +347,11 @@ export default function Component({ user }: MeProps) {
         <PasswordChangeModal
           isOpen={isPasswordModalOpen}
           onClose={() => setIsPasswordModalOpen(false)}
+          userId={user?.id || 0}
+        />
+        <EmailChangeModal
+          isOpen={isEmailModalOpen}
+          onClose={() => setIsEmailModalOpen(false)}
           userId={user?.id || 0}
         />
       </main>
