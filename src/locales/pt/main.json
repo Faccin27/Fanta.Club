@@ -10,7 +10,7 @@
         "showcase":"Análises",
         "forje":"Baixar o Cheat",
         "password":"Trocar a Senha",
-        "Enable":"Habilitado",
+        "Enable":"Habilitar",
         "Announcements":"Anúncios",
         "Updates":"Atualizações",
         "Configs":"Configurações",
@@ -94,7 +94,10 @@
         "thanks2":"Destrua seus inimigos",
         "thanks3":"e ajude seus amigos nas vitórias, um grande abraço de toda a equipe do",
         "thanks4":"um abraço!",
-        "thanks5":"Obrigado!!"
+        "thanks5":"Obrigado!!",
+        "gera":"Crair Cupom",
+        "banned":"BANIDO",
+        "email":"Editar Email"
         
  
  

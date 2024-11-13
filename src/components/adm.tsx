@@ -383,9 +383,9 @@ export default function AdmComponent(
                     <button
                       onClick={() => handleToggleUserStatus(userData.id)}
                       disabled={
-                        (usere?.role !== "FANTA" &&
-                          userData.role === "FANTA") ||
-                        userData.role === "Moderator"
+                        userData?.role === "FANTA" ||
+                        (userData?.role === "Moderator" &&
+                          usere?.role === "Moderator")
                           ? true
                           : false
                       }
@@ -394,11 +394,11 @@ export default function AdmComponent(
                           ? "bg-red-600 hover:bg-red-700 text-white"
                           : "bg-green-600 hover:bg-green-700 text-white"
                       } text-white font-medium px-3 py-[6px] rounded hover:bg-red-700 transition-colors flex items-center ${
-                        (usere?.role !== "FANTA" &&
-                          userData.role === "FANTA") ||
-                        userData.role === "Moderator"
+                        userData.role === "FANTA" ||
+                        (userData.role === "Moderator" &&
+                          usere?.role === "Moderator")
                           ? "cursor-no-drop"
-                          : ""
+                          : "cursor-pointer"
                       }`}
                     >
                       <Gavel size={22} className="mr-2" />
@@ -492,7 +492,7 @@ export default function AdmComponent(
             className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-600 transition-colors"
             onClick={() => setIsModalOpen(true)}
           >
-            Gerar Cupom
+            {t("translation.gera")}
           </motion.button>
         </div>
       </section>

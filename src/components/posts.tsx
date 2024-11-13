@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-{ useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import ReactQuill from "react-quill";

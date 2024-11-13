@@ -1,14 +1,15 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Image from 'next/image'
-import { Check, ShoppingCart, Copy, X } from 'lucide-react'
-import img1 from '@/assets/images/app-screen.png'
-import { motion } from "framer-motion";
-import { useTranslation } from 'react-i18next'
+import { useState } from "react";
+import Image from "next/image";
+import { Check, ShoppingCart, Copy, X } from "lucide-react";
+import img1 from "@/assets/images/app-screen.png";
+import { BanModalFunction } from "@/components/Header";
+import { useTranslation } from "react-i18next";
+import { User } from "@/utils/auth";
 
 interface Plan {
-  id: 'daily' | 'weekly' | 'monthly';
+  id: "daily" | "weekly" | "monthly";
   name: string;
   price: number;
 }
@@ -45,18 +46,16 @@ interface PaymentModalContentProps {
   onCopyPix: (text: string) => Promise<void>;
 }
 
-
-
 const features: string[] = [
-  'Aimbot',
-  'Triggerbot',
-  'Flickbot',
-  'Wallhack',
-  'Radar',
-  'ESP',
-  'Aimassist',
-  'Magnect Trigger',
-]
+  "Aimbot",
+  "Triggerbot",
+  "Flickbot",
+  "Wallhack",
+  "Radar",
+  "ESP",
+  "Aimassist",
+  "Magnect Trigger",
+];
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -79,16 +78,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 const PaymentModalContent: React.FC<PaymentModalContentProps> = ({
   paymentData,
   selectedPlanPrice,
-  onCopyPix
+  onCopyPix,
 }) => (
   <div className="space-y-6">
     <h3 className="text-xl font-bold text-white mb-4">Pagamento via PIX</h3>
     <div className="flex flex-col items-center space-y-4">
-      <img
-        src={paymentData.qrcode}
-        alt="QR Code PIX"
-        className="w-64 h-64"
-      />
+      <img src={paymentData.qrcode} alt="QR Code PIX" className="w-64 h-64" />
       <p className="text-sm text-gray-300">
         Escaneie o QR Code acima com seu aplicativo do banco
       </p>
@@ -121,17 +116,29 @@ const PaymentModalContent: React.FC<PaymentModalContentProps> = ({
   </div>
 );
 
-export default function ProductPage(): JSX.Element {
-  const {t} = useTranslation()
+export interface MeProps {
+  user: User | null;
+}
+export interface ProductsComponentes {
+  LogedUser: User | null;
+}
+
+export default function ProductPage(
+  { LogedUser }: ProductsComponentes,
+  { user }: MeProps
+): JSX.Element {
+  const { t } = useTranslation();
+
   const plans: Plan[] = [
-    { id: 'daily', name: t("translation.daily"), price: 9.99 },
-    { id: 'weekly', name: t("translation.weekly"), price: 49.99 },
-    { id: 'monthly', name: t("translation.month"), price: 149.99 },
-  ]
+    { id: "daily", name: t("translation.daily"), price: 9.99 },
+    { id: "weekly", name: t("translation.weekly"), price: 49.99 },
+    { id: "monthly", name: t("translation.month"), price: 149.99 },
+  ];
+
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedPlan, setSelectedPlan] = useState<Plan>(plans[1]);
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
-  const [coupon, setCoupon] = useState('');
+  const [coupon, setCoupon] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
   const [couponError, setCouponError] = useState<string | null>(null);
   const [paymentData, setPaymentData] = useState<PaymentResponse | null>(null);
@@ -160,8 +167,10 @@ export default function ProductPage(): JSX.Element {
     setCouponError(null);
 
     try {
-      const response = await fetch(`http://localhost:3535/coupons/name/${coupon}`);
-      
+      const response = await fetch(
+        `http://localhost:3535/coupons/name/${coupon}`
+      );
+
       if (response.status === 404) {
         setCouponError("Cupom não encontrado");
         setAppliedCoupon(null);
@@ -173,7 +182,7 @@ export default function ProductPage(): JSX.Element {
       }
 
       const couponData: Coupon = await response.json();
-      
+
       // Check if coupon is expired
       const expiryDate = new Date(couponData.expiryDate);
       const now = new Date();
@@ -197,7 +206,7 @@ export default function ProductPage(): JSX.Element {
 
   const calculateDiscountedPrice = (): number => {
     if (!appliedCoupon) return selectedPlan.price;
-    
+
     const discountAmount = selectedPlan.price * (appliedCoupon.discount / 100);
     return selectedPlan.price - discountAmount;
   };
@@ -207,7 +216,7 @@ export default function ProductPage(): JSX.Element {
     try {
       const paymentRequest: PaymentRequest = {
         valor: calculateDiscountedPrice(),
-        descricao: "Fanta light"
+        descricao: "Fanta light",
       };
 
       const response = await fetch("http://localhost:3535/payment/qrcode", {
@@ -217,7 +226,7 @@ export default function ProductPage(): JSX.Element {
         },
         body: JSON.stringify(paymentRequest),
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -238,14 +247,13 @@ export default function ProductPage(): JSX.Element {
     if (newPlan) {
       setSelectedPlan(newPlan);
       setAppliedCoupon(null);
-      setCoupon('');
+      setCoupon("");
       setCouponError(null);
     }
   };
 
   return (
-    <div
-    className="min-h-screen bg-zinc-900 text-white">
+    <div className="min-h-screen bg-zinc-900 text-white">
       <div className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="space-y-4">
@@ -263,7 +271,11 @@ export default function ProductPage(): JSX.Element {
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`relative aspect-square ${selectedImage === index ? 'ring-2 ring-purple-500 rounded-md' : ''}`}
+                  className={`relative aspect-square ${
+                    selectedImage === index
+                      ? "ring-2 ring-purple-500 rounded-md"
+                      : ""
+                  }`}
                 >
                   <Image
                     src={img}
@@ -320,7 +332,9 @@ export default function ProductPage(): JSX.Element {
                   onClick={handleCouponApply}
                   disabled={couponLoading}
                 >
-                  {couponLoading ? t("translation.Verificando") : t("translation.Aplicar")}
+                  {couponLoading
+                    ? t("translation.Verificando")
+                    : t("translation.Aplicar")}
                 </button>
               </div>
               {couponError && (
@@ -328,7 +342,8 @@ export default function ProductPage(): JSX.Element {
               )}
               {appliedCoupon && (
                 <p className="text-green-500 text-sm">
-                  Cupom {appliedCoupon.name} aplicado: {appliedCoupon.discount}% de desconto
+                  Cupom {appliedCoupon.name} aplicado: {appliedCoupon.discount}%
+                  de desconto
                 </p>
               )}
             </div>
@@ -344,10 +359,10 @@ export default function ProductPage(): JSX.Element {
                 `R$ ${selectedPlan.price.toFixed(2)}`
               )}
             </div>
-            <button 
-              className="w-full bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            <button
+              className={`w-full bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 ${user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"} disabled:cursor-not-allowed`}
               onClick={handleAddToCart}
-              disabled={loading}
+              disabled={user?.isActive === false ? true : loading}
             >
               {loading ? (
                 "Processando..."
@@ -358,14 +373,14 @@ export default function ProductPage(): JSX.Element {
                 </>
               )}
             </button>
-            <p className="text-gray-300">
-             {t("translation.light_fanta")}
-            </p>
+            <p className="text-gray-300">{t("translation.light_fanta")}</p>
           </div>
         </div>
 
         <div className="mt-16 bg-zinc-800 rounded-lg p-8">
-          <h2 className="text-2xl font-bold mb-6 text-center">{t("translation.pro_light_features")}</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">
+            {t("translation.pro_light_features")}
+          </h2>
           <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
             {features.map((feature, index) => (
               <div key={index} className="flex items-center space-x-2">
@@ -376,8 +391,8 @@ export default function ProductPage(): JSX.Element {
           </div>
         </div>
       </div>
-                  <Modal 
-        isOpen={showPaymentModal} 
+      <Modal
+        isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
       >
         {paymentData && (
@@ -389,5 +404,5 @@ export default function ProductPage(): JSX.Element {
         )}
       </Modal>
     </div>
-  )
+  );
 }

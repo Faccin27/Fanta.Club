@@ -59,14 +59,14 @@ export default function ModalProducts({ onClose }: { onClose: () => void }) {
           />
           <ProductCard
             href="/product/fantapro"
-            imageSrc={FantaPro}
+            imageSrc={FantaLight}
             alt="Fanta Pro"
             title="Fanta Pro"
             description={t("translation.fanta_pro_modal")}
           />
           <ProductCard
             href="/product/fantaunban"
-            imageSrc={FantaUnban}
+            imageSrc={FantaLight}
             alt="Fanta Unban"
             title="Fanta Unban"
             description={t("translation.fanta_unban_modal")}

@@ -21,7 +21,7 @@ export default function About() {
   const teamMembers = [
     { id: '2', name: 'Pozinho' },
     { id: '3', name: 'Lkzin' },
-    { id: '1', name: 'Faccin' }
+    { id: '4', name: 'Faccin' }
   ]
 
   const [currentLang, setCurrentLang] = useState(i18n.language);

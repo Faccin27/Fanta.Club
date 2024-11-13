@@ -14,10 +14,10 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import Aside from "./Aside";
-import PasswordChangeModal from "@/components/PasswordChangeModal";
+import PasswordChangeModal from "@/components/Modais/Password/PasswordChangeModal";
 import { useTranslation } from "react-i18next";
 import ModalLoader from "./Modais/Download/modal-loader";
-import EmailChangeModal from "@/components/EmailChangeModal";
+import EmailChangeModal from "./Modais/Email/EmailChangeModal";
 
 interface User {
   id: number;
@@ -97,7 +97,7 @@ export default function Component({ user }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
   const audioRefComponent = useRef<HTMLAudioElement | null>(null);
 
   const playAudio = () => {
@@ -152,7 +152,6 @@ export default function Component({ user }: MeProps) {
     }
     return null;
   };
-
   const handleDownload = (downloadLink: string) => {
     window.open(downloadLink);
   };
@@ -162,6 +161,13 @@ export default function Component({ user }: MeProps) {
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleOpenEmailModal = () => {
+    setIsEmailModalOpen(true);
+  };
+  const handleCloseEmailModal = () => {
+    setIsEmailModalOpen(false);
   };
 
   const { t } = useTranslation();
@@ -186,51 +192,86 @@ export default function Component({ user }: MeProps) {
                 {user?.name}
               </h1>
               <br />
+              <button 
+              disabled={user?.isActive === false ? true: false}
+              className={`ml-2 p-1 rounded-full hover:text-orange-400 ${user?.isActive === false ? "cursor-no-drop":"cursor-pointer"} transition-colors `}>
+                <Edit className="mr-2 h-4 w-4" />
+                <span className="sr-only">Edit Profile</span>
+              </button>
             </div>
             <div className="mt-2 flex items-center justify-center text-zinc-400">
               <Mail className="mr-2 h-4 w-4" />
               <span>{user?.email || "email@example.com"}</span>
               <button
-                onClick={() => setIsEmailModalOpen(true)}
-                className="ml-2 p-1 rounded-full hover:text-orange-400 transition-colors"
+                onClick={handleOpenEmailModal}
+                disabled={user?.isActive === false ? true: false}
+                className={`ml-2 p-1 rounded-full hover:text-orange-400 ${user?.isActive === false ? "cursor-no-drop":"cursor-pointer"} transition-colors`}
               >
                 <Edit className="mr-2 h-4 w-4" />
-                <span className="sr-only">Edit Email</span>
+                <span className="sr-only">{t("translation.email")}</span>
               </button>
             </div>
-            <div className="mt-2 flex items-center justify-center">
-              <span className={user?.role ? getRoleStyles(user.role) : ""}>
-                {user?.role || "N/A"}
-              </span>
+            <div>
+              {isEmailModalOpen && (
+                <EmailChangeModal
+                  isOpen={handleOpenEmailModal}
+                  onClose={handleCloseEmailModal}
+                  userId={Number(user?.id)}
+                />
+              )}
             </div>
-            <button
-              onClick={handleOpenModal}
-              className="mt-8 bg-orange-400 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition-colors flex items-center justify-center mx-auto"
-            >
-              <Download className="inline mr-1 h-4 w-4" />{" "}
-              {t("translation.forje")}
-            </button>
+            <div className="mt-2 flex items-center justify-center">
+              {user?.isActive === false ? (
+                <span className={"text-red-500 font-bold"}>
+                  {t("translation.banned")}
+                </span>
+              ) : (
+                <span className={user?.role ? getRoleStyles(user.role) : ""}>
+                  {user?.role || "N/A"}
+                </span>
+              )}
+            </div>
+            <div>
+              {user?.isActive === false ? (
+                <>
+                  <br />
+                  <span className={"text-red-500 font-bold"}>
+                    Agora você não pode mais comprar nenhum de nossos produtos
+                    e/ou se aventurar junto de nossa comunidade
+                  </span>
+                </>
+              ) : null}
+            </div>
+            {user?.isActive === false ? null : (
+              <button
+                onClick={handleOpenModal}
+                className="mt-8 bg-orange-400 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition-colors flex items-center justify-center mx-auto"
+              >
+                <Download className="inline mr-1 h-4 w-4" />{" "}
+                {t("translation.forje")}
+              </button>
+            )}
           </div>
           <div>{isModalOpen && <ModalLoader onClose={handleCloseModal} />}</div>
           <div className="mt-8 flex flex-wrap justify-center space-x-4">
-            <Link
-              href="#"
+            <button
+              disabled={user?.isActive === false ? true : false}
               onClick={(e) => {
                 e.preventDefault();
                 setIsPasswordModalOpen(true);
               }}
-              className="text-zinc-400 hover:text-orange-400 transition-colors"
+              className={`text-zinc-400 hover:text-orange-400  ${user?.isActive === false ? "cursor-no-drop":"cursor-pointer"} transition-colors`}
             >
               <Lock className="inline mr-1 h-4 w-4" />{" "}
               {t("translation.password")}
-            </Link>
-            <Link
-              href="#"
-              className="text-zinc-400 hover:text-orange-400 transition-colors"
+            </button>
+            <button
+            disabled={user?.isActive === false ? true : false}
+              className={`text-zinc-400 hover:text-orange-400 ${user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"} transition-colors`}
             >
               <ShieldCheck className="inline mr-1 h-4 w-4" />{" "}
               {t("translation.Enable")} 2FA
-            </Link>
+            </button>
           </div>
           <div className="mt-16 space-y-5 pb-32">
             {products.map((product, index) => {

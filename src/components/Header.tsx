@@ -35,8 +35,6 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   };
 
   const pathName = usePathname();
-  
-  
 
   
   const { i18n } = useTranslation();
@@ -76,6 +74,8 @@ useEffect(()=>{
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     window.location.reload();
   }, []);
+
+  const pathName = usePathname()
 
   return (
     <header className="bg-zinc-900 p-4 border-b border-orange-600 fixed z-50 w-full">
@@ -201,47 +201,37 @@ useEffect(()=>{
                     {user.role === "FANTA" || user.role == "Moderator" ? (
                       <Link
                         href="/admin"
-                        className={`block px-4 py-2 hover:bg-orange-500 ${
+                        className={`block px-4 py-2 hover:bg-zinc-600 ${
                           pathName == "/admin"
-                            ? "text-orange-400 hover:bg-orange-600 animate-pulse"
+                            ? "text-orange-400 hover:bg-zinc-600"
                             : ""
                         }`}
                       >
                         Admin
                       </Link>
                     ) : null}
-                    {!user?.isActive ? (
-                      <p
-                        onClick={() => OpenbanModal()}
-                        className="block px-4 py-2 hover:bg-orange-500 cursor-pointer"
-                      >
-                        Profile
-                      </p>
-                    ) : (
+                    
                       <Link
                         href="/me"
-                        className={`block px-4 py-2 hover:bg-orange-500 ${
+                        className={`block px-4 py-2 hover:bg-zinc-600 ${
                           pathName == "/me"
-                            ? "text-orange-400 hover:bg-orange-600 animate-pulse"
+                            ? "text-orange-400 hover:bg-zinc-600"
                             : ""
                         }`}
                       >
                         Profile
                       </Link>
-                    )}
+                    
 
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 hover:bg-zinc-700"
+                      className="block w-full text-left px-4 py-2 hover:bg-zinc-600"
                     >
                       Logout
                     </button>
                   </motion.div>
                 )}
               </AnimatePresence>  
-              <div>
-                {BanModal && <BanModalFunction closeModal={ClosebanModal} />}
-              </div>
             </div>
           ) : (
             <Link
@@ -267,7 +257,7 @@ interface ModalBan {
   closeModal: () => void;
 }
 
-function BanModalFunction({ closeModal }: ModalBan) {
+export function BanModalFunction({ closeModal }: ModalBan) {
   const [BanModal, setIsopenBanModal] = useState<boolean>(false);
   return (
     <motion.div

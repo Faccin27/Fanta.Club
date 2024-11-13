@@ -6,6 +6,7 @@ import { Check, ShoppingCart, Copy, X } from 'lucide-react'
 import img1 from '@/assets/images/app-screen.png'
 import  {useTranslation}  from "react-i18next";
 import img2 from '@/assets/images/logo.png'
+import { MeProps, ProductsComponentes } from './fantalight'
 
 interface Plan {
   id: 'daily' | 'weekly' | 'monthly';
@@ -120,7 +121,7 @@ const PaymentModalContent: React.FC<PaymentModalContentProps> = ({
   </div>
 );
 
-export default function ProductPage() {
+export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user }: MeProps): JSX.Element {
   const {t} = useTranslation()
   const plans: Plan[] = [
     { id: 'daily', name: t("translation.daily"), price: 9.99 },
@@ -350,7 +351,11 @@ export default function ProductPage() {
             </div>
             <button 
               className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={handleAddToCart}
+              onClick={()=> {if(user?.isActive === false) {       
+                window.location.href = "/ban"
+              } else {
+                handleAddToCart();
+              }}}
               disabled={loading}
             >
               {loading ? (
