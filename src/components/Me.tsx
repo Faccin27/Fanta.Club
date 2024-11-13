@@ -237,8 +237,7 @@ export default function Component({ user }: MeProps) {
                 <>
                   <br />
                   <span className={"text-red-500 font-bold"}>
-                    Agora você não pode mais comprar nenhum de nossos produtos
-                    e/ou se aventurar junto de nossa comunidade
+                    {t("translation.ahora")}
                   </span>
                 </>
               ) : null}
