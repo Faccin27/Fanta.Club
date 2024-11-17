@@ -127,7 +127,9 @@
         "login_modal_13":"Already have an account? Join",
         "login_modal_14":"Welcome to",
         "login_modal_15":"Fanta.club",
-        "login_modal_16":"Welcome to fanta.club! Log in with your credentials to access exclusive content. Here, we turn your passion for games into a unique and innovative experience. Have fun and play smart!"
+        "login_modal_16":"Welcome to fanta.club! Log in with your credentials to access exclusive content. Here, we turn your passion for games into a unique and innovative experience. Have fun and play smart!",
+        "role_modal": "Choose an value",
+        "role_modal_1": "Choose one value before submit"
     
 
     }

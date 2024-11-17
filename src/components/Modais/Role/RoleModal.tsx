@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { User } from "@/utils/auth";
 import { api } from "@/utils/api";
 import { ApiError } from "next/dist/server/api-utils";
+import { useTranslation } from "react-i18next";
 
 interface ChnageRoleProps{
     Close: ()=> void;
@@ -17,6 +18,8 @@ export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
     const [newRole, setNewRole] = useState("");
     const [error, setError] = useState<ApiError | null>(null);
     
+
+  const {t} = useTranslation();
 
     useEffect(()=>{
        async function takeUser(){
@@ -39,16 +42,16 @@ export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
     },[])
 
     const handleSubmit = async (evento: React.FormEvent) => {
-        evento.preventDefault();
         try{
             await api.put(`/users/${userId}/role`, {
                 newRole
             });
             console.log("newRole recebido:", newRole);
+            evento.preventDefault();
         }
         catch(err) {
           setError(error);
-          alert(error?.message || "Erro desconhecido");
+          alert(error?.message || t("translation.role_modal_1"));
         }
     }
 
@@ -88,6 +91,12 @@ export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
               className="w-full px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
               required
               >
+                <option
+                value="text" 
+                className="text-zinc-400 font-bold"
+                >
+                    {t("translation.role_modal")}
+                    </option>
                 <option 
                 value="User"
                 className="text-zinc-400 font-bold"
@@ -96,7 +105,7 @@ export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
                     </option>
                 <option 
                 value="Premium"
-                className="ttext-orange-400 font-bold"
+                className="text-orange-400 font-bold"
                 >
                     Premium
                     </option>
@@ -107,7 +116,7 @@ export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
                 </option>
                 <option
                  value="FANTA" 
-                className="font-bold text-orange-400 animate-pulse">
+                className="font-bold text-orange-600 animate-pulse">
                     FANTA
                     </option>
               </select>
