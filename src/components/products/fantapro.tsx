@@ -370,7 +370,7 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
               )}
             </div>
             <button 
-               className={`w-full bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 ${user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"} disabled:cursor-not-allowed`}
+               className={`w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 ${user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"} disabled:cursor-not-allowed`}
               onClick={()=> {if(user?.isActive === false) {       
                 window.location.href = "/ban"
               } else {

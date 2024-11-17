@@ -9,6 +9,7 @@ import PFP from "@/assets/images/b-2.jpg";
 import { useTranslation } from "react-i18next";
 import { checkLoginStatus } from "@/utils/auth";
 import Image from "next/image";
+import ModalChangeRole from "./Modais/Role/RoleModal";
 
 interface AdmComponentProps {
   LogedUser: User | null;
@@ -148,8 +149,9 @@ export default function AdmComponent(
   const [couponPage, setCouponPage] = useState<number>(1);
   const totalUserPages = Math.ceil((users?.length || 0) / itensPerPage);
   const totalCouponPages = Math.ceil(coupons.length / itensPerPage);
-
+  const [isModalRole, setIsModalRole] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [cupom, setCupom] = useState<Coupon | null>(null);
   const [newCoupon, setNewCoupon] = useState<
     Omit<Coupon, "id" | "createdAt" | "createdById">
   >({
@@ -171,6 +173,14 @@ export default function AdmComponent(
   const handleUserPageChange = (newPage: number) => {
     setUserPage(newPage);
   };
+
+const handleOpenRoleModal = () => {
+  setIsModalRole(true);
+}  
+
+const handleCloseRoleModal = () => {
+  setIsModalRole(false);
+}  
 
   const handleCouponPageChange = (newPage: number) => {
     setCouponPage(newPage);
@@ -211,6 +221,10 @@ export default function AdmComponent(
 
     return buttons;
   };
+
+
+
+/// Cupons: /////////////////////////////////////////////////////
 
   const handleCreateCoupon = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -270,6 +284,8 @@ export default function AdmComponent(
       if (!response.ok) {
         throw new Error("Failed to toggle user status");
       }
+//////////////////////////////////////////////////////////////////
+
 
       // Atualiza a lista de usuários com o novo status
       setUsers(
@@ -360,10 +376,13 @@ export default function AdmComponent(
                   <td className="px-4 py-2 border-b border-zinc-800">
                     {userData.email}
                   </td>
-                  <td className="px-4 py-2 border-b border-zinc-800">
-                    <span className={getRoleStyles(userData.role)}>
+                  <td className="px-4 py-2 border-b border-zinc-800 hover:cursor-pointer">
+                    <span className={getRoleStyles(userData.role)} onClick={handleOpenRoleModal}>
                       {userData.role}
                     </span>
+                    <div>
+                      {isModalRole && <ModalChangeRole Close={handleCloseRoleModal} userId={userData.id}/>}
+                    </div>
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
                     {new Date(userData.registeredDate).toLocaleDateString()}

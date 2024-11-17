@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { api, handleApiError } from '@/utils/api';
+import { useTranslation } from "react-i18next";
 
 export default function PasswordChangeModal({
   isOpen,
@@ -17,6 +18,8 @@ export default function PasswordChangeModal({
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const {t} = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,7 +70,7 @@ export default function PasswordChangeModal({
             <X size={24} />
           </button>
           
-          <h3 className="text-2xl font-bold mb-6">Alterar Senha</h3>
+          <h3 className="text-2xl font-bold mb-6">{t("translation.senha_modal")}</h3>
           
           {error && (
             <div className="bg-red-500 text-white p-3 rounded-lg mb-4">
@@ -85,7 +88,7 @@ export default function PasswordChangeModal({
             <div>
               <input
                 type="password"
-                placeholder="Senha atual"
+                placeholder={t("translation.senha_modal_2")}
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 className="w-full px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
@@ -96,7 +99,7 @@ export default function PasswordChangeModal({
             <div>
               <input
                 type="password"
-                placeholder="Nova senha"
+                placeholder={t("translation.senha_modal_3")}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 className="w-full px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
@@ -107,7 +110,7 @@ export default function PasswordChangeModal({
             <div>
               <input
                 type="password"
-                placeholder="Confirme a nova senha"
+                placeholder={t("translation.senha_modal_4")}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
@@ -121,7 +124,7 @@ export default function PasswordChangeModal({
               whileTap={{ scale: 0.98 }}
               className="w-full py-3 bg-orange-400 hover:bg-orange-500 text-white rounded-lg transition-colors text-lg font-semibold"
             >
-              Alterar Senha
+              {t("translation.senha_modal_5")}
             </motion.button>
           </form>
         </div>

@@ -18,6 +18,7 @@ import PasswordChangeModal from "@/components/Modais/Password/PasswordChangeModa
 import { useTranslation } from "react-i18next";
 import ModalLoader from "./Modais/Download/modal-loader";
 import EmailChangeModal from "./Modais/Email/EmailChangeModal";
+import NameModal from "./Modais/Name/NameModal";
 
 interface User {
   id: number;
@@ -34,7 +35,7 @@ interface User {
   updatedAt: string;
 }
 
-interface Order {
+export interface Order {
   id: number;
   name: string;
   price: number;
@@ -97,6 +98,7 @@ export default function Component({ user }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isModalNameOpen, setIsModalNameOpen] = useState<boolean>(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
 
   const audioRefComponent = useRef<HTMLAudioElement | null>(null);
@@ -157,6 +159,14 @@ export default function Component({ user }: MeProps) {
     window.open(downloadLink);
   };
 
+  const handleOpenNameModal = () => {
+    setIsModalNameOpen(true);
+  }  
+
+  const handleCloseNameModal = () => {
+    setIsModalNameOpen(false);
+  }  
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -189,17 +199,21 @@ export default function Component({ user }: MeProps) {
               className="mx-auto h-32 w-32 rounded-full border-2 border-orange-500 shadow-lg"
             />
             <div className="mt-4 flex items-center justify-center">
-              <h1 className="text-3xl font-bold text-orange-400">
+              <h1 
+              className="text-3xl font-bold text-orange-400"
+              >
                 {user?.name}
               </h1>
               <br />
               <button 
+              onClick={handleOpenNameModal}
               disabled={user?.isActive === false ? true: false}
               className={`ml-2 p-1 rounded-full hover:text-orange-400 ${user?.isActive === false ? "cursor-no-drop":"cursor-pointer"} transition-colors `}>
                 <Edit className="mr-2 h-4 w-4" />
                 <span className="sr-only">Edit Profile</span>
               </button>
             </div>
+            <div>{isModalNameOpen && <NameModal onClose={handleCloseNameModal} id={user?.id} user={user}/>}</div>
             <div className="mt-2 flex items-center justify-center text-zinc-400">
               <Mail className="mr-2 h-4 w-4" />
               <span>{user?.email || "email@example.com"}</span>
@@ -252,7 +266,7 @@ export default function Component({ user }: MeProps) {
               </button>
             )}
           </div>
-          <div>{isModalOpen && <ModalLoader onClose={handleCloseModal} />}</div>
+          <div>{isModalOpen && <ModalLoader onClose={handleCloseModal} id={user?.id} user={user}/>}</div>
           <div className="mt-8 flex flex-wrap justify-center space-x-4">
             <button
               disabled={user?.isActive === false ? true : false}

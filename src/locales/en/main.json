@@ -89,20 +89,46 @@
          "fanta_pro_modal":"Fanta Pro is the cheat for you who wants to be a great player without strategy and madness, now you can do this!",
         "fanta_unban_modal":"Fanta Unban help you to go to another level without the Ban.",
         "download_forje":"Download",
-        "sabedoria":"Use our Cheat responsibly. For any questions or complaints, join our Discord:",
-        "thanks1":"Thank you for downloading our cheat; we hope you enjoy every second of it",
+        "sabedoria":"Use our Cheat with responsibly. For any questions or complaints, join our Discord:",
+        "thanks1":"Thank you for downloading our cheat we hope you enjoy every second of it",
         "thanks2":"Destroy your Enemies",
         "thanks3":"and help your friends secure victories. Best regards from the entire team of",
         "thanks4":"Cheers!",
-        "thanks5":"Thank you!",
+        "thanks5":"Thank you",
         "gera":"Make a Cupom",
         "banned":"BANNED",
         "email":"Edit Email",
         "processando":"Wait...",
-        "ahora":"Now you can no longer purchase any of our products and/or venture with our community."
-        
+        "ahora":"Now you can't purchase any of our products and/or venture with our community.",
+        "name_modal":"Change Your NickName",
+        "name_modal_2":"New NickName",
+        "name_modal_3":"Change NickName",
+        "email_modal":"Change Email",
+        "email_modal_2":"New Email",
+        "email_modal_3":"Check the new Email",
+        "email_modal_4":"Change Email",
+        "senha_modal":"Change Password",
+        "senha_modal_2":"Your Password",
+        "senha_modal_3":"New Password",
+        "senha_modal_4":"Repeat your new Password",
+        "senha_modal_5":"Change Password",
+        "login_modal":"Create an Account",
+        "login_modal_2":"E-mail",
+        "login_modal_3":"Password",
+        "login_modal_4":"Forgot your Password?",
+        "login_modal_5":"Join",
+        "login_modal_6":"New here? Crete an Account",
+        "login_modal_7":"Acess our Discord",
+        "login_modal_8":"For questions and support",
+        "login_modal_9":"NickName",
+        "login_modal_10":"I accept the ",
+        "login_modal_11":"Terms of Service",
+        "login_modal_12":"Create and Account",
+        "login_modal_13":"Already have an account? Join",
+        "login_modal_14":"Welcome to",
+        "login_modal_15":"Fanta.club",
+        "login_modal_16":"Welcome to fanta.club! Log in with your credentials to access exclusive content. Here, we turn your passion for games into a unique and innovative experience. Have fun and play smart!"
+    
 
-
-        
     }
 }
