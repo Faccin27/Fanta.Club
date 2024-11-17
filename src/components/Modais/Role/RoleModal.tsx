@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import { motion } from "framer-motion";
 import { User } from "@/utils/auth";
 import { api } from "@/utils/api";
+import { ApiError } from "next/dist/server/api-utils";
 
 interface ChnageRoleProps{
     Close: ()=> void;
@@ -13,8 +14,8 @@ interface ChnageRoleProps{
 export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
     const [isModalRoleOpen, setIsModalRoleOpen] = useState<boolean>(false);
     const [users, setUsersData] = useState<User[] | null>(null);
-    const [newRole, setNewRole] = useState();
-    const [error, setError] = useState<string | null>(null);
+    const [newRole, setNewRole] = useState("");
+    const [error, setError] = useState<ApiError | null>(null);
     
 
     useEffect(()=>{
@@ -31,6 +32,7 @@ export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
         }
         catch(err){
             setError(error);
+            alert(String(error));
         }
        }
        takeUser()
@@ -42,9 +44,11 @@ export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
             await api.put(`/users/${userId}/role`, {
                 newRole
             });
+            console.log("newRole recebido:", newRole);
         }
         catch(err) {
-            alert(err)
+          setError(error);
+          alert(error?.message || "Erro desconhecido");
         }
     }
 
@@ -80,27 +84,29 @@ export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
               <select 
               name="role" 
               id="role"
+              onChange={evento=> setNewRole(evento.target.value)}
               className="w-full px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
               required
               >
                 <option 
-                value={newRole}
+                value="User"
                 className="text-zinc-400 font-bold"
                 >
                     User
                     </option>
                 <option 
-                value={newRole}
+                value="Premium"
                 className="ttext-orange-400 font-bold"
                 >
                     Premium
                     </option>
                 <option 
-                value={newRole}
+                value="Moderator"
                 className="text-purple-400 font-bold"
                 >Moderator
                 </option>
-                <option value={newRole} 
+                <option
+                 value="FANTA" 
                 className="font-bold text-orange-400 animate-pulse">
                     FANTA
                     </option>
