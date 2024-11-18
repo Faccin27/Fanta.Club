@@ -21,7 +21,7 @@ interface ModalLoader{
 }
 
 export default function ModalLoader({onClose, id, user}:ModalLoader,){
-    const [order, setOrders] = useState<Order[] | null>(null);
+    const [order, setOrders] = useState<Order | null>(null);
     const [usere, setUser] = useState();
 
     const {t} = useTranslation();
@@ -45,8 +45,7 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
           }
         };
         fetchOrders();
-      }, [id]);
-    
+      }, [id]);    
 
 
     return(
@@ -115,12 +114,13 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
 
                 <div className="mt-10">
                     <motion.button
+                       // onClick={}
                         type="submit"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="w-full py-3 bg-orange-400 hover:bg-orange-500 text-white rounded-lg transition-colors text-lg font-semibold"
                     >
-                        {t("translation.download_forje")}
+                        {t("translation.download_forje")} {" "} {order?.name}
                     </motion.button>
                 </div>
             </div>

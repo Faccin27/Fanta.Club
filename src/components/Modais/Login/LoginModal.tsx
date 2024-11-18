@@ -113,7 +113,7 @@ export default function EnhancedLoginModal({
             </div>
           </div>
         </div>
-
+        
         {/* Right Column */}
         <div className="w-full md:w-1/2 bg-[#0D0D0E] p-10 relative">
           <button

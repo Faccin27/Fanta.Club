@@ -61,6 +61,19 @@ const getRoleStyles = (role: string) => {
   }
 };
 
+const getTextColor = (role:string) => {
+  switch (role) {
+    case "FANTA":
+      return "text-orange-600 font-bold";
+    case "Moderator":
+      return "text-purple-400 font-bold";
+    case "Premium":
+      return "text-orange-400 font-bold";
+    default:
+      return "text-zinc-400 font-bold";
+  }
+} 
+
 export default function AdmComponent(
   { LogedUser }: AdmComponentProps,
   { user }: MeProps
@@ -143,6 +156,8 @@ export default function AdmComponent(
   }, []);
   ////////////////////////////
 
+ 
+
   const itensPerPage: number = 7;
   const { t } = useTranslation();
   const [userPage, setUserPage] = useState<number>(1);
@@ -160,6 +175,29 @@ export default function AdmComponent(
     expiryDate: "",
   });
 
+   // Cupons Fetch ////////////////////////////
+   useEffect(()=> {
+    const fetchCupons = async () => {
+      try{
+          const [cuponsResponse] = await Promise.all([
+            fetch("http://localhost:3535/coupons")
+          ]);
+          if (!cuponsResponse.ok) {
+            throw new Error("Failed to fetch coupons data")
+          };
+          
+          const couponsData = await cuponsResponse.json();
+          setCupom(couponsData);
+      } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to fetch data");
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchCupons();      
+  },[])
+////////////////////////////
+
   const currentUsers = users.slice(
     (userPage - 1) * itensPerPage,
     userPage * itensPerPage
@@ -176,7 +214,8 @@ export default function AdmComponent(
 
 const handleOpenRoleModal = () => {
   setIsModalRole(true);
-}  
+};
+
 
 const handleCloseRoleModal = () => {
   setIsModalRole(false);
@@ -377,9 +416,18 @@ const handleCloseRoleModal = () => {
                     {userData.email}
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800 hover:cursor-pointer">
-                    <span className={getRoleStyles(userData.role)} onClick={handleOpenRoleModal}>
+                    <div className="relative">
+                    <span className={getRoleStyles(userData.role)} >
+                      <button
+                      className={`${usere?.role === "Moderator" && userData.role === "FANTA" ? "cursor-no-drop" : "cursor-pointer"}`}
+                      disabled={usere?.role === "Moderator" && userData.role === "FANTA" ? true : false}
+                      onClick={handleOpenRoleModal}
+                      >
+
                       {userData.role}
+                      </button>
                     </span>
+                    </div>
                     <div>
                       {isModalRole && <ModalChangeRole Close={handleCloseRoleModal} userId={userData.id}/>}
                     </div>

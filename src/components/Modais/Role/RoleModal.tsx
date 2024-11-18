@@ -1,7 +1,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
-import { User } from "@/utils/auth";
+import { checkLoginStatus, User } from "@/utils/auth";
 import { api } from "@/utils/api";
 import { ApiError } from "next/dist/server/api-utils";
 import { useTranslation } from "react-i18next";
@@ -14,13 +14,14 @@ interface ChnageRoleProps{
 
 export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
     const [isModalRoleOpen, setIsModalRoleOpen] = useState<boolean>(false);
-    const [users, setUsersData] = useState<User[] | null>(null);
+    const [users, setUsersData] = useState<User | null>(null);
     const [newRole, setNewRole] = useState("");
     const [error, setError] = useState<ApiError | null>(null);
     
 
   const {t} = useTranslation();
 
+  
     useEffect(()=>{
        async function takeUser(){
         try{
@@ -40,6 +41,21 @@ export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
        }
        takeUser()
     },[])
+
+    
+    const [usere, setUser] = useState<User | null>(null);
+    useEffect(() => {
+      async function fetchUserData() {
+        try {
+          const { user } = await checkLoginStatus();
+          setUser(user);
+        } catch (err) {
+          alert(err);
+        };
+      }
+  
+      fetchUserData();
+    }, []);
 
     const handleSubmit = async (evento: React.FormEvent) => {
         try{
@@ -114,11 +130,13 @@ export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
                 className="text-purple-400 font-bold"
                 >Moderator
                 </option>
-                <option
+                {usere?.role === "Moderator" ?  null : (
+                  <option
                  value="FANTA" 
                 className="font-bold text-orange-600 animate-pulse">
                     FANTA
                     </option>
+                )}
               </select>
             </div>
             <motion.button
