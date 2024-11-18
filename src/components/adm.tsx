@@ -120,17 +120,24 @@ export default function AdmComponent(
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [usersResponse] = await Promise.all([
+        const [usersResponse, couponsResponse] = await Promise.all([
           fetch("http://localhost:3535/users"),
+          fetch("http://localhost:3535/coupons"),
         ]);
 
         if (!usersResponse.ok) {
           throw new Error("Failed to fetch users");
         }
 
+        if (!couponsResponse.ok) {
+          throw new Error("Failed to fetch coupons");
+        }
+
         const userData = await usersResponse.json();
+        const couponData = await couponsResponse.json();
 
         setUsers(userData);
+        setCoupons(couponData);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to fetch data");
       } finally {

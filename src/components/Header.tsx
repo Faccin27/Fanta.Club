@@ -34,7 +34,6 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
     setIsopenBanModal(false);
   };
 
-  const pathName = usePathname();
 
   
   const { i18n } = useTranslation();
