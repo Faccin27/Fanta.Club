@@ -130,21 +130,27 @@ export default function AdmComponent(
     fetchUserData();
   }, []);
 
-  //// Users Fetch /////////////////////////
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [usersResponse] = await Promise.all([
+        const [usersResponse, couponsResponse] = await Promise.all([
           fetch("http://localhost:3535/users"),
+          fetch("http://localhost:3535/coupons"),
         ]);
 
         if (!usersResponse.ok) {
           throw new Error("Failed to fetch users");
         }
 
+        if (!couponsResponse.ok) {
+          throw new Error("Failed to fetch coupons");
+        }
+
         const userData = await usersResponse.json();
+        const couponData = await couponsResponse.json();
 
         setUsers(userData);
+        setCoupons(couponData);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to fetch data");
       } finally {
@@ -154,7 +160,6 @@ export default function AdmComponent(
 
     fetchData();
   }, []);
-  ////////////////////////////
 
  
 
@@ -167,6 +172,9 @@ export default function AdmComponent(
   const [isModalRole, setIsModalRole] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cupom, setCupom] = useState<Coupon | null>(null);
+  const [modalFiltroOpen, setModalFiltroOpen] = useState<boolean>(false);
+
+  
   const [newCoupon, setNewCoupon] = useState<
     Omit<Coupon, "id" | "createdAt" | "createdById">
   >({
@@ -221,6 +229,13 @@ const handleCloseRoleModal = () => {
   setIsModalRole(false);
 }  
 
+const handleOpenModalFiltro = () => {
+  setModalFiltroOpen(true);
+};
+
+const handleCloseModalFiltro = () => {
+  setModalFiltroOpen(false);
+};
   const handleCouponPageChange = (newPage: number) => {
     setCouponPage(newPage);
   };
@@ -371,6 +386,13 @@ const handleCloseRoleModal = () => {
         >
           {t("translation.adm")}
         </motion.h1>
+      </div>
+      <div className=" flex ml-[80rem]">
+        <button 
+        onClick={handleOpenModalFiltro}
+        className="font-bold text-zinc-200 border-4 border-orange-600 rounded-md bg-orange-600 hover:bg-orange-700 hover:text-zinc-300 hover:border-orange-700 text-xl px-4">
+          {t("translation.filter")}
+        </button>
       </div>
       <section className="container mx-auto px-4">
         <h2 className="text-2xl font-bold mb-4 text-orange-400">

@@ -10,6 +10,7 @@ import {
   Mail,
   RefreshCw,
   ShieldCheck,
+  Pencil,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,6 +20,7 @@ import { useTranslation } from "react-i18next";
 import ModalLoader from "./Modais/Download/modal-loader";
 import EmailChangeModal from "./Modais/Email/EmailChangeModal";
 import NameModal from "./Modais/Name/NameModal";
+import AboutModal from "./Modais/About/AboutModal";
 
 interface User {
   id: number;
@@ -96,11 +98,13 @@ const products: Product[] = [
 
 export default function Component({ user }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [isModalAboutOpen, setIsModalAboutOpen] = useState<boolean>(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalNameOpen, setIsModalNameOpen] = useState<boolean>(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
 
+  
   const audioRefComponent = useRef<HTMLAudioElement | null>(null);
 
   const playAudio = () => {
@@ -144,17 +148,25 @@ export default function Component({ user }: MeProps) {
     const order = orders.find((order) => order.name === productName);
     if (order) {
       if (order.expiration === "LIFETIME") return "NEVER";
-
+      
       const expirationDate = new Date(order.expirationDate);
       const today = new Date();
       if (today >= expirationDate) return 0;
-
+      
       const diffTime = Math.abs(expirationDate.getTime() - today.getTime());
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       return diffDays;
     }
     return null;
   };
+  
+    const handleOpenModalAbout = () => {
+      setIsModalAboutOpen(true);
+    };
+    const handleCloseModalAbout = () => {
+      setIsModalAboutOpen(false);
+    };
+
   const handleDownload = (downloadLink: string) => {
     window.open(downloadLink);
   };
@@ -205,13 +217,6 @@ export default function Component({ user }: MeProps) {
                 {user?.name}
               </h1>
               <br />
-              <button 
-              onClick={handleOpenNameModal}
-              disabled={user?.isActive === false ? true: false}
-              className={`ml-2 p-1 rounded-full hover:text-orange-400 ${user?.isActive === false ? "cursor-no-drop":"cursor-pointer"} transition-colors `}>
-                <Edit className="mr-2 h-4 w-4" />
-                <span className="sr-only">Edit Profile</span>
-              </button>
             </div>
             <div>{isModalNameOpen && <NameModal onClose={handleCloseNameModal} id={user?.id} user={user}/>}</div>
             <div className="mt-2 flex items-center justify-center text-zinc-400">
@@ -287,6 +292,19 @@ export default function Component({ user }: MeProps) {
               {t("translation.Enable")} 2FA
             </button>
           </div>
+          <br/>
+            <div className="max-w-fit ml-auto mr-auto">
+
+            <button
+            onClick={handleOpenModalAbout}
+            className={`text-zinc-400 hover:text-orange-400 ${user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"} transition-colors`}
+            >
+              <Pencil className="inline mr-1 h-4 w-4" />{" "}Tell us about you
+            </button>
+            </div>
+            <div>
+              {isModalAboutOpen && <AboutModal isOpen={handleOpenModalAbout} onClose={handleCloseModalAbout} userId={user?.id} />}
+            </div>
           <div className="mt-16 space-y-5 pb-32">
             {products.map((product, index) => {
               const isActive = isProductActive(product.name);

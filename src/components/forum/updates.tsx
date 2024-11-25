@@ -121,17 +121,6 @@ const Updates: React.FC = () => {
         <UpdatesIcon className="mr-2" />
         <h1 className="text-2xl font-bold">{t("translation.updates_title")}</h1>
         <div className='relative left-3/4 md:left-3/4'>
-      {canPostAnnouncement && (
-          <div className="flex justify-between gap-4">
-          
-          <button
-            className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
-            onClick={() => router.push("/post")}
-          >
-            {t("translation.Post")}
-          </button>
-          </div>
-        )}
         </div>
       </div>
       <motion.div

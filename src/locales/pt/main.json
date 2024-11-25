@@ -129,7 +129,11 @@
         "login_modal_15":"Fanta.club",
         "login_modal_16":"Bem-vindo ao fanta.club! Entre com suas credenciais para acessar conteúdos exclusivos. Aqui transformamos o seu tesão por jogos em uma experiencia unica e inovadora. Divirta-se e jogue com inteligência!",
         "role_modal": "Escolha um valor",
-        "role_modal_1": "Escolha um valor antes de dar o submit"
+        "role_modal_1": "Escolha um valor antes de dar o submit",
+        "filter":"Filtrar",
+        "filter_cargo":"Filtrar o usuário pelo:",
+        "filter_nome":"Nome:",
+        "filter_role":"Cargo:"
  
  
     }

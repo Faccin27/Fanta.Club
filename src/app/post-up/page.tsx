@@ -1,11 +1,11 @@
-"use client";
+"use client"
+
 import { useEffect, useState } from 'react';
 import { checkLoginStatus, User } from '@/utils/auth';
-import Post from "@/components/posts";
+import PostUpdates from '@/components/post-updates';
 
-export default function PostPage(){
-
-  const [user, setUser] = useState<User | null>(null);
+export default function PagePostUp(){
+    const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,7 +40,7 @@ export default function PostPage(){
 
   return(
     <>
-    <Post/>
+    <PostUpdates/>
     </>
   )
 }

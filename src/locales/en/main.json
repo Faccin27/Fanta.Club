@@ -47,7 +47,7 @@
         "regis":"Registraded in",
         "action_admin":"Action",
         "admin_ativo":"Active",
-        "admin_nao_ativo":"indicative",
+        "admin_nao_ativo":"Indicative",
         "cupom_name":"Name",
         "cupom_discount":"Discount",
         "cupom_created_at":"Created at",
@@ -129,7 +129,11 @@
         "login_modal_15":"Fanta.club",
         "login_modal_16":"Welcome to fanta.club! Log in with your credentials to access exclusive content. Here, we turn your passion for games into a unique and innovative experience. Have fun and play smart!",
         "role_modal": "Choose an value",
-        "role_modal_1": "Choose one value before submit"
+        "role_modal_1": "Choose one value before submit",
+        "filter":"Filter",
+        "filter_cargo":"Filter user by:",
+        "filter_nome":"Name:",
+        "filter_role":"Role:"
     
 
     }
