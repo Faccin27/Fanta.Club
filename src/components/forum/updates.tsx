@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { checkLoginStatus, User as AuthUser } from "@/utils/auth"; 
 import { useRouter } from 'next/navigation';
 import { motion } from "framer-motion";
+import { Types } from './announcements';
 
 interface Author {
   name: string;
@@ -69,10 +70,42 @@ interface Order {
   expirationDate: string;
 }
 
+
+enum Type{
+  Updates = "Updates"
+}
+
+interface Updates {
+  id: number;
+  title: string;
+  content: string;
+  type: Type;
+  createdAt: string | number | bigint | boolean | null | undefined;
+  createdById: number;
+  createdByPhoto:string | undefined;
+  createdByName: string | undefined;
+}
+
+
 const Updates: React.FC = () => {
   const {t} = useTranslation()
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [updates, setUpdate] = useState<Updates[] | undefined>(undefined);
   const [orders, setOrders] = useState<Order[]>([]);
+  
+  useEffect((()=>{
+    const fetchUpdates = async () => {
+      try{
+        const response = await fetch("http://localhost:3535/anun/buscaType?type=Updates");
+        const result: Updates[] = await response.json();
+        setUpdate(result);
+      } catch(err){
+        throw new Error(`Encontramos um erro para poder fazer o GET dos Updates. Verifique o erro: ${err}`)
+      };
+    };
+    fetchUpdates();
+  }),[]);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
@@ -110,8 +143,7 @@ const Updates: React.FC = () => {
 
 
 
-  const canPostAnnouncement = user && (user.role === 'FANTA' || user.role === 'Moderator');
-  const canPostConfig = user && (user.role === "Premium");
+  const canPostUpdate = user && (user.role === 'FANTA' || user.role === 'Moderator');
   const router = useRouter()
 
 
@@ -120,9 +152,18 @@ const Updates: React.FC = () => {
       <div className="flex items-center mb-6">
         <UpdatesIcon className="mr-2" />
         <h1 className="text-2xl font-bold">{t("translation.updates_title")}</h1>
-        <div className='relative left-3/4 md:left-3/4'>
+        {canPostUpdate ? (
+          <div>
+          <button
+          className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors ml-[61rem]"
+          onClick={()=>router.push("/post-up")}
+          >
+                Post
+          </button>
         </div>
-      </div>
+
+):null}
+</div>
       <motion.div
       initial={{ opacity: 2, x: 60 }}
       animate={{ opacity: 1, x: 0 }}
@@ -131,12 +172,12 @@ const Updates: React.FC = () => {
        delay: 0.1
       }}
       className="space-y-4">
-        {updates.map((update) => (
+        {updates?.map((update) => (
           <div key={update.id} className="bg-zinc-700 shadow rounded-lg p-4">
             <div className="flex items-center mb-2">
               <Image
-                src={update.author.image}
-                alt={`${update.author.name}'s profile picture`}
+                src={update.createdByPhoto || pfp}
+                alt={`profile picture`}
                 width={40}
                 height={40}
                 className="rounded-full mr-3"
@@ -148,7 +189,7 @@ const Updates: React.FC = () => {
                   </h2>
                 </Link>
                 <p className="text-sm text-gray-400">
-                  Por: {update.author.name} em {update.date}
+                  Criado por: <strong className='fonrt-bold text-orange-500'>{update.createdByName}</strong> no horário:{update.createdAt}
                 </p>
               </div>
             </div>

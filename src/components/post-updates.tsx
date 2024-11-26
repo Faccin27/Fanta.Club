@@ -111,7 +111,9 @@ useEffect(() => {
           title: title,
           content: content,
           type: "Updates",
-          createdById: usere?.id
+          createdById: usere?.id,
+          createdByPhoto:usere?.photo || "",
+          createdByName: usere?.name || ""
         }),
       });
       alert("Postagem realizada com sucesso!")

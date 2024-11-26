@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { api } from "@/utils/api";
 import { ApiError } from "next/dist/server/api-utils";
 import { checkLoginStatus } from "@/utils/auth";
-
+import pfp from '@/assets/images/pfp.png'
 interface User {
   id: number;
   name: string;
@@ -110,15 +110,18 @@ const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
         "Content-Type": "application/json",
       },
       body:JSON.stringify({
-        title: title,
-        content: content,
-        type: "Announcements",
-        createdById: usere?.id
+        title: title, 
+        content: content, 
+        type: "Announcements", 
+        createdById: usere?.id, 
+        createdByPhoto:usere?.photo || "",
+        createdByName: usere?.name || ""
       }),
     });
+    console.log(title)
     alert("Postagem realizada com sucesso!")
     setTitle("");
-    setContent("");
+    setContent("");  
   } catch(err){
     alert(err);
     throw new Error(`We can't post the update here, erro: ${err}`);
