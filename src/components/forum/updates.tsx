@@ -71,7 +71,7 @@ interface Order {
 }
 
 
-enum Type{
+export enum Type{
   Updates = "Updates"
 }
 
@@ -85,6 +85,9 @@ interface Updates {
   createdByPhoto:string | undefined;
   createdByName: string | undefined;
 }
+
+
+
 
 
 const Updates: React.FC = () => {
