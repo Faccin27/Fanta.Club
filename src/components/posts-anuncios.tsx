@@ -10,7 +10,10 @@ import { useTranslation } from "react-i18next";
 import { api } from "@/utils/api";
 import { ApiError } from "next/dist/server/api-utils";
 import { checkLoginStatus } from "@/utils/auth";
-import pfp from '@/assets/images/pfp.png'
+import DOMPurify from "dompurify";
+
+
+
 interface User {
   id: number;
   name: string;
@@ -103,6 +106,9 @@ useEffect(() => {
 const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
   evento.preventDefault();
   console.log(usere);
+  const contentWithOutTags = DOMPurify.sanitize(content,{ ALLOWED_TAGS: [] });
+  console.log(contentWithOutTags);
+
   try{
     await fetch("http://localhost:3535/anun", {
       method:"POST",
@@ -111,7 +117,7 @@ const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
       },
       body:JSON.stringify({
         title: title, 
-        content: content, 
+        content: contentWithOutTags, 
         type: "Announcements", 
         createdById: usere?.id, 
         createdByPhoto:usere?.photo || "",
@@ -199,6 +205,7 @@ const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
                         className="quill-editor custom-toolbar text-white outline-none border-zinc-200  bg-zinc-800 h-40"
                         style={{ minWidth: "auto", minHeight: "auto" }}
                       />
+
                     </motion.div>
                   </div>
                   <motion.button

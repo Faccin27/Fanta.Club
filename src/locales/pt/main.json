@@ -69,7 +69,7 @@
         "frequently_asked_questions":"Perguntas Frequentes",
         "configs_title":"Configurações",
         "anuncios":"Anúncios",
-        "pesquisar":"Pesquisar no Fórum",
+        "pesquisar":"Pesquisar por usuário",
         "plan":"Selecione o plano",
         "service":"Nosso serviço de remoção de banimento é a solução ideal para você que deseja recuperar o acesso às suas contas em jogos e plataformas protegidas por anticheat. Com tecnologia de bypass avançada, você poderá voltar a jogar sem preocupações.",
         "banSourcers":"Recursos do Serviço de Remoção de Banimento",
@@ -133,7 +133,8 @@
         "filter":"Filtrar",
         "filter_cargo":"Filtrar o usuário pelo:",
         "filter_nome":"Nome:",
-        "filter_role":"Cargo:"
+        "filter_role":"Cargo:",
+        "filter_all":"Todos os usuários"
  
  
     }

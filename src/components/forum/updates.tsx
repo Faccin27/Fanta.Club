@@ -152,9 +152,11 @@ const Updates: React.FC = () => {
 
   return (
     <div className="p-4">
-      <div className="flex items-center mb-6">
-        <UpdatesIcon className="mr-2" />
-        <h1 className="text-2xl font-bold">{t("translation.updates_title")}</h1>
+      <div className="flex items-center justify-center mb-6">
+      <div className="flex items-center">
+      <UpdatesIcon className='mr-3'/>
+          <h1 className="text-2xl font-bold">{t("translation.Updates")}</h1>
+        </div>
         {canPostUpdate ? (
           <div>
           <button

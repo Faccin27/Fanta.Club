@@ -3,14 +3,13 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { Gavel, X, Trash2 } from "lucide-react";
+import { Gavel, X, Trash2, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import PFP from "@/assets/images/b-2.jpg";
 import { useTranslation } from "react-i18next";
 import { checkLoginStatus } from "@/utils/auth";
 import Image from "next/image";
 import ModalChangeRole from "./Modais/Role/RoleModal";
-
 interface AdmComponentProps {
   LogedUser: User | null;
 }
@@ -61,7 +60,7 @@ const getRoleStyles = (role: string) => {
   }
 };
 
-const getTextColor = (role:string) => {
+const getTextColor = (role: string) => {
   switch (role) {
     case "FANTA":
       return "text-orange-600 font-bold";
@@ -72,7 +71,7 @@ const getTextColor = (role:string) => {
     default:
       return "text-zinc-400 font-bold";
   }
-} 
+};
 
 export default function AdmComponent(
   { LogedUser }: AdmComponentProps,
@@ -82,10 +81,8 @@ export default function AdmComponent(
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isDisable, setIsDisable] = useState<boolean>(true);
 
   const [orders, setOrders] = useState<Order[]>([]);
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const rota = useRouter();
 
   // User Fetch /////////////////////////
@@ -161,20 +158,20 @@ export default function AdmComponent(
     fetchData();
   }, []);
 
- 
-
   const itensPerPage: number = 7;
   const { t } = useTranslation();
   const [userPage, setUserPage] = useState<number>(1);
   const [couponPage, setCouponPage] = useState<number>(1);
   const totalUserPages = Math.ceil((users?.length || 0) / itensPerPage);
   const totalCouponPages = Math.ceil(coupons.length / itensPerPage);
+  const [indentifier, setId] = useState<number | null>(null);
+  const [userSearch, setUserSearch] = useState<User | null>(null);
+  const [searched, setSearched] = useState<string>("");
   const [isModalRole, setIsModalRole] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cupom, setCupom] = useState<Coupon | null>(null);
   const [modalFiltroOpen, setModalFiltroOpen] = useState<boolean>(false);
 
-  
   const [newCoupon, setNewCoupon] = useState<
     Omit<Coupon, "id" | "createdAt" | "createdById">
   >({
@@ -183,28 +180,28 @@ export default function AdmComponent(
     expiryDate: "",
   });
 
-   // Cupons Fetch ////////////////////////////
-   useEffect(()=> {
+  // Cupons Fetch ////////////////////////////
+  useEffect(() => {
     const fetchCupons = async () => {
-      try{
-          const [cuponsResponse] = await Promise.all([
-            fetch("http://localhost:3535/coupons")
-          ]);
-          if (!cuponsResponse.ok) {
-            throw new Error("Failed to fetch coupons data")
-          };
-          
-          const couponsData = await cuponsResponse.json();
-          setCupom(couponsData);
+      try {
+        const [cuponsResponse] = await Promise.all([
+          fetch("http://localhost:3535/coupons"),
+        ]);
+        if (!cuponsResponse.ok) {
+          throw new Error("Failed to fetch coupons data");
+        }
+
+        const couponsData = await cuponsResponse.json();
+        setCupom(couponsData);
       } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch data");
-    } finally {
-      setLoading(false);
-    }
-  };
-  fetchCupons();      
-  },[])
-////////////////////////////
+        setError(err instanceof Error ? err.message : "Failed to fetch data");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCupons();
+  }, []);
+  ////////////////////////////
 
   const currentUsers = users.slice(
     (userPage - 1) * itensPerPage,
@@ -220,22 +217,22 @@ export default function AdmComponent(
     setUserPage(newPage);
   };
 
-const handleOpenRoleModal = () => {
-  setIsModalRole(true);
-};
+  const handleOpenRoleModal = (id:number) => {
+    setId(id);
+    setIsModalRole(true);
+  };
 
+  const handleCloseRoleModal = () => {
+    setIsModalRole(false);
+  };
 
-const handleCloseRoleModal = () => {
-  setIsModalRole(false);
-}  
+  const handleOpenModalFiltro = () => {
+    setModalFiltroOpen(true);
+  };
 
-const handleOpenModalFiltro = () => {
-  setModalFiltroOpen(true);
-};
-
-const handleCloseModalFiltro = () => {
-  setModalFiltroOpen(false);
-};
+  const handleCloseModalFiltro = () => {
+    setModalFiltroOpen(false);
+  };
   const handleCouponPageChange = (newPage: number) => {
     setCouponPage(newPage);
   };
@@ -276,9 +273,7 @@ const handleCloseModalFiltro = () => {
     return buttons;
   };
 
-
-
-/// Cupons: /////////////////////////////////////////////////////
+  /// Cupons: /////////////////////////////////////////////////////
 
   const handleCreateCoupon = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -338,8 +333,7 @@ const handleCloseModalFiltro = () => {
       if (!response.ok) {
         throw new Error("Failed to toggle user status");
       }
-//////////////////////////////////////////////////////////////////
-
+      //////////////////////////////////////////////////////////////////
 
       // Atualiza a lista de usuários com o novo status
       setUsers(
@@ -375,6 +369,21 @@ const handleCloseModalFiltro = () => {
     );
   }
 
+
+  const handleSubmit = async (evento: React.FormEvent) => {
+    evento.preventDefault();
+    try{
+      const response = await fetch(`http://localhost:3535/users/buscaNome?userName=${searched}`)
+      const result:User = await response.json();
+      setUserSearch(result);
+      console.log("Usuário encontrado");
+    } catch(err){
+      console.log("Usuário NÃO encontrado");
+      throw new Error(`We can't search the user, check your internet status, error: ${err}`);
+    };
+  };
+
+
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100">
       <div className="p-8 font-sans">
@@ -387,13 +396,39 @@ const handleCloseModalFiltro = () => {
           {t("translation.adm")}
         </motion.h1>
       </div>
-      <div className=" flex ml-[80rem]">
-        <button 
-        onClick={handleOpenModalFiltro}
-        className="font-bold text-zinc-200 border-4 border-orange-600 rounded-md bg-orange-600 hover:bg-orange-700 hover:text-zinc-300 hover:border-orange-700 text-xl px-4">
-          {t("translation.filter")}
-        </button>
-      </div>
+      {/* Começo área de procurar por user */}
+      <form onSubmit={handleSubmit}>
+        <div className="flex justify-end mr-[84px]">
+          <button
+          type="submit"
+          className="absolute text-zinc-400 mr-4  mt-2 hover:text-green-500"
+          >
+
+        <Search
+              size={18}
+            />
+          </button>
+          <input
+          value={searched}
+          onChange={event=> setSearched(event.target.value)}
+            type="text"
+            placeholder={t("translation.pesquisar")}
+            className="bg-zinc-800 text-zinc-100 pl-10 pr-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+        </div>
+        </form>
+        {userSearch ? (
+          <div className="flex justify-end mb-5 mt-5 mr-36">
+          <button
+          onClick={()=>setUserSearch(null)}
+          className="absolute mr-4 px-4 py-2 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-700"
+          >
+            {t("translation.filter_all")}
+          </button>
+          </div>
+        ) : null}
+          
+        {/* Fim área de procurar por user */}
       <section className="container mx-auto px-4">
         <h2 className="text-2xl font-bold mb-4 text-orange-400">
           {t("translation.user")}
@@ -420,84 +455,192 @@ const handleCloseModalFiltro = () => {
               </tr>
             </thead>
             <tbody>
-              {currentUsers.map((userData) => (
-                <tr key={userData.id} className="bg-zinc-800 transition-colors">
+              {userSearch ? (
+              
+                  <tr key={userSearch?.id} className="bg-zinc-800 transition-colors">
                   <td className="px-4 py-2 border-b border-zinc-800">
-                    {userData.id}
+                    {userSearch?.id}
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
                     <Link
-                      href={`/user/${userData.id}`}
+                      href={`/user/${userSearch?.id}`}
                       target="_blank"
                       className="text-orange-600 font-medium hover:text-orange-700 transition-colors"
                     >
-                      {userData.name}
+                      {userSearch?.name}
                     </Link>
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
-                    {userData.email}
+                    {userSearch?.email}
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800 hover:cursor-pointer">
                     <div className="relative">
-                    <span className={getRoleStyles(userData.role)} >
-                      <button
-                      className={`${usere?.role === "Moderator" && userData.role === "FANTA" ? "cursor-no-drop" : "cursor-pointer"}`}
-                      disabled={usere?.role === "Moderator" && userData.role === "FANTA" ? true : false}
-                      onClick={handleOpenRoleModal}
-                      >
-
-                      {userData.role}
-                      </button>
-                    </span>
+                      <span className={getRoleStyles(userSearch.role)}>
+                        <button
+                          className={`${
+                            usere?.role === "Moderator" &&
+                            userSearch?.role === "FANTA"
+                              ? "cursor-no-drop"
+                              : "cursor-pointer"
+                          }`}
+                          disabled={
+                            usere?.role === "Moderator" &&
+                            userSearch?.role === "FANTA"
+                              ? true
+                              : false
+                          }
+                          onClick={()=>handleOpenRoleModal(userSearch.id)}
+                        >
+                          {userSearch?.role}
+                        </button>
+                      </span>
                     </div>
                     <div>
-                      {isModalRole && <ModalChangeRole Close={handleCloseRoleModal} userId={userData.id}/>}
+                      {isModalRole && (
+                        <ModalChangeRole
+                          Close={handleCloseRoleModal}
+                          userId={userSearch.id}
+                        />
+                      )}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
-                    {new Date(userData.registeredDate).toLocaleDateString()}
+                    {new Date(userSearch.registeredDate).toLocaleDateString()}
                   </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
-                    <span
-                      className={`font-medium ${
-                        userData.isActive ? "text-green-400" : "text-red-400"
-                      }`}
-                    >
-                      {userData.isActive
-                        ? t("translation.admin_ativo")
-                        : t("translation.admin_nao_ativo")}
-                    </span>
-                  </td>
+                      <span
+                        className={`font-medium ${
+                          userSearch.isActive ? "text-green-400" : "text-red-400"
+                        }`}
+                      >
+                        {userSearch.isActive
+                          ? t("translation.admin_ativo")
+                          : t("translation.admin_nao_ativo")}
+                      </span>
+                    </td>
                   <td className="px-4 py-2 border-b border-zinc-800">
                     <button
-                      onClick={() => handleToggleUserStatus(userData.id)}
+                      onClick={() => handleToggleUserStatus(userSearch.id)}
                       disabled={
-                        userData?.role === "FANTA" ||
-                        (userData?.role === "Moderator" &&
+                        userSearch?.role === "FANTA" ||
+                        (userSearch?.role === "Moderator" &&
                           usere?.role === "Moderator")
                           ? true
                           : false
                       }
                       className={`${
-                        userData.isActive
+                        userSearch?.isActive
                           ? "bg-red-600 hover:bg-red-700 text-white"
                           : "bg-green-600 hover:bg-green-700 text-white"
                       } text-white font-medium px-3 py-[6px] rounded hover:bg-red-700 transition-colors flex items-center ${
-                        userData.role === "FANTA" ||
-                        (userData.role === "Moderator" &&
+                        userSearch?.role === "FANTA" ||
+                        (userSearch?.role === "Moderator" &&
                           usere?.role === "Moderator")
                           ? "cursor-no-drop"
                           : "cursor-pointer"
                       }`}
                     >
                       <Gavel size={22} className="mr-2" />
-                      {userData.isActive
+                      {userSearch?.isActive
                         ? t("translation.ban")
                         : t("translation.unban")}
                     </button>
                   </td>
                 </tr>
-              ))}
+              ) : (
+                currentUsers.map((userData) => (
+                  <tr key={userData.id} className="bg-zinc-800 transition-colors">
+                    <td className="px-4 py-2 border-b border-zinc-800">
+                      {userData.id}
+                    </td>
+                    <td className="px-4 py-2 border-b border-zinc-800">
+                      <Link
+                        href={`/user/${userData.id}`}
+                        target="_blank"
+                        className="text-orange-600 font-medium hover:text-orange-700 transition-colors"
+                      >
+                        {userData.name}
+                      </Link>
+                    </td>
+                    <td className="px-4 py-2 border-b border-zinc-800">
+                      {userData.email}
+                    </td>
+                    <td className="px-4 py-2 border-b border-zinc-800">
+                      <span className={getRoleStyles(userData.role)}>
+                      <button
+                          className={`${
+                            usere?.role === "Moderator" &&
+                            userData?.role === "FANTA"
+                              ? "cursor-no-drop"
+                              : "cursor-pointer"
+                          }`}
+                          disabled={
+                            usere?.role === "Moderator" &&
+                            userData?.role === "FANTA"
+                              ? true
+                              : false
+                          }
+                          onClick={()=>handleOpenRoleModal(userData.id)}
+                        >
+                        {userData.role}
+                        </button>
+                      </span>
+                    <div>
+                      {isModalRole && (
+                        <ModalChangeRole
+                          Close={handleCloseRoleModal}
+                          userId={userData.id}
+                        />
+                      )}
+                    </div>
+                    </td>
+                    <td className="px-4 py-2 border-b border-zinc-800">
+                      {new Date(userData.registeredDate).toLocaleDateString()}
+                    </td>
+                    <td className="px-4 py-2 border-b border-zinc-800">
+                      <span
+                        className={`font-medium ${
+                          userData.isActive ? "text-green-400" : "text-red-400"
+                        }`}
+                      >
+                        {userData.isActive
+                          ? t("translation.admin_ativo")
+                          : t("translation.admin_nao_ativo")}
+                      </span>
+                    </td>
+                    <td className="px-4 py-2 border-b border-zinc-800">
+                      <button
+                        onClick={() => handleToggleUserStatus(userData.id)}
+                        disabled={
+                          userData?.role === "FANTA" ||
+                          (userData?.role === "Moderator" &&
+                            usere?.role === "Moderator")
+                            ? true
+                            : false
+                        }
+                        className={`${
+                          userData.isActive
+                            ? "bg-red-600 hover:bg-red-700 text-white"
+                            : "bg-green-600 hover:bg-green-700 text-white"
+                        } text-white font-medium px-3 py-[6px] rounded hover:bg-red-700 transition-colors flex items-center ${
+                          userData.role === "FANTA" ||
+                          (userData.role === "Moderator" &&
+                            usere?.role === "Moderator")
+                            ? "cursor-no-drop"
+                            : "cursor-pointer"
+                        }`}
+                      >
+                        <Gavel size={22} className="mr-2" />
+                        {userData.isActive
+                          ? t("translation.ban")
+                          : t("translation.unban")}
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+              
+               
             </tbody>
           </table>
         </div>

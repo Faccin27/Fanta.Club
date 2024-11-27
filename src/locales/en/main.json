@@ -69,7 +69,7 @@
         "frequently_asked_questions":"Frequently Asked Questions",
         "configs_title":"Configs",
         "anuncios":"Announcements",
-        "pesquisar":"Search in Forum",
+        "pesquisar":"Search for User",
         "plan":"Select the Plan",
         "service":"Our unban service is the ideal solution for you who want to regain access to your accounts on anticheat-protected games and platforms. With advanced bypass technology, you can get back to gaming worry-free.",
         "banSourcers":"Features of Unbanning Service",
@@ -133,7 +133,8 @@
         "filter":"Filter",
         "filter_cargo":"Filter user by:",
         "filter_nome":"Name:",
-        "filter_role":"Role:"
+        "filter_role":"Role:",
+        "filter_all":"Show All Users"
     
 
     }

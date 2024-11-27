@@ -64,17 +64,6 @@ const categoryComponents = {
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-orange-400">{t("translation.fanta_forum")}</h1>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder={t("translation.pesquisar")}
-              className="bg-zinc-800 text-zinc-100 pl-10 pr-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
-            />
-            <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400"
-              size={18}
-            />
-          </div>
         </div>
 
         <motion.div
