@@ -7,6 +7,10 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // ou o tema que você está usando
 import Aside from "./Aside";
 import { useTranslation } from "react-i18next";
+import { api } from "@/utils/api";
+import { ApiError } from "next/dist/server/api-utils";
+import { checkLoginStatus } from "@/utils/auth";
+import DOMPurify from "dompurify";
 
 interface User {
   id: number;
@@ -21,7 +25,6 @@ interface PostProps {
   loggedUser: User | null;
 }
 
-
 interface Order {
   id: number;
   name: string;
@@ -31,9 +34,6 @@ interface Order {
   userId: number;
   expirationDate: string;
 }
-
-
-
 
 const getRoleStyles = (role: string) => {
   switch (role) {
@@ -48,9 +48,7 @@ const getRoleStyles = (role: string) => {
   }
 };
 
-
-
-  export default function Post() {
+export default function Post() {
   //Funcionalidades do Quill:
   const toolbarOptions = [
     ["bold", "italic", "underline"], // toggled buttons
@@ -73,20 +71,60 @@ const getRoleStyles = (role: string) => {
     ["clean"], // remove formatting button
   ];
 
+  const { t } = useTranslation();
+  const [usere, setUsere] = useState<User | null>(null);
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [anuncio, setAnuncio] = useState<string>("");
+  const [identifier, setId] = useState<number | undefined>(undefined);
 
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const { user } = await checkLoginStatus();
+        setUsere(user);
+        setId(usere?.id);
+      } catch (err) {
+        alert(err);
+      }
+    }
 
-  const handleSubmitForm = (evento: React.FormEvent<HTMLFormElement>) => {
-    //Aqui vai ficar o fetch
-    alert("Fazendo a publicação do anúncio");
+    fetchUserData();
+  }, []);
+
+  const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
+    evento.preventDefault();
+    console.log(usere);
+    const contentWithOutTags = DOMPurify.sanitize(content, {
+      ALLOWED_TAGS: [],
+    });
+    console.log(contentWithOutTags);
+
+    try {
+      await fetch("http://localhost:3535/announcements", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          content: contentWithOutTags,
+          type: "Announcements",
+          createdById: usere?.id,
+          createdByPhoto: usere?.photo || "",
+          createdByName: usere?.name || "",
+        }),
+      });
+      console.log(title);
+      alert("Postagem realizada com sucesso!");
+      setTitle("");
+      setContent("");
+    } catch (err) {
+      alert(err);
+      throw new Error(`We can't post the update here, erro: ${err}`);
+    }
   };
 
-
-  const {t} = useTranslation()
-  const [anuncioP, setAnuncioP] = useState<string>("");
-  const [anuncioT, setAnuncioT] = useState<string>("");
-  const [anuncio, setAnuncio] = useState();
-  const [atualizacao, setAtualizacao] = useState();
-  const [configs, setConfigs] = useState();
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100">
       <div className="p-8 font-sans">
@@ -96,7 +134,7 @@ const getRoleStyles = (role: string) => {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="text-left text-3xl font-bold tracking-tighter sm:text-3xl text-orange-400"
         >
-        {t("translation.posts_header")}
+          {t("translation.posts_header")}
         </motion.h1>
       </div>
       <main>
@@ -116,26 +154,30 @@ const getRoleStyles = (role: string) => {
                 }}
                 onSubmit={handleSubmitForm}
               >
-                <div className="mt-6 bg-gradient-to-b from-orange-500 via-zinc-900 from-0% via-25% to-zinc-900 rounded-xl shadow-2xl p-6">
+                <div className="mt-6 bg-zinc-800 rounded-xl shadow-2xl p-6 outline-none border  border-orange-500">
                   <div className="mb-4">
-                    <h2 className="text-lg font-bold mb-2 block">{t("translation.posts_title")}</h2>
+                    <h2 className="text-lg font-bold mb-2 block">
+                      {t("translation.posts_title")}
+                    </h2>
                     <input
                       required
                       type="text"
-                      value={anuncioT}
-                      onChange={(evento) => setAnuncioT(evento.target.value)}
+                      value={title}
+                      onChange={(evento) => setTitle(evento.target.value)}
                       placeholder={t("translation.posts_place")}
-                      className="w-full bg-zinc-800 rounded-lg p-3 outline-none border border-zinc-700 focus:border-orange-500 text-white sm:p-2"
+                      className="w-full bg-zinc-800 rounded-lg sm:p-2 outline-none border border-zinc-200 text-white text-center"
                     />
                   </div>
-                  <h2 className="text-lg font-bold mb-2 block">{t("translation.posts_content")}</h2>
+                  <h2 className="text-lg font-bold mb-2 block">
+                    {t("translation.posts_content")}
+                  </h2>
                   <div>
-                    <motion.div 
+                    <motion.div
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{
                         duration: 0.9,
-                        ease: [0, 0.71, 0.2, 1.01], 
+                        ease: [0, 0.71, 0.2, 1.01],
                         scale: {
                           type: "spring",
                           damping: 5,
@@ -152,36 +194,19 @@ const getRoleStyles = (role: string) => {
                           },
                         }}
                         theme="snow"
-                        value={anuncioP}
-                        onChange={setAnuncioP}
-                        className="quill-editor custom-toolbar text-white h-auto border-orange-500 bg-zinc-900"
+                        value={content}
+                        onChange={setContent}
+                        className="quill-editor custom-toolbar text-white outline-none border-zinc-200  bg-zinc-800 h-40"
                         style={{ minWidth: "auto", minHeight: "auto" }}
                       />
                     </motion.div>
-                    <div className="mb-12">
-                      <h2 className="text-lg font-bold mb-2 block">
-                      {t("translation.posts_type")}
-                      </h2>
-                      <div>
-                        <select
-                          name="Tipo do anúncio"
-                          id="opcoes"
-                          className="rounded-lg bg-zinc-900 px-5 py-3 font-medium text-white transition-colors sm:px-4 sm:py-2"
-                          required
-                        >
-                          <option value={anuncio}>Announcements</option>
-                          <option value={atualizacao}>Updates</option>
-                          <option value={configs}>Configs</option>
-                        </select>
-                      </div>
-                    </div>
                   </div>
                   <motion.button
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 3 }}
                     type="submit"
-                    className="bg-zinc-900 shadow-2xl rounded-lg sm:px-4 sm:py-2 hover:bg-orange-400"
+                    className="bg-orange-600 shadow-2xl rounded-lg hover:bg-orange-400 px-8 py-2"
                   >
                     {t("translation.posts_post")}
                   </motion.button>

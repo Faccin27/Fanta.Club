@@ -1,5 +1,5 @@
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { FaDiscord } from "react-icons/fa";
@@ -9,16 +9,43 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 import { api, handleApiError } from '@/utils/api';
 import { useTranslation } from "react-i18next";
+import { MeProps } from "@/components/products/fantalight";
+import { Order } from "@/components/Me";
+import { User } from "@/utils/auth";
 
 
 interface ModalLoader{
     onClose: ()=> void
+    id: number | undefined
+    user: User | null
 }
 
-export default function ModalLoader({onClose}:ModalLoader){
-    
-    
+export default function ModalLoader({onClose, id, user}:ModalLoader,){
+    const [order, setOrders] = useState<Order | null>(null);
+    const [usere, setUser] = useState();
+
     const {t} = useTranslation();
+
+
+    useEffect(() => {
+        const fetchOrders = async () => {
+          if (id) {
+            try {
+              const response = await fetch(
+                `http://localhost:3535/users/orders/${id}`
+              );
+              if (!response.ok) {
+                throw new Error("Failed to fetch orders");
+              }
+              const data = await response.json();
+              setOrders(data);
+            } catch (error) {
+              console.error("Error fetching orders:", error);
+            }
+          }
+        };
+        fetchOrders();
+      }, [id]);    
 
 
     return(
@@ -50,7 +77,7 @@ export default function ModalLoader({onClose}:ModalLoader){
                     </div>
                     <div className="p-8 bg-gradient-to-t from-black to-transparent">
                         <h2 className="text-3xl font-bold mb-4 flex justify-center items-center">
-                            <span className="text-orange-400">{t("translation.thanks5")}</span>
+                            <span className="text-orange-400">{t("translation.thanks5")} {" "} {user?.name}{"!"}</span>
                         </h2>
                         <p className="text-sm">
                           {t("translation.thanks1")}  {" "} <span className="text-orange-400 hover:text-orange-600 cursor-pointer">{t("translation.thanks2")}</span> {" "}
@@ -87,12 +114,13 @@ export default function ModalLoader({onClose}:ModalLoader){
 
                 <div className="mt-10">
                     <motion.button
+                       // onClick={}
                         type="submit"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="w-full py-3 bg-orange-400 hover:bg-orange-500 text-white rounded-lg transition-colors text-lg font-semibold"
                     >
-                        {t("translation.download_forje")}
+                        {t("translation.download_forje")} {" "} {order?.name}
                     </motion.button>
                 </div>
             </div>

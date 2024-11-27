@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Check, ShoppingCart, Copy, X } from "lucide-react";
 import img1 from "@/assets/images/app-screen.png";
 import { BanModalFunction } from "@/components/Header";
 import { useTranslation } from "react-i18next";
-import { User } from "@/utils/auth";
+import { checkLoginStatus, User } from "@/utils/auth";
 
 interface Plan {
   id: "daily" | "weekly" | "monthly";
@@ -144,6 +144,7 @@ export default function ProductPage(
   const [paymentData, setPaymentData] = useState<PaymentResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [couponLoading, setCouponLoading] = useState<boolean>(false);
+  const [usere, setUser] = useState<User | null>(null)
 
   const images = [img1, img1, img1, img1];
 
@@ -210,6 +211,23 @@ export default function ProductPage(
     const discountAmount = selectedPlan.price * (appliedCoupon.discount / 100);
     return selectedPlan.price - discountAmount;
   };
+
+
+  
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const { isLoggedIn, user } = await checkLoginStatus();
+        setUser(user);
+      } catch (err) {
+        alert("Failed to fetch user data");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchUserData();
+  }, []);
 
   const handleAddToCart = async (): Promise<void> => {
     setLoading(true);
@@ -362,10 +380,10 @@ export default function ProductPage(
             <button
               className={`w-full bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 ${user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"} disabled:cursor-not-allowed`}
               onClick={handleAddToCart}
-              disabled={user?.isActive === false ? true : loading}
+              disabled={usere?.isActive === false ? true : loading}
             >
-              {loading ? (
-                "Processando..."
+                  {loading ? (
+                t("translation.processando")
               ) : (
                 <>
                   <ShoppingCart className="w-4 h-4 mr-2" />

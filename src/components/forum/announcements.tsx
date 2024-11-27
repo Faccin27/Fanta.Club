@@ -6,58 +6,28 @@ import Link from "next/link";
 import { Bell as AnnouncementsIcon } from "lucide-react";
 import pfp from "@/assets/images/pfp.png";
 import { useTranslation } from "react-i18next";
-import { checkLoginStatus, User as AuthUser } from "@/utils/auth"; // Renomeado para evitar conflito
+import { checkLoginStatus, User as AuthUser, User } from "@/utils/auth"; // Renomeado para evitar conflito
 
 interface Author {
   name: string;
   image: string;
 }
 
+export enum Types {
+  Announcements = "Announcements",
+  Updates = "Updates",
+  Configs = "Configs",
+}
 interface Announcement {
   id: number;
   title: string;
-  author: Author;
-  date: string;
+  content: string;
+  type: Types;
+  createdAt: string | number | bigint | boolean | null | undefined;
+  createdById: number;
+  createdByPhoto: string | undefined;
+  createdByName: string | undefined;
 }
-
-const announcements: Announcement[] = [
-  {
-    id: 1,
-    title: "Novo hack de mira lançado!",
-    author: {
-      name: "DevHacker",
-      image: pfp.src,
-    },
-    date: "01/10/2023",
-  },
-  {
-    id: 2,
-    title: "Atualização no wallhack para evitar bans",
-    author: {
-      name: "AntiBanMaster",
-      image: pfp.src,
-    },
-    date: "05/10/2023",
-  },
-  {
-    id: 3,
-    title: "Lançamento do hack de recoil perfeito",
-    author: {
-      name: "RecoilExpert",
-      image: pfp.src,
-    },
-    date: "10/10/2023",
-  },
-  {
-    id: 4,
-    title: "Desconto de 20% em todos os hacks durante o fim de semana!",
-    author: {
-      name: "ValorantHacksStore",
-      image: pfp.src,
-    },
-    date: "12/10/2023",
-  },
-];
 
 interface Order {
   id: number;
@@ -70,11 +40,30 @@ interface Order {
 }
 
 export default function Announcements() {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [anuncios, setAnuncios] = useState<Announcement[] | undefined>(
+    undefined
+  );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchAnuncios = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3535/announcements/buscaType?type=Announcements"
+        );
+        const result: Announcement[] = await response.json();
+        setAnuncios(result);
+        console.log("Anuncios recebidos");
+      } catch (err) {
+        throw new Error(`Erro ao fazer o GET dos anuncios. Erro: ${err}`);
+      }
+    };
+    fetchAnuncios();
+  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -85,8 +74,9 @@ export default function Announcements() {
     fetchUserData();
   }, []);
 
-  const canPostAnnouncement = user && (user.role === 'FANTA' || user.role === 'Moderator');
-  const canPostConfig = user && (user.role === "Premium");
+  const canPostAnnouncement =
+    user && (user.role === "FANTA" || user.role === "Moderator");
+  const canPostConfig = user && user.role === "Premium";
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -116,50 +106,54 @@ export default function Announcements() {
         </div>
         {canPostAnnouncement && (
           <div className="flex justify-between gap-4">
-          
-          <button
-            className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
-            onClick={() => router.push("/post")}
-          >
-            {t("translation.Post")}
-          </button>
+            <button
+              className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
+              onClick={() => router.push("/post-anun")}
+            >
+              {t("translation.Post")}
+            </button>
           </div>
         )}
       </div>
       <div className="space-y-4">
-        {announcements.map((announcement) => (
+        {anuncios?.map((anuncio) => (
           <motion.div
-          initial={{ opacity: 2, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{
-           duration: 0.5,
-           delay: 0.1
-         }}
-            key={announcement.id}
+            initial={{ opacity: 2, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 0.5,
+              delay: 0.1,
+            }}
+            key={anuncio.id}
             className="bg-zinc-700 shadow rounded-lg p-4"
           >
             <div className="flex items-center mb-2">
               <Image
-                src={announcement.author.image}
-                alt={`${announcement.author.name}'s profile picture`}
+                src={anuncio.createdByPhoto || pfp}
+                alt={`profile picture`}
                 width={40}
                 height={40}
                 className="rounded-full mr-3"
               />
+
               <div>
-                <Link href={`/forum/announcements/${announcement.id}`}>
+                <Link href={`/forum/announcements/${anuncio.id}`}>
                   <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">
-                    {announcement.title}
+                    {anuncio.title}
                   </h2>
                 </Link>
                 <p className="text-sm text-gray-400">
-                  Por: {announcement.author.name} em {announcement.date}
+                  Criado por:{" "}
+                  <strong className="fonrt-bold text-orange-500">
+                    {anuncio.createdByName}
+                  </strong>{" "}
+                  no horário: {anuncio.createdAt}
                 </p>
               </div>
             </div>
-            <Link href={`/forum/announcements/${announcement.id}`}>
+            <Link href={`/forum/announcements/${anuncio.id}`}>
               <p className="text-sm text-gray-300 cursor-pointer hover:underline">
-                Clique para ver mais detalhes sobre "{announcement.title}"
+                Clique para ver mais detalhes sobre "{anuncio.title}"
               </p>
             </Link>
           </motion.div>

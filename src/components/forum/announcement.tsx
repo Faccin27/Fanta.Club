@@ -4,12 +4,12 @@ import Aside from "@/components/Aside";
 import {
   Bell as AnnouncementsIcon,
   ArrowLeft as BackIcon,
-  XCircle
+  XCircle,
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { Types } from "./announcements";
 
 interface Author {
   name: string;
@@ -19,45 +19,39 @@ interface Author {
 interface Announcement {
   id: number;
   title: string;
-  author: Author;
-  date: string;
   content: string;
+  type: Types;
+  createdAt: string | number | bigint | boolean | null | undefined;
+  createdById: number;
+  createdByPhoto: string | undefined;
+  createdByName: string | undefined;
 }
 
-const getAnnouncementById = (id: string | number): Announcement | undefined => {
-  const announcements: Announcement[] = [
-    {
-      id: 1,
-      title: "Novo hack de mira lançado!",
-      author: {
-        name: "DevHacker",
-        image: pfp.src,
-      },
-      date: "01/10/2023",
-      content:
-        "Estamos animados para anunciar o lançamento do nosso mais recente hack de mira! Este hack oferece precisão incomparável e é praticamente indetectável. Características principais incluem ajuste automático de mira, previsão de movimento do alvo e compatibilidade com os últimos patches do jogo.",
-    },
-  ];
-
-  return announcements.find((announcement) => announcement.id === Number(id));
-};
-
-export interface AnnouncementDetailProps {
-  id: string;
+interface IdNun {
+  id: number;
 }
 
-const AnnouncementDetail: React.FC<AnnouncementDetailProps> = ({ id }) => {
+function AnnouncementDetail({ id }: IdNun) {
   const router = useRouter();
-  const [announcement, setAnnouncement] = React.useState<
-    Announcement | undefined
-  >(undefined);
+  const [anuncios, setAnuncios] = useState<Announcement | null>(null);
 
-  React.useEffect(() => {
-    const fetchedAnnouncement = getAnnouncementById(id);
-    setAnnouncement(fetchedAnnouncement);
-  }, [id]);
+  useEffect(() => {
+    const fetchAnuncios = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3535/announcements/${id}`
+        );
+        const result: Announcement = await response.json();
+        setAnuncios(result);
+        console.log("Anuncios recebidos");
+      } catch (err) {
+        throw new Error(`Erro ao fazer o GET dos anuncios. Erro: ${err}`);
+      }
+    };
+    fetchAnuncios();
+  }, []);
 
-  if (!announcement) {
+  if (!anuncios) {
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100">
         <main className="container mx-auto px-4 py-8">
@@ -111,35 +105,33 @@ const AnnouncementDetail: React.FC<AnnouncementDetailProps> = ({ id }) => {
         <div className="bg-zinc-800 shadow-lg rounded-lg p-6">
           <div className="flex items-center mb-6">
             <Image
-              src={announcement.author.image}
-              alt={`${announcement.author.name}'s profile picture`}
+              src={anuncios.createdByPhoto || pfp}
+              alt={`${anuncios.createdByName}'s profile picture`}
               width={60}
               height={60}
               className="rounded-full mr-4"
             />
             <div>
               <h2 className="text-2xl text-orange-400 font-semibold mb-1">
-                {announcement.title}
+                {anuncios.title}
               </h2>
               <p className="text-sm text-zinc-400">
                 Por:{" "}
                 <span className="text-orange-300 cursor-pointer hover:underline">
-                  {announcement.author.name}{" "}
+                  {anuncios.createdByName}{" "}
                 </span>{" "}
-                • {announcement.date}
+                • {anuncios.createdAt}
               </p>
             </div>
           </div>
           <div className="mt-6">
-            <p className="text-zinc-300 leading-relaxed">
-              {announcement.content}
-            </p>
+            <p className="text-zinc-300 leading-relaxed">{anuncios.content}</p>
           </div>
         </div>
       </main>
       <Aside />
     </div>
   );
-};
+}
 
 export default AnnouncementDetail;

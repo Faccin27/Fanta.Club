@@ -1,62 +1,50 @@
 "use client";
 import pfp from "@/assets/images/pfp.png";
 import Aside from "@/components/Aside";
-import {
-  ArrowLeft as BackIcon,
-  XCircle
-} from "lucide-react";
+import { ArrowLeft as BackIcon, XCircle } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Type } from "./updates";
 
 interface Author {
   name: string;
   image: string;
 }
-
-interface Update {
+interface Updates {
   id: number;
   title: string;
-  author: Author;
-  date: string;
-  description: string;
-  downloadUrl: string;
+  content: string;
+  type: Type;
+  createdAt: string | number | bigint | boolean | null | undefined;
+  createdById: number;
+  createdByPhoto: string | undefined;
+  createdByName: string | undefined;
 }
 
-const getUpdateById = (id: string | number): Update | undefined => {
-  const updates: Update[] = [
-    {
-      id: 1,
-      title: "Nova Atualização Hack Valorant - Versão 3.0",
-      author: {
-        name: "HackMaster",
-        image: pfp.src,
-      },
-      date: "10/10/2023",
-      description:
-        "A versão 3.0 do hack de Valorant inclui melhorias significativas no aimbot, correções de bugs e novas funcionalidades para o modo 'Ghost'. Certifique-se de baixar a atualização abaixo e seguir as instruções de instalação.",
-      downloadUrl: "/api/updates/valorant-hack-v3.json",
-    },
-    // Adicione mais atualizações conforme necessário
-  ];
-
-  return updates.find((update) => update.id === Number(id));
-};
-
-export interface UpdateDetailProps {
-  id: string;
+interface IdInt {
+  id: number;
 }
-
-const UpdateDetail: React.FC<UpdateDetailProps> = ({ id }) => {
+function UpdateDetail({ id }: IdInt) {
   const router = useRouter();
-  const [update, setUpdate] = React.useState<Update | undefined>(undefined);
+  const [updates, setUpdate] = useState<Updates | null>(null);
 
-  React.useEffect(() => {
-    const fetchedUpdate = getUpdateById(id);
-    setUpdate(fetchedUpdate);
-  }, [id]);
+  useEffect(() => {
+    const fetchUpdates = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3535/announcements/${id}`
+        );
+        const result: Updates = await response.json();
+        setUpdate(result);
+      } catch (err) {
+        throw new Error(`Erro para efetuar o fetch dos Updates. Erro: ${err}`);
+      }
+    };
+    fetchUpdates();
+  }, []);
 
-  if (!update) {
+  if (!updates) {
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100">
         <main className="container mx-auto px-4 py-8">
@@ -109,28 +97,28 @@ const UpdateDetail: React.FC<UpdateDetailProps> = ({ id }) => {
         <div className="bg-zinc-800 shadow-lg rounded-lg p-6">
           <div className="flex items-center mb-6">
             <Image
-              src={update.author.image}
-              alt={`${update.author.name}'s profile picture`}
+              src={updates?.createdByPhoto || pfp}
+              alt={`${updates?.createdByName}'s profile picture`}
               width={60}
               height={60}
               className="rounded-full mr-4"
             />
             <div>
               <h2 className="text-2xl text-orange-400 font-semibold mb-1">
-                {update.title}
+                {updates?.title}
               </h2>
               <p className="text-sm text-zinc-400">
                 Por:{" "}
                 <span className="text-orange-300 cursor-pointer hover:underline">
-                  {update.author.name}
+                  {updates?.createdByName}
                 </span>{" "}
-                • {update.date}
+                • {updates?.createdAt}
               </p>
             </div>
           </div>
           <div className="mt-6">
             <p className="text-zinc-300 leading-relaxed mb-4">
-              {update.description}
+              {updates.content}
             </p>
           </div>
         </div>
@@ -138,6 +126,6 @@ const UpdateDetail: React.FC<UpdateDetailProps> = ({ id }) => {
       <Aside />
     </div>
   );
-};
+}
 
 export default UpdateDetail;

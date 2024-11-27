@@ -7,6 +7,7 @@ import logo from "@/assets/images/logo.png";
 import axios from "axios";
 import Cookies from 'js-cookie';
 import { api, handleApiError } from '@/utils/api';
+import { useTranslation } from "react-i18next";
 
 export default function EnhancedLoginModal({
   isOpen,
@@ -21,6 +22,8 @@ export default function EnhancedLoginModal({
   const [isRegistering, setIsRegistering] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [error, setError] = useState("");
+
+  const {t} = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,18 +105,15 @@ export default function EnhancedLoginModal({
             </div>
             <div className="p-8 bg-gradient-to-t from-black to-transparent">
               <h2 className="text-3xl font-bold mb-4">
-                Bem vindo ao <span className="text-orange-400">Fanta.club</span>
+                {t("translation.login_modal_14")} {" "}<span className="text-orange-400">{t("translation.login_modal_15")}</span>
               </h2>
               <p className="text-sm">
-                Bem-vindo ao fanta.club! Entre com suas credenciais para acessar
-                conteúdos exclusivos. Aqui transformamos o seu tesão por jogos em
-                uma experiencia unica e inovadora. Divirta-se e jogue com
-                inteligência!
+              {t("translation.login_modal_16")}
               </p>
             </div>
           </div>
         </div>
-
+        
         {/* Right Column */}
         <div className="w-full md:w-1/2 bg-[#0D0D0E] p-10 relative">
           <button
@@ -131,7 +131,7 @@ export default function EnhancedLoginModal({
               transition={{ duration: 0.2 }}
             >
               <h3 className="text-3xl font-bold mb-8">
-                {isRegistering ? "Criar Conta" : "Entrar"}
+                {isRegistering ? t("translation.login_modal") : t("translation.login_modal_5")}
               </h3>
               {error && (
                 <div className="bg-red-500 text-white p-3 rounded-lg mb-4">
@@ -142,7 +142,7 @@ export default function EnhancedLoginModal({
                 <div>
                   <input
                     type="email"
-                    placeholder="Digite seu e-mail"
+                    placeholder={t("translation.login_modal_2")}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
@@ -158,7 +158,7 @@ export default function EnhancedLoginModal({
                   >
                     <input
                       type="text"
-                      placeholder="Nome de usuário"
+                      placeholder={t("translation.login_modal_9")}
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       className="w-full px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
@@ -169,7 +169,7 @@ export default function EnhancedLoginModal({
                 <div className="relative">
                   <input
                     type="password"
-                    placeholder="Digite sua senha"
+                    placeholder={t("translation.login_modal_3")}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
@@ -180,7 +180,7 @@ export default function EnhancedLoginModal({
                       href="#"
                       className="absolute right-0 top-14 text-xs text-orange-400 hover:underline"
                     >
-                      Esqueceu sua senha?
+                      {t("translation.login_modal_4")}
                     </a>
                   )}
                 </div>
@@ -201,9 +201,9 @@ export default function EnhancedLoginModal({
                       required
                     />
                     <label htmlFor="terms" className="text-sm text-gray-300">
-                      Eu aceito os{" "}
+                      {t("translation.login_modal_10")}{" "}
                       <a href="#" className="text-orange-400 hover:underline">
-                        Termos de Uso
+                        {t("translation.login_modal_11")}
                       </a>
                     </label>
                   </motion.div>
@@ -214,7 +214,7 @@ export default function EnhancedLoginModal({
                   whileTap={{ scale: 0.95 }}
                   className="w-full py-3 bg-orange-400 hover:bg-orange-500 text-white rounded-lg transition-colors text-lg font-semibold"
                 >
-                  {isRegistering ? "Criar Conta" : "Entrar"}
+                  {isRegistering ? t("translation.login_modal_12") : t("translation.login_modal_5")}
                 </motion.button>
               </form>
             </motion.div>
@@ -227,8 +227,8 @@ export default function EnhancedLoginModal({
               className="text-sm text-orange-400 hover:underline"
             >
               {isRegistering
-                ? "Já tem uma conta? Entrar"
-                : "Nova aqui? Criar conta"}
+                ? t("translation.login_modal_13")
+                : t("translation.login_modal_6")}
             </motion.button>
           </div>
           <div className="mt-10">
@@ -237,10 +237,10 @@ export default function EnhancedLoginModal({
               whileTap={{ scale: 0.95 }}
               className="w-full py-3 bg-[#1A1A1C] text-white border border-gray-700 rounded-lg hover:bg-[#2A2A2C] hover:text-orange-300 transition-colors flex items-center justify-center"
             >
-              <FaDiscord className="mr-2 h-5 w-5" /> Acesse nosso Discord
+              <FaDiscord className="mr-2 h-5 w-5" /> {t("translation.login_modal_7")}
             </motion.button>
             <p className="text-xs text-center mt-3 text-gray-400">
-              Para dúvidas e suporte
+              {t("translation.login_modal_8")}
             </p>
           </div>
         </div>
