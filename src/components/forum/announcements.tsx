@@ -78,25 +78,6 @@ export default function Announcements() {
     user && (user.role === "FANTA" || user.role === "Moderator");
   const canPostConfig = user && user.role === "Premium";
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      if (user) {
-        try {
-          const response = await fetch(
-            `http://localhost:3535/users/orders/${user.id}`
-          );
-          if (!response.ok) {
-            throw new Error("Failed to fetch orders");
-          }
-          const data = await response.json();
-          setOrders(data); // Definindo as ordens corretamente
-        } catch (error) {
-          console.error("Error fetching orders:", error);
-        }
-      }
-    };
-    fetchOrders();
-  }, [user]);
   return (
     <div className="p-4">
       <div className="flex items-center justify-between mb-6">

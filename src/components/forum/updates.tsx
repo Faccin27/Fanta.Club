@@ -119,25 +119,6 @@ const Updates: React.FC = () => {
     fetchUserData();
   }, []);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      if (user) {
-        try {
-          const response = await fetch(
-            `http://localhost:3535/users/orders/${user.id}`
-          );
-          if (!response.ok) {
-            throw new Error("Failed to fetch orders");
-          }
-          const data = await response.json();
-          setOrders(data); // Definindo as ordens corretamente
-        } catch (error) {
-          console.error("Error fetching orders:", error);
-        }
-      }
-    };
-    fetchOrders();
-  }, [user]);
 
   const canPostUpdate =
     user && (user.role === "FANTA" || user.role === "Moderator");
