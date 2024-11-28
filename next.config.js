@@ -1,11 +1,8 @@
-// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remova ou comente a configuração i18n
-  // i18n: {
-  //   locales: ['en', 'pt'],
-  //   defaultLocale: 'en',
-  // },
+  images: {
+    domains: ['res.cloudinary.com'], // Adicione o domínio do Cloudinary aqui
+  },
 }
 
-module.exports = nextConfig
+module.exports = nextConfig;
