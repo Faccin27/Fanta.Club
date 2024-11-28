@@ -44,9 +44,20 @@ export default function ImageChangeModal({
     }
 
     try {
-      // iMPLEMENTAR para enviar a imagem para o servidor
-      // tipo
-      // await api.put(`/users/${userId}/image`, { image: selectedImage });
+      // Converter base64 para Blob
+      const response = await fetch(selectedImage);
+      const blob = await response.blob();
+      
+      // Criar FormData
+      const formData = new FormData();
+      formData.append('image', blob, 'profile-picture.jpg');
+
+      // Enviar PUT request com FormData
+      await api.put(`/users/userpfp/${userId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
       
       setSuccess(t("translation.image_changed_success"));
       setTimeout(() => {
@@ -143,4 +154,3 @@ export default function ImageChangeModal({
     </motion.div>
   );
 }
-
