@@ -11,8 +11,9 @@ import {
   RefreshCw,
   ShieldCheck,
   Pencil,
+  Camera,
 } from "lucide-react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import Aside from "./Aside";
 import PasswordChangeModal from "@/components/Modais/Password/PasswordChangeModal";
@@ -21,6 +22,7 @@ import ModalLoader from "./Modais/Download/modal-loader";
 import EmailChangeModal from "./Modais/Email/EmailChangeModal";
 import NameModal from "./Modais/Name/NameModal";
 import AboutModal from "./Modais/About/AboutModal";
+import ImageChangeModal from "@/components/Modais/ProfileImage/ImageChangeModal";
 
 interface User {
   id: number;
@@ -53,6 +55,13 @@ interface Product {
   price: number;
   link: string;
   downloadLink: string;
+}
+
+interface ImageChangeModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  userId?: number;
+  currentImage: string | null;
 }
 
 const getRoleStyles = (role: string) => {
@@ -103,8 +112,8 @@ export default function Component({ user }: MeProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalNameOpen, setIsModalNameOpen] = useState<boolean>(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
+  const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false);
 
-  
   const audioRefComponent = useRef<HTMLAudioElement | null>(null);
 
   const playAudio = () => {
@@ -148,24 +157,24 @@ export default function Component({ user }: MeProps) {
     const order = orders.find((order) => order.name === productName);
     if (order) {
       if (order.expiration === "LIFETIME") return "NEVER";
-      
+
       const expirationDate = new Date(order.expirationDate);
       const today = new Date();
       if (today >= expirationDate) return 0;
-      
+
       const diffTime = Math.abs(expirationDate.getTime() - today.getTime());
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       return diffDays;
     }
     return null;
   };
-  
-    const handleOpenModalAbout = () => {
-      setIsModalAboutOpen(true);
-    };
-    const handleCloseModalAbout = () => {
-      setIsModalAboutOpen(false);
-    };
+
+  const handleOpenModalAbout = () => {
+    setIsModalAboutOpen(true);
+  };
+  const handleCloseModalAbout = () => {
+    setIsModalAboutOpen(false);
+  };
 
   const handleDownload = (downloadLink: string) => {
     window.open(downloadLink);
@@ -173,11 +182,11 @@ export default function Component({ user }: MeProps) {
 
   const handleOpenNameModal = () => {
     setIsModalNameOpen(true);
-  }  
+  };
 
   const handleCloseNameModal = () => {
     setIsModalNameOpen(false);
-  }  
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -193,6 +202,14 @@ export default function Component({ user }: MeProps) {
     setIsEmailModalOpen(false);
   };
 
+  const handleOpenProfileImageModal = () => {
+    setIsProfileImageModalOpen(true);
+  };
+
+  const handleCloseProfileImageModal = () => {
+    setIsProfileImageModalOpen(false);
+  };
+
   const { t } = useTranslation();
 
   return (
@@ -203,29 +220,49 @@ export default function Component({ user }: MeProps) {
         </div>
         <div className="container mx-auto px-4 -mt-16">
           <div className="text-center">
-            <Image
-              src={user?.photo == null ? PFP : user.photo}
-              alt="profile picture"
-              width={128}
-              height={128}
-              className="mx-auto h-32 w-32 rounded-full border-2 border-orange-500 shadow-lg"
-            />
-            <div className="mt-4 flex items-center justify-center">
-              <h1 
-              className="text-3xl font-bold text-orange-400"
+            <div
+              className="relative mx-auto h-32 w-32 group"
+              onClick={handleOpenProfileImageModal}
+            >
+              <Image
+                src={user?.photo == null ? PFP : user.photo}
+                alt="profile picture"
+                width={128}
+                height={128}
+                className="mx-auto h-32 w-32 rounded-full border-2 border-orange-500 shadow-lg group-hover:opacity-70 transition-opacity duration-300 "
+              />
+              <div
+                className="absolute inset-0 flex items-center justify-center 
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-300 
+                  cursor-pointer"
               >
+                <Camera className="text-white w-10 h-10" />
+              </div>
+            </div>
+            <div className="mt-4 flex items-center justify-center">
+              <h1 className="text-3xl font-bold text-orange-400">
                 {user?.name}
               </h1>
               <br />
             </div>
-            <div>{isModalNameOpen && <NameModal onClose={handleCloseNameModal} id={user?.id} user={user}/>}</div>
+            <div>
+              {isModalNameOpen && (
+                <NameModal
+                  onClose={handleCloseNameModal}
+                  id={user?.id}
+                  user={user}
+                />
+              )}
+            </div>
             <div className="mt-2 flex items-center justify-center text-zinc-400">
               <Mail className="mr-2 h-4 w-4" />
               <span>{user?.email || "email@example.com"}</span>
               <button
                 onClick={handleOpenEmailModal}
-                disabled={user?.isActive === false ? true: false}
-                className={`ml-2 p-1 rounded-full hover:text-orange-400 ${user?.isActive === false ? "cursor-no-drop":"cursor-pointer"} transition-colors`}
+                disabled={user?.isActive === false ? true : false}
+                className={`ml-2 p-1 rounded-full hover:text-orange-400 ${
+                  user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"
+                } transition-colors`}
               >
                 <Edit className="mr-2 h-4 w-4" />
                 <span className="sr-only">{t("translation.email")}</span>
@@ -271,7 +308,15 @@ export default function Component({ user }: MeProps) {
               </button>
             )}
           </div>
-          <div>{isModalOpen && <ModalLoader onClose={handleCloseModal} id={user?.id} user={user}/>}</div>
+          <div>
+            {isModalOpen && (
+              <ModalLoader
+                onClose={handleCloseModal}
+                id={user?.id}
+                user={user}
+              />
+            )}
+          </div>
           <div className="mt-8 flex flex-wrap justify-center space-x-4">
             <button
               disabled={user?.isActive === false ? true : false}
@@ -279,32 +324,43 @@ export default function Component({ user }: MeProps) {
                 e.preventDefault();
                 setIsPasswordModalOpen(true);
               }}
-              className={`text-zinc-400 hover:text-orange-400  ${user?.isActive === false ? "cursor-no-drop":"cursor-pointer"} transition-colors`}
+              className={`text-zinc-400 hover:text-orange-400  ${
+                user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"
+              } transition-colors`}
             >
               <Lock className="inline mr-1 h-4 w-4" />{" "}
               {t("translation.password")}
             </button>
             <button
-            disabled={user?.isActive === false ? true : false}
-              className={`text-zinc-400 hover:text-orange-400 ${user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"} transition-colors`}
+              disabled={user?.isActive === false ? true : false}
+              className={`text-zinc-400 hover:text-orange-400 ${
+                user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"
+              } transition-colors`}
             >
               <ShieldCheck className="inline mr-1 h-4 w-4" />{" "}
               {t("translation.Enable")} 2FA
             </button>
           </div>
-          <br/>
-            <div className="max-w-fit ml-auto mr-auto">
-
+          <br />
+          <div className="max-w-fit ml-auto mr-auto">
             <button
-            onClick={handleOpenModalAbout}
-            className={`text-zinc-400 hover:text-orange-400 ${user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"} transition-colors`}
+              onClick={handleOpenModalAbout}
+              className={`text-zinc-400 hover:text-orange-400 ${
+                user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"
+              } transition-colors`}
             >
-              <Pencil className="inline mr-1 h-4 w-4" />{" "}Tell us about you
+              <Pencil className="inline mr-1 h-4 w-4" /> Tell us about you
             </button>
-            </div>
-            <div>
-              {isModalAboutOpen && <AboutModal isOpen={handleOpenModalAbout} onClose={handleCloseModalAbout} userId={user?.id} />}
-            </div>
+          </div>
+          <div>
+            {isModalAboutOpen && (
+              <AboutModal
+                isOpen={handleOpenModalAbout}
+                onClose={handleCloseModalAbout}
+                userId={user?.id}
+              />
+            )}
+          </div>
           <div className="mt-16 space-y-5 pb-32">
             {products.map((product, index) => {
               const isActive = isProductActive(product.name);
@@ -376,6 +432,14 @@ export default function Component({ user }: MeProps) {
             })}
           </div>
         </div>
+        {isProfileImageModalOpen && (
+          <ImageChangeModal
+            isOpen={isProfileImageModalOpen}
+            onClose={handleCloseProfileImageModal}
+            userId={user?.id || 0}
+            // currentImage={user?.photo | PFP}
+          />
+        )}
         <PasswordChangeModal
           isOpen={isPasswordModalOpen}
           onClose={() => setIsPasswordModalOpen(false)}

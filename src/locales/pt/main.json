@@ -134,7 +134,13 @@
         "filter_cargo":"Filtrar o usuário pelo:",
         "filter_nome":"Nome:",
         "filter_role":"Cargo:",
-        "filter_all":"Todos os usuários"
+        "filter_all":"Todos os usuários",
+        "change_profile_image": "Alterar Imagem de Perfil",
+        "no_image_selected": "Nenhuma imagem foi selecionada.",
+        "image_changed_success": "Imagem alterada com sucesso!",
+        "attach_image": "Selecionar Imagem",
+        "no_image": "Nenhuma imagem",
+        "confirm_change": "Confirmar Alteração"
  
  
     }

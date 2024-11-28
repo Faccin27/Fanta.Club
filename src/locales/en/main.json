@@ -134,7 +134,13 @@
         "filter_cargo":"Filter user by:",
         "filter_nome":"Name:",
         "filter_role":"Role:",
-        "filter_all":"Show All Users"
+        "filter_all":"Show All Users",
+        "change_profile_image": "Change Profile Image",
+        "no_image_selected": "No image selected.",
+        "image_changed_success": "Image changed successfully!",
+        "attach_image": "Attach Image",
+        "no_image": "No image",
+        "confirm_change": "Confirm Change"
     
 
     }
