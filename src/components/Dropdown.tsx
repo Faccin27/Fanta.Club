@@ -31,14 +31,14 @@ export default function DropdownComponent({anunId}:{anunId:number}) {
       <div className="absolute right-0 mt-2 w-40 bg-zinc-800 rounded-lg shadow-lg z-20 ml-[900px]">
         <button
           onClick={handleDelete}
-          className="flex items-center w-full px-4 py-2 text-red-600 hover:bg-zinc-500 rounded-t-lg active:text-red-800"
+          className="flex items-center w-full px-4 py-2 text-red-600 hover:bg-zinc-900 rounded-t-lg active:text-red-800"
         >
           <Trash2 className="mr-2" />
           Delete
         </button>
 
         <button
-          className="flex items-center w-full px-4 py-2 text-sky-600 hover:bg-zinc-500 rounded-b-lg active:text-sky-800"
+          className="flex items-center w-full px-4 py-2 text-sky-600 hover:bg-zinc-900 rounded-b-lg active:text-sky-800"
         >
           <UpdatesIcon className="mr-2" />
           Update

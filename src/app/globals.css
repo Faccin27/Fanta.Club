@@ -30,7 +30,12 @@
 
 
 
-
+  .quill-editor {
+    display: flex;
+    flex-grow: 1;
+    overflow: auto; /* Para garantir que o conteúdo fique rolável */
+    border-radius: 0.5rem; /* Ajusta as bordas */
+  }
 
   /* Cor dos ícones da toolbar */
   .custom-toolbar .ql-toolbar .ql-stroke {
