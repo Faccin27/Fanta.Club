@@ -121,9 +121,10 @@ function UpdateDetail({id}:IdInt) {
             </div>
           </div>
           <div className="mt-6">
-            <p className="text-zinc-300 leading-relaxed mb-4">
-              {updates.content}
-            </p>
+          <div
+              className="prose prose-h1:text-orange-600 prose-p:text-orange-400 prose-img:max-w-52"
+            dangerouslySetInnerHTML={{__html: updates.content}}
+              />
           </div>
         </div>
       </main>

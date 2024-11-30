@@ -129,9 +129,10 @@ useEffect(()=>{
             </div>
           </div>
           <div className="mt-6">
-            <p className="text-zinc-300 leading-relaxed">
-              {anuncios.content}
-            </p>
+              <div
+              className="prose prose-h1:text-orange-600 prose-p:text-orange-400 prose-img:max-w-52 prose-ul:text-orange-400 prose-li:text-orange-400 prose-ol:text-orange-400"
+            dangerouslySetInnerHTML={{__html: anuncios.content}}
+              />
           </div>
         </div>
       </main>

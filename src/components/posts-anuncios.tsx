@@ -106,8 +106,6 @@ useEffect(() => {
 const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
   evento.preventDefault();
   console.log(usere);
-  const contentWithOutTags = DOMPurify.sanitize(content,{ ALLOWED_TAGS: [] });
-  console.log(contentWithOutTags);
 
   try{
     await fetch("http://localhost:3535/anun", {
@@ -117,7 +115,7 @@ const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
       },
       body:JSON.stringify({
         title: title, 
-        content: contentWithOutTags, 
+        content: content, 
         type: "Announcements", 
         createdById: usere?.id, 
         createdByPhoto:usere?.photo || "",

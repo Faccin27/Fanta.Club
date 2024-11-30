@@ -8,6 +8,7 @@ import { checkLoginStatus, User as AuthUser } from "@/utils/auth";
 import { useRouter } from 'next/navigation';
 import { motion } from "framer-motion";
 import { Types } from './announcements';
+import DropdownComponent from '../Dropdown';
 
 interface Author {
   name: string;
@@ -21,44 +22,7 @@ interface Update {
   date: string;
 }
 
-const updates: Update[] = [
-  {
-    id: 1,
-    title: "Atualização de segurança para evitar banimentos",
-    author: {
-      name: "DevTeam",
-      image: pfp.src,
-    },
-    date: "01/09/2023"
-  },
-  {
-    id: 2,
-    title: "Aimbot otimizado para headshots com maior precisão",
-    author: {
-      name: "AimMaster",
-      image: pfp.src,
-    },
-    date: "10/09/2023"
-  },
-  {
-    id: 3,
-    title: "Wallhack atualizado para compatibilidade com novos mapas",
-    author: {
-      name: "MapPro",
-      image: pfp.src,
-    },
-    date: "15/09/2023"
-  },
-  {
-    id: 4,
-    title: "Correção de bugs e melhoria de desempenho do radar hack",
-    author: {
-      name: "CheatFixer",
-      image: pfp.src,
-    },
-    date: "22/09/2023"
-  }
-];
+
 
 interface Order {
   id: number;
@@ -188,6 +152,9 @@ const Updates: React.FC = () => {
                 className="rounded-full mr-3"
               />
               <div>
+              {user?.role === "Moderator" || user?.role === "FANTA" ?(
+                   <DropdownComponent anunId={update.id}/>
+                ) : null}
                 <Link href={`/forum/updates/${update.id}`}>
                   <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">
                     {update.title}
