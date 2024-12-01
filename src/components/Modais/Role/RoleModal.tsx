@@ -145,7 +145,7 @@ export default function ModalChangeRole({Close, userId}: ChnageRoleProps){
               whileTap={{ scale: 0.98 }}
               className="w-full py-3 bg-orange-400 hover:bg-orange-500 text-white rounded-lg transition-colors text-lg font-semibold"
             >
-              Alterar Cargo
+             {t("translation.carga")}
             </motion.button>
           </form>
         </div>

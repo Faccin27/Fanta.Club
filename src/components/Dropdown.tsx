@@ -38,6 +38,7 @@ export default function DropdownComponent({anunId}:{anunId:number}) {
         </button>
 
         <button
+        onClick={()=> window.location.href = "/update"}
           className="flex items-center w-full px-4 py-2 text-sky-600 hover:bg-zinc-900 rounded-b-lg active:text-sky-800"
         >
           <UpdatesIcon className="mr-2" />

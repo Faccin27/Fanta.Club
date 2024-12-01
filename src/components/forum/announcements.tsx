@@ -21,7 +21,7 @@ export enum Types{
   Updates = "Updates",
   Configs = "Configs"
 }
-interface Announcement {
+export interface Announcement {
   id: number;
   title: string;
   content: string;

@@ -9,7 +9,7 @@ import Hero from '@/components/home/HeroSection'
 
 const MainPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-zinc-900 text-zinc-100">
+    <div className="min-h-screen bg-zinc-900 text-zinc-100 overflow-x-hidden">
       <main>
         <Hero />
         <ProductShowcase />

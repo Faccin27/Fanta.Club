@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
@@ -32,9 +32,9 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
 
   const ClosebanModal = () => {
     setIsopenBanModal(false);
-  };  
-  
-  
+  };
+
+
   
   const { i18n } = useTranslation();
   const [currentLang, setCurrentLang] = useState(i18n.language);
@@ -178,8 +178,8 @@ useEffect(()=>{
                 <Image
                   src={user?.photo == null ? pfp : user.photo}
                   alt={`${user.name}'s avatar`}
-                  width={32}
-                  height={32}
+                  width={35}
+                  height={20}
                   className="rounded-lg mr-2"
                 />
                 <span>{user.name}</span>
