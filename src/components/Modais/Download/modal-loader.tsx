@@ -15,13 +15,13 @@ import { User } from "@/utils/auth";
 
 
 interface ModalLoader{
-    onClose: ()=> void
-    id: number | undefined
-    user: User | null
+    onClose: ()=> void;
+    id: number | undefined;
+    user: User | undefined;
 }
 
 export default function ModalLoader({onClose, id, user}:ModalLoader,){
-    const [order, setOrders] = useState<Order | null>(null);
+    const [order, setOrders] = useState<Order[] | null>(null);
     const [usere, setUser] = useState();
 
     const {t} = useTranslation();
@@ -37,7 +37,7 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
               if (!response.ok) {
                 throw new Error("Failed to fetch orders");
               }
-              const data = await response.json();
+              const data:Order[] = await response.json();
               setOrders(data);
             } catch (error) {
               console.error("Error fetching orders:", error);
@@ -111,6 +111,7 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
               <FaDiscord className="mr-2 h-5 w-5" /> Acesse nosso Discord
             </motion.button>
                 </div>
+      {order?.map((produto)=>(
 
                 <div className="mt-10">
                     <motion.button
@@ -120,9 +121,10 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
                         whileTap={{ scale: 0.95 }}
                         className="w-full py-3 bg-orange-400 hover:bg-orange-500 text-white rounded-lg transition-colors text-lg font-semibold"
                     >
-                        {t("translation.download_forje")} {" "} {order?.name}
+                        {t("translation.download_forje")} {" "} {produto.name}
                     </motion.button>
                 </div>
+      ))}
             </div>
         </motion.div>
     </motion.div>

@@ -143,7 +143,11 @@
         "confirm_change": "Confirm Change",
         "updating":"Update",
         "carga":"Update Role",
-        "anunzinho":"Updated"
+        "anunzinho":"Updated",
+        "alala":"Tell us about you",
+        "userr":"Do it!",
+        "att": "Change my description",
+        "recharg": "Please, reload the page to see your new description!"
     
 
     }

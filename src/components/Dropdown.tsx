@@ -1,4 +1,4 @@
-import {Ellipsis as Options, Trash2,  RefreshCw as UpdatesIcon  } from "lucide-react";
+import {Ellipsis as Options, Trash2  } from "lucide-react";
 import React, { useState } from "react";
 
 export default function DropdownComponent({anunId}:{anunId:number}) {
@@ -35,14 +35,6 @@ export default function DropdownComponent({anunId}:{anunId:number}) {
         >
           <Trash2 className="mr-2" />
           Delete
-        </button>
-
-        <button
-        onClick={()=> window.location.href = "/update"}
-          className="flex items-center w-full px-4 py-2 text-sky-600 hover:bg-zinc-900 rounded-b-lg active:text-sky-800"
-        >
-          <UpdatesIcon className="mr-2" />
-          Update
         </button>
       </div>
     )}

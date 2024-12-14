@@ -4,7 +4,8 @@ import { checkLoginStatus, User } from '@/utils/auth';
 import Me from "@/components/Me";
 
 export default function MainComponent() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | undefined>(undefined);
+  const [indentifier, setIndentifier] = useState<number | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,6 +15,7 @@ export default function MainComponent() {
         const { isLoggedIn, user } = await checkLoginStatus();
         if (isLoggedIn && user) {
           setUser(user);
+          console.log(user.id);
         } else {
           window.location.href = '/'
         }
@@ -37,7 +39,7 @@ export default function MainComponent() {
 
   return (
     <>
-      <Me user={user} />
+      <Me user={user} ident={user?.id} />
     </>
   );
 }

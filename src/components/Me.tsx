@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import B1 from "@/assets/images/b-1.png";
+import { motion } from "framer-motion";
 import B2 from "@/assets/images/b-2.jpg";
 import PFP from "@/assets/images/pfp.png";
 import {
@@ -7,6 +8,7 @@ import {
   Download,
   Edit,
   Lock,
+  X,
   Mail,
   RefreshCw,
   ShieldCheck,
@@ -23,6 +25,10 @@ import EmailChangeModal from "./Modais/Email/EmailChangeModal";
 import NameModal from "./Modais/Name/NameModal";
 import AboutModal from "./Modais/About/AboutModal";
 import ImageChangeModal from "@/components/Modais/ProfileImage/ImageChangeModal";
+import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 interface User {
   id: number;
@@ -34,6 +40,7 @@ interface User {
   gender: string;
   birthDate: string;
   isActive: boolean;
+  description:string | TrustedHTML | undefined;
   role: string;
   createdAt: string;
   updatedAt: string;
@@ -78,7 +85,8 @@ const getRoleStyles = (role: string) => {
 };
 
 interface MeProps {
-  user: User | null;
+  user: User | undefined;
+  ident: number | undefined;
 }
 
 const products: Product[] = [
@@ -105,10 +113,11 @@ const products: Product[] = [
   },
 ];
 
-export default function Component({ user }: MeProps) {
+export default function Component({ user,ident  }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [isModalAboutOpen, setIsModalAboutOpen] = useState<boolean>(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [descriptionOpen, setDesc] = useState<boolean>(false);
+  const [newDescription, setNew] = useState<string>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalNameOpen, setIsModalNameOpen] = useState<boolean>(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
@@ -132,7 +141,7 @@ export default function Component({ user }: MeProps) {
           if (!response.ok) {
             throw new Error("Failed to fetch orders");
           }
-          const data = await response.json();
+          const data:Order[] = await response.json();
           setOrders(data);
         } catch (error) {
           console.error("Error fetching orders:", error);
@@ -153,6 +162,16 @@ export default function Component({ user }: MeProps) {
     return today < expirationDate;
   };
 
+  const toolbarOptions = [
+    ["bold", "italic", "underline"], // Negrito, itálico, sublinhado
+    ["blockquote"], // Bloco de citação
+    [{ list: "ordered" }, { list: "bullet" }], // Listas ordenadas e não ordenadas
+    [{ align: [] }], // Alinhamento do texto
+    [{ header: [1, 2, false] }], // Cabeçalhos H1 e H2
+    ["clean"], // Remover formatação
+  ];
+  
+
   const getRemainingDays = (productName: string) => {
     const order = orders.find((order) => order.name === productName);
     if (order) {
@@ -169,16 +188,17 @@ export default function Component({ user }: MeProps) {
     return null;
   };
 
-  const handleOpenModalAbout = () => {
-    setIsModalAboutOpen(true);
-  };
-  const handleCloseModalAbout = () => {
-    setIsModalAboutOpen(false);
-  };
 
   const handleDownload = (downloadLink: string) => {
     window.open(downloadLink);
   };
+
+  const handleShowDescriptionEdit = () => {
+    setDesc(true);
+  }
+  const handleUnShowDescriptionEdit = () => {
+    setDesc(false);
+  }
 
   const handleOpenNameModal = () => {
     setIsModalNameOpen(true);
@@ -193,6 +213,24 @@ export default function Component({ user }: MeProps) {
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleSubmit = async(evento:React.FormEvent)=>{
+    evento.preventDefault();
+    try{
+      await fetch(`http://localhost:3535/users/${ident}/desc`,{
+        method:"PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body:JSON.stringify({
+          description:newDescription
+        })
+      });
+      alert(t("translation.recharg"))
+    } catch(err){
+      throw new Error(`We can't update your description Error: ${err}`)
+    };
   };
 
   const handleOpenEmailModal = () => {
@@ -287,6 +325,16 @@ export default function Component({ user }: MeProps) {
                   {user?.role || "N/A"}
                 </span>
               )}
+               
+            </div>
+            <div className="mt-2 flex items-center justify-center px-2">
+              {user?.description === null ? null :(
+  
+            <div
+              className="prose prose-h1:text-zinc-300 prose-h2:text-zinc-300 prose-h3:text-zinc-300 prose-h4:text-zinc-300 prose-h5:text-zinc-300 prose-h6:text-zinc-300 prose-p:text-zinc-300 prose-img:max-w-52 prose-ol:text-zinc-300 prose-ul:text-zinc-300 border-2 border-orange-500 rounded-lg px-2 py-4 bg-zinc-900 prose-strong:text-zinc-300 prose-em:text-zinc-300 prose-blockquote:text-zinc-300 text-zinc-300"
+            dangerouslySetInnerHTML={{__html: user?.description}}
+              />
+              )}
             </div>
             <div>
               {user?.isActive === false ? (
@@ -343,23 +391,97 @@ export default function Component({ user }: MeProps) {
           </div>
           <br />
           <div className="max-w-fit ml-auto mr-auto">
-            <button
-              onClick={handleOpenModalAbout}
+            {user?.description === null ? (
+              <button
+              onClick={handleShowDescriptionEdit}
+                className={`text-zinc-400 hover:text-orange-400 ${
+                  user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"
+                } transition-colors`}
+              >
+                {descriptionOpen ? null : (<Pencil className="inline mr-1 h-4 w-4" />)} 
+                {descriptionOpen ? null : t("translation.alala")} 
+              </button>
+            ) : (
+              <button
+            onClick={handleShowDescriptionEdit}
               className={`text-zinc-400 hover:text-orange-400 ${
                 user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"
               } transition-colors`}
             >
-              <Pencil className="inline mr-1 h-4 w-4" /> Tell us about you
+              {descriptionOpen ? null : (<Pencil className="inline mr-1 h-4 w-4" />)} 
+              {descriptionOpen ? null : t("translation.att")} 
             </button>
-          </div>
-          <div>
-            {isModalAboutOpen && (
-              <AboutModal
-                isOpen={handleOpenModalAbout}
-                onClose={handleCloseModalAbout}
-                userId={user?.id}
-              />
             )}
+            <div>
+              {descriptionOpen && (
+                <div className="mt-10 mb-10">
+          <div className="container mx-auto px-4 -mt-16">
+          <div className="text-center">
+            <div className="z-50">
+              <motion.form
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.5,
+                  ease: [0, 0.71, 0.2, 1.01],
+                }}
+                onSubmit={handleSubmit}
+              >
+                <div className="mt-6  rounded-xl shadow-2xl p-6 outline-none border  border-orange-500 min-w-full">
+                  <div className="flex flex-col">
+                <div className="self-end">
+                <button 
+                onClick={handleUnShowDescriptionEdit}
+                className="text-3xl text-red-600 mb-5"><X size={40}/></button>
+                </div>
+                  </div>
+                  <div>
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.9,
+                        ease: [0, 0.71, 0.2, 1.01], 
+                        scale: {
+                          type: "spring",
+                          damping: 5,
+                          stiffness: 100,
+                          restDelta: 0.001,
+                        },
+                      }}
+                      className="mb-32"
+                    >
+                      <ReactQuill
+                          modules={{
+                            toolbar: toolbarOptions, 
+                          }}
+                          theme="snow"
+                          value={newDescription}
+                          onChange={evento=>setNew(evento)}
+                          className="quill-editor custom-toolbar text-white outline-none border-zinc-200 h-40"
+                          style={{ minWidth: "auto", minHeight: "auto" }}
+                        />
+
+                    </motion.div>
+                  </div>
+                  <motion.button
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 3 }}
+                    type="submit"
+                    className="bg-orange-600 shadow-2xl rounded-lg hover:bg-orange-400 px-8 py-2"
+                  >
+                    {t("translation.userr")}
+                  </motion.button>
+                </div>
+              </motion.form>
+            </div>
+          </div>
+        </div>
+                </div>
+              )}
+            </div>
           </div>
           <div className="mt-16 space-y-5 pb-32">
             {products.map((product, index) => {

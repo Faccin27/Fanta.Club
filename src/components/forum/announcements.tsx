@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Bell as AnnouncementsIcon,
-  Ellipsis as Options  } from "lucide-react";
+  RefreshCw as UpdatesIcon  } from "lucide-react";
 import pfp from "@/assets/images/pfp.png";
 import { useTranslation } from "react-i18next";
 import { checkLoginStatus, User as AuthUser, User } from "@/utils/auth"; // Renomeado para evitar conflito
@@ -115,6 +115,13 @@ export default function Announcements() {
         </div>
         {canPostAnnouncement && (
           <div className="flex justify-between gap-4">
+            <button
+                  onClick={()=> window.location.href = "/update"}
+                  className="flex items-center w-full px-4 py-2 text-sky-600 hover:bg-sky-900 rounded-lg bg-sky-950 active:text-sky-800"
+                  >
+                     <UpdatesIcon className="mr-2" />
+                     Update
+                   </button>
           
           <button
             className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
@@ -147,7 +154,9 @@ export default function Announcements() {
               />
               <div>
                 {user?.role === "Moderator" || user?.role === "FANTA" ?(
-                   <DropdownComponent anunId={anuncio.id}/>
+                  <>
+                  <DropdownComponent anunId={anuncio.id}/>
+                     </>
                 ) : null}
            
                 <Link href={`/forum/announcements/${anuncio.id}`}>
