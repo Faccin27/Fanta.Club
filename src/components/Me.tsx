@@ -117,7 +117,7 @@ export default function Component({ user,ident  }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [descriptionOpen, setDesc] = useState<boolean>(false);
-  const [newDescription, setNew] = useState<string>();
+  const [newDescription, setNew] = useState<string | TrustedHTML | undefined>(user?.description);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalNameOpen, setIsModalNameOpen] = useState<boolean>(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
@@ -331,7 +331,7 @@ export default function Component({ user,ident  }: MeProps) {
               {user?.description === null ? null :(
   
             <div
-              className="prose prose-h1:text-zinc-300 prose-h2:text-zinc-300 prose-h3:text-zinc-300 prose-h4:text-zinc-300 prose-h5:text-zinc-300 prose-h6:text-zinc-300 prose-p:text-zinc-300 prose-img:max-w-52 prose-ol:text-zinc-300 prose-ul:text-zinc-300 border-2 border-orange-500 rounded-lg px-2 py-4 bg-zinc-900 prose-strong:text-zinc-300 prose-em:text-zinc-300 prose-blockquote:text-zinc-300 text-zinc-300"
+              className="prose prose-h1:text-zinc-300 prose-h2:text-zinc-300 prose-h3:text-zinc-300 prose-h4:text-zinc-300 prose-h5:text-zinc-300 prose-h6:text-zinc-300 prose-p:text-zinc-300 prose-img:max-w-52 prose-ol:text-zinc-300 prose-ul:text-zinc-300 border-2 border-orange-500 rounded-lg px-2 py-4 bg-zinc-900 prose-strong:text-zinc-300 prose-em:text-zinc-300 prose-blockquote:text-zinc-300 text-zinc-300 prose-p:truncate"
             dangerouslySetInnerHTML={{__html: user?.description}}
               />
               )}
@@ -457,9 +457,9 @@ export default function Component({ user,ident  }: MeProps) {
                             toolbar: toolbarOptions, 
                           }}
                           theme="snow"
-                          value={newDescription}
+                          value={String(newDescription)}
                           onChange={evento=>setNew(evento)}
-                          className="quill-editor custom-toolbar text-white outline-none border-zinc-200 h-40"
+                          className="quill-editor custom-toolbar text-white outline-none border-zinc-200 h-40 w-[33rem]"
                           style={{ minWidth: "auto", minHeight: "auto" }}
                         />
 
