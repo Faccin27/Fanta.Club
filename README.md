@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fanta.club - Social and Showcase Platform
 
-## Getting Started
+**Fanta.club** é uma plataforma multifuncional que combina um sistema de fóruns, showcases personalizados, gerenciamento de compras e autenticação segura com confirmação por e-mail. Desenvolvida com tecnologias modernas como **React**, **Next.js** e **Tailwind CSS**, a interface proporciona uma experiência intuitiva e agradável para os usuários.
 
-First, run the development server:
+<img src="./public/readme_home.png" alt="Homepage" width="600"/>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Funcionalidades
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔐 Autenticação de Usuário
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Login e Registro**: Sistema seguro e intuitivo para autenticação.
+- **Confirmação de E-mail**: Validação do e-mail para garantir contas legítimas.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<img src="./public/readme_login.png" alt="Homepage" width="600"/>
 
-## Learn More
+### 📋 Fóruns
 
-To learn more about Next.js, take a look at the following resources:
+- **Anuncios**: Para anúncios sobre diversos assuntos do mercado.
+- **Updates**: Para atualizações de nossos produtos.
+- **Configs**: Para todos os usuarios clientes postarem conteudo.
+- **Questions**: Para perguntas frequentemente feitas.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+### 🌟 Sistema de Showcase
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Exposição Personalizada**: Sistema com filtro para usuarios e para plataformas como youtube e tiktok
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+### 🛒 Gerenciamento de Compras
+
+- **Sistema de Compras**: Plataforma integrada para realizar compras com eficiência.
+- **Histórico de Compras**: Visualize e gerencie compras realizadas.
+
+
+### 📧 Confirmação por E-mail
+
+- **Validação de Login/Registro**: Confirme o e-mail para acesso seguro e confiável.
+- **Recuperação de Senha**: Sistema simples para redefinição de senhas por e-mail.
+
+### 📊 Painel de Controle
+
+- **Dashboard Intuitivo**: Gerencie suas atividades na plataforma de forma clara e eficiente.
+
+<img src="./public/readme_profile.png" alt="Dashboard" width="600"/>
+
+## Tecnologias Utilizadas
+
+- **Front-end**:
+  - React com TypeScript
+  - Next.js para renderização de páginas
+  - Tailwind CSS para estilização
+  - Framer Motion para animações
+  - Lucide-react para ícones
+  - Axios para requisições HTTP
+  - DOMPurify para sanitização de HTML
+  - i18next para internacionalização do site
+  - Sharp para conversão de imagens
+  
+- **Back-end**:
+  - Fastify para gerenciamento de rotas
+  - Prisma ORM para interação com o banco de dados MySQL
+  - Veja mais no repositorio [back-end](https://github.com/Faccin27/Fanta.club-backend).
+
+## Como Rodar o Projeto
+
+1. Clone este repositório:
+
+   ```bash
+   git clone https://github.com/Faccin27/Fanta.club
+   ```
+
+2. Instale as dependências:
+
+   ```bash
+   npm install
+   ```
+
+3. Rode o projeto:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Acesse o projeto no navegador:
+   ```
+   http://localhost:3000
+   ```
+
+## Repositório do Back-end
+
+Você pode acessar o repositório do back-end do projeto [aqui](https://github.com/Faccin27/Fanta.club-backend).
+
+## Contribuições
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir um PR ou relatar problemas.
+
