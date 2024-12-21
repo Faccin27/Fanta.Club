@@ -111,18 +111,23 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
               <FaDiscord className="mr-2 h-5 w-5" /> Acesse nosso Discord
             </motion.button>
                 </div>
-      {order?.map((produto)=>(
 
-                <div className="mt-10">
+      {order?.map((produto)=>(        
+        <div className="mt-10">
+                  {produto.name === "FANTA_PRO" ? produto.name = "FANTA PRO":null}
+                  {produto.name === "FANTA_LIGHT" ? produto.name = "FANTA LIGHT":null}
+                  {produto.name === "FANTA_UNBAN" ? produto.name = "FANTA UNBAN":null}
+                  
                     <motion.button
-                       // onClick={}
-                        type="submit"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="w-full py-3 bg-orange-400 hover:bg-orange-500 text-white rounded-lg transition-colors text-lg font-semibold"
-                    >
-                        {t("translation.download_forje")} {" "} {produto.name}
-                    </motion.button>
+                    // onClick={}
+                     type="submit"
+                     whileHover={{ scale: 1.05 }}
+                     whileTap={{ scale: 0.95 }}
+                     className={`w-full py-3 ${produto.name === "FANTA PRO" ? "bg-orange-600": ""} ${produto.name === "FANTA LIGHT" ? "bg-purple-600": ""} ${produto.name === "FANTA UNBAN" ? "bg-green-800": ""} ${produto.name === "FANTA PRO" ? "hover:bg-orange-400": "hover:bg-orange-500"} text-white rounded-lg transition-colors text-lg font-semibold`}
+                 >
+                     {t("translation.download_forje")} {" "} <strong>{produto.name}</strong>
+                 </motion.button>
+        
                 </div>
       ))}
             </div>
