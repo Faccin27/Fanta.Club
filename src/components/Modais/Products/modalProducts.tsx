@@ -35,7 +35,6 @@ export default function ModalProducts({ onClose }: { onClose: () => void }) {
         transition={{ type: "spring", damping: 25, stiffness: 300 }}
         className="bg-[#121214] text-white max-w-2xl w-full rounded-lg shadow-xl overflow-hidden"
       >
-        
         <div className="relative p-6 bg-[#0D0D0E] flex justify-between items-center border-b border-orange-500">
           <h2 className="text-2xl font-bold text-center flex-1">
             {t("translation.produtos_les")}
@@ -49,7 +48,7 @@ export default function ModalProducts({ onClose }: { onClose: () => void }) {
           </button>
         </div>
 
-        <div className="p-6 space-y-6 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-6">
+        <div className="p-6 space-y-6 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-6 items-stretch">
           <ProductCard
             href="/product/fantalight"
             imageSrc={FantaLight}
@@ -80,7 +79,7 @@ export default function ModalProducts({ onClose }: { onClose: () => void }) {
 function ProductCard({ href, imageSrc, alt, title, description }: ProductCardProps) {
   return (
     <Link href={href} passHref>
-      <div className="block p-4 text-center bg-[#18181A] rounded-lg border border-orange-400 transition-transform transform hover:scale-105 hover:border-orange-500">
+      <div className="h-full flex flex-col p-4 text-center bg-[#18181A] rounded-lg border border-orange-400 transition-transform transform hover:scale-105 hover:border-orange-500">
         <Image
           src={imageSrc}
           alt={alt}
@@ -89,8 +88,8 @@ function ProductCard({ href, imageSrc, alt, title, description }: ProductCardPro
           className="rounded mb-4"
           placeholder="blur"
         />
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="text-sm text-gray-400 mt-2">{description}</p>
+        <h3 className="text-lg font-semibold mb-2">{title}</h3>
+        <p className="text-sm text-gray-400 flex-grow">{description}</p>
       </div>
     </Link>
   );
