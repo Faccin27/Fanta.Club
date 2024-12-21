@@ -120,6 +120,7 @@ export default function Component({ user,ident  }: MeProps) {
   const [newDescription, setNew] = useState<string | TrustedHTML | undefined>(user?.description);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalNameOpen, setIsModalNameOpen] = useState<boolean>(false);
+  const [notification, setNotification] = useState();
   const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
   const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false);
 
