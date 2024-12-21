@@ -180,8 +180,8 @@ useEffect(()=>{
                   alt={`${user.name}'s avatar`}
                   width={35}
                   height={20}
-                  className="rounded-lg mr-2"
-                />
+                  className="w-[35px] h-[35px] object-cover rounded-lg mr-2"
+                  />
                 <span>{user.name}</span>
                 <ChevronDown className="ml-1 h-4 w-4" />
               </button>
