@@ -3,9 +3,9 @@
 import React, { useRef } from "react";
 import Aside from "./Aside";
 import PricingSection from "@/components/home/PriceSection";
-import FeatureSection from "@/components/home/FeatureSection"
-import ProductShowcase from "@/components/home/ProductSection"
-import Hero from '@/components/home/HeroSection'
+import FeatureSection from "@/components/home/FeatureSection";
+import ProductShowcase from "@/components/home/ProductSection";
+import Hero from "@/components/home/HeroSection";
 
 const MainPage: React.FC = () => {
   return (

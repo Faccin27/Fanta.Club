@@ -25,10 +25,10 @@ import EmailChangeModal from "./Modais/Email/EmailChangeModal";
 import NameModal from "./Modais/Name/NameModal";
 import AboutModal from "./Modais/About/AboutModal";
 import ImageChangeModal from "@/components/Modais/ProfileImage/ImageChangeModal";
-import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 interface User {
   id: number;
@@ -40,7 +40,7 @@ interface User {
   gender: string;
   birthDate: string;
   isActive: boolean;
-  description:string | TrustedHTML | undefined;
+  description: string | TrustedHTML | undefined;
   role: string;
   createdAt: string;
   updatedAt: string;
@@ -113,11 +113,13 @@ const products: Product[] = [
   },
 ];
 
-export default function Component({ user,ident  }: MeProps) {
+export default function Component({ user, ident }: MeProps) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [descriptionOpen, setDesc] = useState<boolean>(false);
-  const [newDescription, setNew] = useState<string | TrustedHTML | undefined>(user?.description);
+  const [newDescription, setNew] = useState<string | TrustedHTML | undefined>(
+    user?.description
+  );
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalNameOpen, setIsModalNameOpen] = useState<boolean>(false);
   const [notification, setNotification] = useState();
@@ -142,7 +144,7 @@ export default function Component({ user,ident  }: MeProps) {
           if (!response.ok) {
             throw new Error("Failed to fetch orders");
           }
-          const data:Order[] = await response.json();
+          const data: Order[] = await response.json();
           setOrders(data);
         } catch (error) {
           console.error("Error fetching orders:", error);
@@ -171,7 +173,6 @@ export default function Component({ user,ident  }: MeProps) {
     [{ header: [1, 2, false] }], // Cabeçalhos H1 e H2
     ["clean"], // Remover formatação
   ];
-  
 
   const getRemainingDays = (productName: string) => {
     const order = orders.find((order) => order.name === productName);
@@ -189,17 +190,16 @@ export default function Component({ user,ident  }: MeProps) {
     return null;
   };
 
-
   const handleDownload = (downloadLink: string) => {
     window.open(downloadLink);
   };
 
   const handleShowDescriptionEdit = () => {
     setDesc(true);
-  }
+  };
   const handleUnShowDescriptionEdit = () => {
     setDesc(false);
-  }
+  };
 
   const handleOpenNameModal = () => {
     setIsModalNameOpen(true);
@@ -216,22 +216,22 @@ export default function Component({ user,ident  }: MeProps) {
     setIsModalOpen(false);
   };
 
-  const handleSubmit = async(evento:React.FormEvent)=>{
+  const handleSubmit = async (evento: React.FormEvent) => {
     evento.preventDefault();
-    try{
-      await fetch(`http://localhost:3535/users/${ident}/desc`,{
-        method:"PUT",
+    try {
+      await fetch(`http://localhost:3535/users/${ident}/desc`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body:JSON.stringify({
-          description:newDescription
-        })
+        body: JSON.stringify({
+          description: newDescription,
+        }),
       });
-      alert(t("translation.recharg"))
-    } catch(err){
-      throw new Error(`We can't update your description Error: ${err}`)
-    };
+      alert(t("translation.recharg"));
+    } catch (err) {
+      throw new Error(`We can't update your description Error: ${err}`);
+    }
   };
 
   const handleOpenEmailModal = () => {
@@ -326,7 +326,6 @@ export default function Component({ user,ident  }: MeProps) {
                   {user?.role || "N/A"}
                 </span>
               )}
-               
             </div>
 
             <div>
@@ -386,92 +385,101 @@ export default function Component({ user,ident  }: MeProps) {
           <div className="max-w-fit ml-auto mr-auto">
             {user?.description === null ? (
               <button
-              onClick={handleShowDescriptionEdit}
+                onClick={handleShowDescriptionEdit}
                 className={`text-zinc-400 hover:text-orange-400 ${
                   user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"
                 } transition-colors`}
               >
-                {descriptionOpen ? null : (<Pencil className="inline mr-1 h-4 w-4" />)} 
-                {descriptionOpen ? null : t("translation.alala")} 
+                {descriptionOpen ? null : (
+                  <Pencil className="inline mr-1 h-4 w-4" />
+                )}
+                {descriptionOpen ? null : t("translation.alala")}
               </button>
             ) : (
               <button
-            onClick={handleShowDescriptionEdit}
-              className={`text-zinc-400 hover:text-orange-400 ${
-                user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"
-              } transition-colors`}
-            >
-              {descriptionOpen ? null : (<Pencil className="inline mr-1 h-4 w-4" />)} 
-              {descriptionOpen ? null : t("translation.att")} 
-            </button>
+                onClick={handleShowDescriptionEdit}
+                className={`text-zinc-400 hover:text-orange-400 ${
+                  user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"
+                } transition-colors`}
+              >
+                {descriptionOpen ? null : (
+                  <Pencil className="inline mr-1 h-4 w-4" />
+                )}
+                {descriptionOpen ? null : t("translation.att")}
+              </button>
             )}
             <div>
               {descriptionOpen && (
                 <div className="mt-10 mb-10">
-          <div className="container mx-auto px-4 -mt-16">
-          <div className="text-center">
-            <div className="z-50">
-              <motion.form
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.5,
-                  ease: [0, 0.71, 0.2, 1.01],
-                }}
-                onSubmit={handleSubmit}
-              >
-                <div className="mt-6  rounded-xl shadow-2xl p-6 outline-none border  border-orange-500 min-w-full">
-                  <div className="flex flex-col">
-                <div className="self-end">
-                <button 
-                onClick={handleUnShowDescriptionEdit}
-                className="text-3xl text-orange-600 mb-5 hover:text-orange-400"><X size={40}/></button>
-                </div>
-                  </div>
-                  <div>
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{
-                        duration: 0.9,
-                        ease: [0, 0.71, 0.2, 1.01], 
-                        scale: {
-                          type: "spring",
-                          damping: 5,
-                          stiffness: 100,
-                          restDelta: 0.001,
-                        },
-                      }}
-                      className="mb-32"
-                    >
-                      <ReactQuill
-                          modules={{
-                            toolbar: toolbarOptions, 
+                  <div className="container mx-auto px-4 -mt-16">
+                    <div className="text-center">
+                      <div className="z-50">
+                        <motion.form
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{
+                            duration: 0.8,
+                            delay: 0.5,
+                            ease: [0, 0.71, 0.2, 1.01],
                           }}
-                          theme="snow"
-                          value={String(newDescription)}
-                          onChange={evento=>setNew(evento)}
-                          className="quill-editor custom-toolbar text-white outline-none border-zinc-200 h-40 w-[33rem]"
-                          style={{ minWidth: "auto", minHeight: "auto" }}
-                        />
-
-                    </motion.div>
+                          onSubmit={handleSubmit}
+                        >
+                          <div className="mt-6  rounded-xl shadow-2xl p-6 outline-none border  border-orange-500 min-w-full">
+                            <div className="flex flex-col">
+                              <div className="self-end">
+                                <button
+                                  onClick={handleUnShowDescriptionEdit}
+                                  className="text-3xl text-orange-600 mb-5 hover:text-orange-400"
+                                >
+                                  <X size={40} />
+                                </button>
+                              </div>
+                            </div>
+                            <div>
+                              <motion.div
+                                initial={{ opacity: 0, scale: 0.5 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                  duration: 0.9,
+                                  ease: [0, 0.71, 0.2, 1.01],
+                                  scale: {
+                                    type: "spring",
+                                    damping: 5,
+                                    stiffness: 100,
+                                    restDelta: 0.001,
+                                  },
+                                }}
+                                className="mb-32"
+                              >
+                                <ReactQuill
+                                  modules={{
+                                    toolbar: toolbarOptions,
+                                  }}
+                                  theme="snow"
+                                  value={String(newDescription)}
+                                  onChange={(evento) => setNew(evento)}
+                                  className="quill-editor custom-toolbar text-white outline-none border-zinc-200 h-40 w-[33rem]"
+                                  style={{
+                                    minWidth: "auto",
+                                    minHeight: "auto",
+                                  }}
+                                />
+                              </motion.div>
+                            </div>
+                            <motion.button
+                              initial={{ opacity: 0, y: -50 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 3 }}
+                              type="submit"
+                              className="bg-orange-600 shadow-2xl rounded-lg hover:bg-orange-400 px-8 py-2"
+                            >
+                              {t("translation.userr")}
+                            </motion.button>
+                          </div>
+                        </motion.form>
+                      </div>
+                    </div>
                   </div>
-                  <motion.button
-                    initial={{ opacity: 0, y: -50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 3 }}
-                    type="submit"
-                    className="bg-orange-600 shadow-2xl rounded-lg hover:bg-orange-400 px-8 py-2"
-                  >
-                    {t("translation.userr")}
-                  </motion.button>
-                </div>
-              </motion.form>
-            </div>
-          </div>
-        </div>
                 </div>
               )}
             </div>

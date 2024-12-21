@@ -12,7 +12,7 @@ import pfp from "@/assets/images/pfp.png";
 import { usePathname } from "next/navigation";
 import Scroll from "./scroll-bar/scroll";
 import { FaDiscord } from "react-icons/fa";
-import  {useTranslation}  from "react-i18next";
+import { useTranslation } from "react-i18next";
 interface HeaderProps {
   isLoggedIn: boolean;
   user: User | null;
@@ -24,7 +24,6 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const languageButtonRef = useRef<HTMLButtonElement>(null);
   const [BanModal, setIsopenBanModal] = useState<boolean>(false);
   const userButtonRef = useRef<HTMLButtonElement>(null);
-  
 
   const OpenbanModal = () => {
     setIsopenBanModal(true);
@@ -34,8 +33,6 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
     setIsopenBanModal(false);
   };
 
-
-  
   const { i18n } = useTranslation();
   const [currentLang, setCurrentLang] = useState(i18n.language);
   const handleChangeLanguagePtBr = () => {
@@ -45,11 +42,11 @@ export default function Component({ isLoggedIn, user }: HeaderProps) {
   const handleChangeLanguageEn = () => {
     i18n.changeLanguage("en");
     setCurrentLang("en");
-};
+  };
 
-useEffect(()=>{
-  setCurrentLang(i18n.language)
-},[currentLang])
+  useEffect(() => {
+    setCurrentLang(i18n.language);
+  }, [currentLang]);
 
   const toggleLanguageOptions = () => {
     setShowLanguageOptions((prev) => !prev);
@@ -74,7 +71,7 @@ useEffect(()=>{
     window.location.reload();
   }, []);
 
-  const pathName = usePathname()
+  const pathName = usePathname();
 
   return (
     <header className="bg-zinc-900 p-4 border-b border-orange-600 fixed z-50 w-full">
@@ -152,7 +149,7 @@ useEffect(()=>{
                   }}
                 >
                   <button
-                  onClick={handleChangeLanguagePtBr}
+                    onClick={handleChangeLanguagePtBr}
                     className="block px-4 py-2 hover:bg-orange-500 whitespace-nowrap w-full"
                   >
                     pt
@@ -181,7 +178,7 @@ useEffect(()=>{
                   width={35}
                   height={20}
                   className="w-[35px] h-[35px] object-cover rounded-lg mr-2"
-                  />
+                />
                 <span>{user.name}</span>
                 <ChevronDown className="ml-1 h-4 w-4" />
               </button>
@@ -209,18 +206,17 @@ useEffect(()=>{
                         Admin
                       </Link>
                     ) : null}
-                    
-                      <Link
-                        href="/me"
-                        className={`block px-4 py-2 hover:bg-zinc-600 ${
-                          pathName == "/me"
-                            ? "text-orange-400 hover:bg-zinc-600"
-                            : ""
-                        }`}
-                      >
-                        Profile
-                      </Link>
-                    
+
+                    <Link
+                      href="/me"
+                      className={`block px-4 py-2 hover:bg-zinc-600 ${
+                        pathName == "/me"
+                          ? "text-orange-400 hover:bg-zinc-600"
+                          : ""
+                      }`}
+                    >
+                      Profile
+                    </Link>
 
                     <button
                       onClick={handleLogout}
@@ -230,7 +226,7 @@ useEffect(()=>{
                     </button>
                   </motion.div>
                 )}
-              </AnimatePresence>  
+              </AnimatePresence>
             </div>
           ) : (
             <Link

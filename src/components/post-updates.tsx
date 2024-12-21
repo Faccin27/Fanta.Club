@@ -24,7 +24,6 @@ interface PostProps {
   loggedUser: User | null;
 }
 
-
 interface Order {
   id: number;
   name: string;
@@ -34,9 +33,6 @@ interface Order {
   userId: number;
   expirationDate: string;
 }
-
-
-
 
 const getRoleStyles = (role: string) => {
   switch (role) {
@@ -51,9 +47,7 @@ const getRoleStyles = (role: string) => {
   }
 };
 
-
-
-  export default function PostUpdates() {
+export default function PostUpdates() {
   //Funcionalidades do Quill:
   const toolbarOptions = [
     ["bold", "italic", "underline"], // toggled buttons
@@ -76,57 +70,53 @@ const getRoleStyles = (role: string) => {
     ["clean"], // remove formatting button
   ];
 
-  
-  const {t} = useTranslation()
-const [usere, setUsere] = useState<User | null>(null);
-const [title, setTitle] = useState<string>("");
-const [content, setContent] = useState<string>("");
-const [anuncio, setAnuncio] = useState<string>("");
-const [identifier, setId] = useState<number | undefined>(undefined);
+  const { t } = useTranslation();
+  const [usere, setUsere] = useState<User | null>(null);
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [anuncio, setAnuncio] = useState<string>("");
+  const [identifier, setId] = useState<number | undefined>(undefined);
 
-useEffect(() => {
-  async function fetchUserData() {
-    try {
-      const { user } = await checkLoginStatus();
-      setUsere(user);
-      setId(usere?.id)
-    } catch (err) {
-      alert(err);
-    };
-  }
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const { user } = await checkLoginStatus();
+        setUsere(user);
+        setId(usere?.id);
+      } catch (err) {
+        alert(err);
+      }
+    }
 
-  fetchUserData();
-}, []);
+    fetchUserData();
+  }, []);
 
   const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
     evento.preventDefault();
     console.log(usere);
-    try{
+    try {
       await fetch("http://localhost:3535/anun", {
-        method:"POST",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body:JSON.stringify({
+        body: JSON.stringify({
           title: title,
           content: content,
           type: "Updates",
           createdById: usere?.id,
-          createdByPhoto:usere?.photo || "",
-          createdByName: usere?.name || ""
+          createdByPhoto: usere?.photo || "",
+          createdByName: usere?.name || "",
         }),
       });
-      alert("Postagem realizada com sucesso!")
+      alert("Postagem realizada com sucesso!");
       setTitle("");
       setContent("");
-    } catch(err){
+    } catch (err) {
       alert(err);
       throw new Error(`We can't post the update here, erro: ${err}`);
-    };
+    }
   };
-
-
-
 
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100">
@@ -137,7 +127,7 @@ useEffect(() => {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="text-left text-3xl font-bold tracking-tighter sm:text-3xl text-orange-400"
         >
-        {t("translation.posts_header")}
+          {t("translation.posts_header")}
         </motion.h1>
       </div>
       <main>
@@ -159,7 +149,9 @@ useEffect(() => {
               >
                 <div className="mt-6 bg-zinc-800 rounded-xl shadow-2xl p-6 outline-none border  border-orange-500">
                   <div className="mb-4">
-                    <h2 className="text-lg font-bold mb-2 block">{t("translation.posts_title")}</h2>
+                    <h2 className="text-lg font-bold mb-2 block">
+                      {t("translation.posts_title")}
+                    </h2>
                     <input
                       required
                       type="text"
@@ -169,14 +161,16 @@ useEffect(() => {
                       placeholder={t("translation.posts_place")}
                     />
                   </div>
-                  <h2 className="text-lg font-bold mb-2 block">{t("translation.posts_content")}</h2>
+                  <h2 className="text-lg font-bold mb-2 block">
+                    {t("translation.posts_content")}
+                  </h2>
                   <div>
-                    <motion.div 
+                    <motion.div
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{
                         duration: 0.9,
-                        ease: [0, 0.71, 0.2, 1.01], 
+                        ease: [0, 0.71, 0.2, 1.01],
                         scale: {
                           type: "spring",
                           damping: 5,

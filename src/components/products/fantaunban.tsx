@@ -1,16 +1,16 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { Check, ShoppingCart, Copy, X } from 'lucide-react'
-import img1 from '@/assets/images/app-screen.png'
-import  {useTranslation}  from "react-i18next";
-import img2 from '@/assets/images/logo.png'
-import { MeProps, ProductsComponentes } from './fantalight'
-import { checkLoginStatus, User } from '@/utils/auth'
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { Check, ShoppingCart, Copy, X } from "lucide-react";
+import img1 from "@/assets/images/app-screen.png";
+import { useTranslation } from "react-i18next";
+import img2 from "@/assets/images/logo.png";
+import { MeProps, ProductsComponentes } from "./fantalight";
+import { checkLoginStatus, User } from "@/utils/auth";
 
 interface Plan {
-  id: 'daily' | 'weekly' | 'monthly';
+  id: "daily" | "weekly" | "monthly";
   name: string;
   price: number;
 }
@@ -47,18 +47,16 @@ interface PaymentModalContentProps {
   onCopyPix: (text: string) => Promise<void>;
 }
 
-
-
 const features = [
-  'Valorant',
-  'Fivem',
-  'Call of duty',
-  'Gamersclub',
-  'Dayz',
-  'Fortnite',
-  'Apex',
-  'Faceit',
-]
+  "Valorant",
+  "Fivem",
+  "Call of duty",
+  "Gamersclub",
+  "Dayz",
+  "Fortnite",
+  "Apex",
+  "Faceit",
+];
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -81,16 +79,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 const PaymentModalContent: React.FC<PaymentModalContentProps> = ({
   paymentData,
   selectedPlanPrice,
-  onCopyPix
+  onCopyPix,
 }) => (
   <div className="space-y-6">
     <h3 className="text-xl font-bold text-white mb-4">Pagamento via PIX</h3>
     <div className="flex flex-col items-center space-y-4">
-      <img
-        src={paymentData.qrcode}
-        alt="QR Code PIX"
-        className="w-64 h-64"
-      />
+      <img src={paymentData.qrcode} alt="QR Code PIX" className="w-64 h-64" />
       <p className="text-sm text-gray-300">
         Escaneie o QR Code acima com seu aplicativo do banco
       </p>
@@ -123,45 +117,40 @@ const PaymentModalContent: React.FC<PaymentModalContentProps> = ({
   </div>
 );
 
-export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user }: MeProps): JSX.Element {
-  const {t} = useTranslation()
+export default function ProductPage(
+  { LogedUser }: ProductsComponentes,
+  { user }: MeProps
+): JSX.Element {
+  const { t } = useTranslation();
   const plans: Plan[] = [
-    { id: 'daily', name: t("translation.daily"), price: 9.99 },
-    { id: 'weekly', name: t("translation.weekly"), price: 49.99 },
-    { id: 'monthly', name: t("translation.month"), price: 149.99 },
-  ]
+    { id: "daily", name: t("translation.daily"), price: 9.99 },
+    { id: "weekly", name: t("translation.weekly"), price: 49.99 },
+    { id: "monthly", name: t("translation.month"), price: 149.99 },
+  ];
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedPlan, setSelectedPlan] = useState<Plan>(plans[1]);
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
-  const [coupon, setCoupon] = useState('');
+  const [coupon, setCoupon] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
   const [couponError, setCouponError] = useState<string | null>(null);
   const [paymentData, setPaymentData] = useState<PaymentResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [usere, setUser] = useState<User | null>(null)
+  const [usere, setUser] = useState<User | null>(null);
   const [couponLoading, setCouponLoading] = useState<boolean>(false);
 
-  const images = [
-    img1,
-    img1,
-    img1,
-    img1,
-  ]
+  const images = [img1, img1, img1, img1];
 
-
-  useEffect(()=>{
+  useEffect(() => {
     async function fetchUserData() {
-      try{
-        const {user} = await checkLoginStatus();
-        setUser(user)
-      }
-      catch{
-        alert("error to fetch user data")
+      try {
+        const { user } = await checkLoginStatus();
+        setUser(user);
+      } catch {
+        alert("error to fetch user data");
       }
     }
-    fetchUserData()
-  },[])
-
+    fetchUserData();
+  }, []);
 
   const copyToClipboard = async (text: string): Promise<void> => {
     try {
@@ -183,8 +172,10 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
     setCouponError(null);
 
     try {
-      const response = await fetch(`http://localhost:3535/coupons/name/${coupon}`);
-      
+      const response = await fetch(
+        `http://localhost:3535/coupons/name/${coupon}`
+      );
+
       if (response.status === 404) {
         setCouponError("Cupom não encontrado");
         setAppliedCoupon(null);
@@ -196,7 +187,7 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
       }
 
       const couponData: Coupon = await response.json();
-      
+
       // Check if coupon is expired
       const expiryDate = new Date(couponData.expiryDate);
       const now = new Date();
@@ -220,18 +211,17 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
 
   const calculateDiscountedPrice = (): number => {
     if (!appliedCoupon) return selectedPlan.price;
-    
+
     const discountAmount = selectedPlan.price * (appliedCoupon.discount / 100);
     return selectedPlan.price - discountAmount;
   };
-
 
   const handleAddToCart = async (): Promise<void> => {
     setLoading(true);
     try {
       const paymentRequest: PaymentRequest = {
         valor: calculateDiscountedPrice(),
-        descricao: "Fanta Unban"
+        descricao: "Fanta Unban",
       };
 
       const response = await fetch("http://localhost:3535/payment/qrcode", {
@@ -241,7 +231,7 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
         },
         body: JSON.stringify(paymentRequest),
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -262,16 +252,10 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
     if (newPlan) {
       setSelectedPlan(newPlan);
       setAppliedCoupon(null);
-      setCoupon('');
+      setCoupon("");
       setCouponError(null);
     }
   };
-
-
-
-
-
-
 
   return (
     <div className="min-h-screen bg-zinc-900 text-white">
@@ -292,7 +276,9 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`relative aspect-square ${selectedImage === index ? 'ring-2 ring-green-500' : ''}`}
+                  className={`relative aspect-square ${
+                    selectedImage === index ? "ring-2 ring-green-500" : ""
+                  }`}
                 >
                   <Image
                     src={img}
@@ -316,7 +302,10 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
               </span>
             </div>
             <div className="space-y-2">
-              <label htmlFor="plan-select" className="block text-sm font-medium text-gray-300">
+              <label
+                htmlFor="plan-select"
+                className="block text-sm font-medium text-gray-300"
+              >
                 {t("translation.plan")}
               </label>
               <select
@@ -350,7 +339,9 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
                   onClick={handleCouponApply}
                   disabled={couponLoading}
                 >
-                  {couponLoading ? t("translation.Verificando") : t("translation.Aplicar")}
+                  {couponLoading
+                    ? t("translation.Verificando")
+                    : t("translation.Aplicar")}
                 </button>
               </div>
               {couponError && (
@@ -358,7 +349,8 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
               )}
               {appliedCoupon && (
                 <p className="text-green-500 text-sm">
-                  Cupom {appliedCoupon.name} aplicado: {appliedCoupon.discount}% de desconto
+                  Cupom {appliedCoupon.name} aplicado: {appliedCoupon.discount}%
+                  de desconto
                 </p>
               )}
             </div>
@@ -374,13 +366,15 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
                 `R$ ${selectedPlan.price.toFixed(2)}`
               )}
             </div>
-            <button 
+            <button
               className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={()=> {if(user?.isActive === false) {       
-                window.location.href = "/ban"
-              } else {
-                handleAddToCart();
-              }}}
+              onClick={() => {
+                if (user?.isActive === false) {
+                  window.location.href = "/ban";
+                } else {
+                  handleAddToCart();
+                }
+              }}
               disabled={usere?.isActive === false ? true : loading}
             >
               {loading ? (
@@ -392,14 +386,14 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
                 </>
               )}
             </button>
-            <p className="text-gray-300">
-              {t("translation.service")}
-            </p>
+            <p className="text-gray-300">{t("translation.service")}</p>
           </div>
         </div>
 
         <div className="mt-16 bg-zinc-800 rounded-lg p-8">
-          <h2 className="text-2xl font-bold mb-6 text-center">{t("translation.banSourcers")}</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">
+            {t("translation.banSourcers")}
+          </h2>
           <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
             {features.map((feature, index) => (
               <div key={index} className="flex items-center space-x-2">
@@ -411,8 +405,8 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
         </div>
       </div>
 
-      <Modal 
-        isOpen={showPaymentModal} 
+      <Modal
+        isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
       >
         {paymentData && (
@@ -424,5 +418,5 @@ export default function ProductPage(  { LogedUser }: ProductsComponentes,{ user 
         )}
       </Modal>
     </div>
-  )
+  );
 }

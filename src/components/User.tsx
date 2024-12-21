@@ -44,14 +44,14 @@ export default function Component({ user }: { user: User }) {
   // Função para definir o estilo do cargo
   const getRoleStyles = (role: string) => {
     switch (role) {
-      case 'FANTA':
-        return 'font-bold animate-pulse bg-gradient-to-r from-red-500 via-yellow-500 to-orange-500 text-transparent bg-clip-text';
-      case 'Moderator':
-        return 'text-purple-400 font-bold';
-      case 'Premium':
-        return 'text-orange-400 font-bold';
-      default: 
-        return 'text-zinc-400 font-bold';
+      case "FANTA":
+        return "font-bold animate-pulse bg-gradient-to-r from-red-500 via-yellow-500 to-orange-500 text-transparent bg-clip-text";
+      case "Moderator":
+        return "text-purple-400 font-bold";
+      case "Premium":
+        return "text-orange-400 font-bold";
+      default:
+        return "text-zinc-400 font-bold";
     }
   };
 
@@ -115,11 +115,11 @@ export default function Component({ user }: { user: User }) {
           </div>
           <div className="mt-8 flex flex-wrap justify-center space-x-4">
             <div className="text-zinc-400">
-              <CalendarDays className="inline mr-1 h-4 w-4" /> 
+              <CalendarDays className="inline mr-1 h-4 w-4" />
               Member since {new Date(user.registeredDate).toLocaleDateString()}
             </div>
           </div>
-          
+
           {/* Seção de banners dos produtos */}
           <div className="mt-16 space-y-5 pb-32">
             {products.map((product, index) => {

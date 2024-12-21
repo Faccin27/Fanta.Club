@@ -98,7 +98,6 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
     fetchUserData();
   }, []);
 
-
   useEffect(() => {
     const handleFetchAnnouncement = async () => {
       try {
@@ -109,7 +108,7 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
         throw new Error(`Não conseguimos efetuar o Fetch dos anúncios!`);
       }
     };
-    handleFetchAnnouncement(); 
+    handleFetchAnnouncement();
   }, []);
 
   useEffect(() => {
@@ -122,51 +121,49 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
         throw new Error(`Não conseguimos efetuar o Fetch dos anúncios!`);
       }
     };
-    handleFetchAnnouncement(); 
+    handleFetchAnnouncement();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(`id: ${id}`);
-  },[id])
+  }, [id]);
 
+  const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
+    evento.preventDefault();
+    console.log(usere);
 
-    const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
-      evento.preventDefault();
-      console.log(usere);
-  
-      try {
-        await fetch(`http://localhost:3535/anun/${id}`, { 
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title: title,
-            content: content
-          }),
-        });
-        console.log(title);
-        console.log(id);
-        alert("Postagem realizada com sucesso!");
-        setTitle("");
-        setContent("");
-        await fetch(`http://localhost:3535/users/${usere?.id}/up`,{
-          method:"PUT",
-          headers: {
-              "Content-Type": "application/json",
-            },
-            body:JSON.stringify({
-              updating:false
-            })
+    try {
+      await fetch(`http://localhost:3535/anun/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          content: content,
+        }),
       });
-      } catch (err) {
-        alert(err);
-        throw new Error(`We can't update the announcement here, error: ${err}`);
-      } 
-    };
-  
-    
-    return (
+      console.log(title);
+      console.log(id);
+      alert("Postagem realizada com sucesso!");
+      setTitle("");
+      setContent("");
+      await fetch(`http://localhost:3535/users/${usere?.id}/up`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          updating: false,
+        }),
+      });
+    } catch (err) {
+      alert(err);
+      throw new Error(`We can't update the announcement here, error: ${err}`);
+    }
+  };
+
+  return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100">
       <div className="p-8 font-sans">
         <motion.h1
@@ -246,29 +243,25 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
                         name="role"
                         id="role"
                         value={id}
-                        onChange={(evento)=> setId(Number(evento.target.value))}
+                        onChange={(evento) =>
+                          setId(Number(evento.target.value))
+                        }
                         className="px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all mb-7"
                         required
                       >
-                        <option
-                          value={0}
-                          className="text-zinc-400 font-bold"
-                        >
+                        <option value={0} className="text-zinc-400 font-bold">
                           {t("translation.role_modal")}
                         </option>
 
-                        {anunci?.map((item)=>(
-
-                          <option 
+                        {anunci?.map((item) => (
+                          <option
                             key={item.id}
                             value={item.id}
                             className="text-zinc-400 font-bold"
                           >
                             {item.title}
                           </option>
-                          
                         ))}
-            
                       </select>
                     </div>
                   </div>
@@ -290,5 +283,4 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
       <Aside />
     </div>
   );
-
 }
