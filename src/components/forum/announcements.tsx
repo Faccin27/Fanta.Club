@@ -3,10 +3,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { Bell as AnnouncementsIcon } from "lucide-react";
+import {
+  Bell as AnnouncementsIcon,
+  RefreshCw as UpdatesIcon,
+} from "lucide-react";
 import pfp from "@/assets/images/pfp.png";
 import { useTranslation } from "react-i18next";
 import { checkLoginStatus, User as AuthUser, User } from "@/utils/auth"; // Renomeado para evitar conflito
+import DropdownComponent from "../Dropdown";
 
 interface Author {
   name: string;
@@ -18,7 +22,7 @@ export enum Types {
   Updates = "Updates",
   Configs = "Configs",
 }
-interface Announcement {
+export interface Announcement {
   id: number;
   title: string;
   content: string;
@@ -42,18 +46,20 @@ interface Order {
 export default function Announcements() {
   const { t } = useTranslation();
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [identifier, setindentifier] = useState<number | undefined>(undefined);
   const [orders, setOrders] = useState<Order[]>([]);
   const [anuncios, setAnuncios] = useState<Announcement[] | undefined>(
     undefined
   );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [modalOptions, setModalOpitions] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
     const fetchAnuncios = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3535/announcements/buscaType?type=Announcements"
+          "http://localhost:3535/anun/buscaType?type=Announcements"
         );
         const result: Announcement[] = await response.json();
         setAnuncios(result);
@@ -78,6 +84,26 @@ export default function Announcements() {
     user && (user.role === "FANTA" || user.role === "Moderator");
   const canPostConfig = user && user.role === "Premium";
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (user) {
+        try {
+          const response = await fetch(
+            `http://localhost:3535/users/orders/${user.id}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch orders");
+          }
+          const data = await response.json();
+          setOrders(data); // Definindo as ordens corretamente
+        } catch (error) {
+          console.error("Error fetching orders:", error);
+        }
+      }
+    };
+    fetchOrders();
+  }, [user]);
+
   return (
     <div className="p-4">
       <div className="flex items-center justify-between mb-6">
@@ -87,6 +113,14 @@ export default function Announcements() {
         </div>
         {canPostAnnouncement && (
           <div className="flex justify-between gap-4">
+            <button
+              onClick={() => (window.location.href = "/update")}
+              className="flex items-center w-full px-4 py-2 text-sky-600 hover:bg-sky-900 rounded-lg bg-sky-950 active:text-sky-800"
+            >
+              <UpdatesIcon className="mr-2" />
+              Update
+            </button>
+
             <button
               className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
               onClick={() => router.push("/post-anun")}
@@ -116,8 +150,13 @@ export default function Announcements() {
                 height={40}
                 className="rounded-full mr-3"
               />
-
               <div>
+                {user?.role === "Moderator" || user?.role === "FANTA" ? (
+                  <>
+                    <DropdownComponent anunId={anuncio.id} />
+                  </>
+                ) : null}
+
                 <Link href={`/forum/announcements/${anuncio.id}`}>
                   <h2 className="text-lg text-orange-500 hover:underline cursor-pointer font-semibold">
                     {anuncio.title}

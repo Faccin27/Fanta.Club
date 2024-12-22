@@ -10,6 +10,9 @@ import { useTranslation } from "react-i18next";
 import { api } from "@/utils/api";
 import { ApiError } from "next/dist/server/api-utils";
 import { checkLoginStatus } from "@/utils/auth";
+import DOMPurify from "dompurify";
+import { AdmComponentProps } from "./adm";
+import { Announcement } from "./forum/announcements";
 
 interface User {
   id: number;
@@ -47,7 +50,7 @@ const getRoleStyles = (role: string) => {
   }
 };
 
-export default function Post() {
+export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
   //Funcionalidades do Quill:
   const toolbarOptions = [
     ["bold", "italic", "underline"], // toggled buttons
@@ -73,16 +76,20 @@ export default function Post() {
   const { t } = useTranslation();
   const [usere, setUsere] = useState<User | null>(null);
   const [title, setTitle] = useState<string>("");
+  const [modal, setModal] = useState<boolean>(false);
+  const [anun, setAnun] = useState<Announcement | null>(null);
+  const [anunci, setAnunci] = useState<Announcement[] | null>(null);
   const [content, setContent] = useState<string>("");
   const [anuncio, setAnuncio] = useState<string>("");
-  const [identifier, setId] = useState<number | undefined>(undefined);
+  const [identifier, setIdentifier] = useState<number | undefined>(undefined);
+  const [id, setId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     async function fetchUserData() {
       try {
         const { user } = await checkLoginStatus();
         setUsere(user);
-        setId(usere?.id);
+        setIdentifier(usere?.id);
       } catch (err) {
         alert(err);
       }
@@ -91,20 +98,68 @@ export default function Post() {
     fetchUserData();
   }, []);
 
+  useEffect(() => {
+    const handleFetchAnnouncement = async () => {
+      try {
+        const response = await fetch("http://localhost:3535/anun/");
+        const result: Announcement | null = await response.json();
+        setAnun(result);
+      } catch (err) {
+        throw new Error(`Não conseguimos efetuar o Fetch dos anúncios!`);
+      }
+    };
+    handleFetchAnnouncement();
+  }, []);
+
+  useEffect(() => {
+    const handleFetchAnnouncement = async () => {
+      try {
+        const response = await fetch("http://localhost:3535/anun/");
+        const result: Announcement[] | null = await response.json();
+        setAnunci(result);
+      } catch (err) {
+        throw new Error(`Não conseguimos efetuar o Fetch dos anúncios!`);
+      }
+    };
+    handleFetchAnnouncement();
+  }, []);
+
+  useEffect(() => {
+    console.log(`id: ${id}`);
+  }, [id]);
+
   const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
     evento.preventDefault();
     console.log(usere);
+
     try {
-      await api.post("/anun", {
-        title,
-        content,
-        anuncio,
-        identifier,
+      await fetch(`http://localhost:3535/anun/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          content: content,
+        }),
       });
-      console.log("Doing all right!");
+      console.log(title);
+      console.log(id);
+      alert("Postagem realizada com sucesso!");
+      setTitle("");
+      setContent("");
+      await fetch(`http://localhost:3535/users/${usere?.id}/up`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          updating: false,
+        }),
+      });
     } catch (err) {
       alert(err);
-      console.log(`Unxpected error: ${err}`);
+      throw new Error(`We can't update the announcement here, error: ${err}`);
     }
   };
 
@@ -117,7 +172,7 @@ export default function Post() {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="text-left text-3xl font-bold tracking-tighter sm:text-3xl text-orange-400"
         >
-          {t("translation.config_title")}
+          {t("translation.updating")}
         </motion.h1>
       </div>
       <main>
@@ -148,7 +203,7 @@ export default function Post() {
                       value={title}
                       onChange={(evento) => setTitle(evento.target.value)}
                       placeholder={t("translation.posts_place")}
-                      className="w-full bg-zinc-800 rounded-lg p-3 outline-none border  border-orange-500 text-white sm:p-2"
+                      className="w-full bg-zinc-800 rounded-lg sm:p-2 outline-none border border-zinc-200 text-white text-center"
                     />
                   </div>
                   <h2 className="text-lg font-bold mb-2 block">
@@ -179,17 +234,43 @@ export default function Post() {
                         theme="snow"
                         value={content}
                         onChange={setContent}
-                        className="quill-editor custom-toolbar text-white h-auto outline-none border  bg-zinc-800"
+                        className="quill-editor custom-toolbar text-white outline-none border-zinc-200  bg-zinc-800 h-40"
                         style={{ minWidth: "auto", minHeight: "auto" }}
                       />
                     </motion.div>
+                    <div className="flex justify-center items-center">
+                      <select
+                        name="role"
+                        id="role"
+                        value={id}
+                        onChange={(evento) =>
+                          setId(Number(evento.target.value))
+                        }
+                        className="px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all mb-7"
+                        required
+                      >
+                        <option value={0} className="text-zinc-400 font-bold">
+                          {t("translation.role_modal")}
+                        </option>
+
+                        {anunci?.map((item) => (
+                          <option
+                            key={item.id}
+                            value={item.id}
+                            className="text-zinc-400 font-bold"
+                          >
+                            {item.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                   <motion.button
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 3 }}
                     type="submit"
-                    className="bg-orange-600 shadow-2xl rounded-lg sm:px-4 sm:py-2 hover:bg-orange-400"
+                    className="bg-orange-600 shadow-2xl rounded-lg hover:bg-orange-400 px-8 py-2"
                   >
                     {t("translation.posts_post")}
                   </motion.button>

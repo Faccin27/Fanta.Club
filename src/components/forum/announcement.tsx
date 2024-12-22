@@ -4,12 +4,13 @@ import Aside from "@/components/Aside";
 import {
   Bell as AnnouncementsIcon,
   ArrowLeft as BackIcon,
-  XCircle,
+  XCircle
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Types } from "./announcements";
+
 
 interface Author {
   name: string;
@@ -23,33 +24,36 @@ interface Announcement {
   type: Types;
   createdAt: string | number | bigint | boolean | null | undefined;
   createdById: number;
-  createdByPhoto: string | undefined;
+  createdByPhoto:string | undefined;
   createdByName: string | undefined;
 }
 
-interface IdNun {
-  id: number;
+
+
+
+interface IdNun{
+  id: number
 }
 
-function AnnouncementDetail({ id }: IdNun) {
+function AnnouncementDetail({id}:IdNun) {
   const router = useRouter();
   const [anuncios, setAnuncios] = useState<Announcement | null>(null);
 
-  useEffect(() => {
-    const fetchAnuncios = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3535/announcements/${id}`
-        );
-        const result: Announcement = await response.json();
-        setAnuncios(result);
-        console.log("Anuncios recebidos");
-      } catch (err) {
-        throw new Error(`Erro ao fazer o GET dos anuncios. Erro: ${err}`);
-      }
+useEffect(()=>{
+  const fetchAnuncios = async () => {
+    try{
+      const response = await fetch(`http://localhost:3535/anun/${id}`);
+      const result:Announcement = await response.json();
+      setAnuncios(result);
+      console.log("Anuncios recebidos")
+    } catch(err){
+      throw new Error(`Erro ao fazer o GET dos anuncios. Erro: ${err}`)
     };
-    fetchAnuncios();
-  }, []);
+  };
+  fetchAnuncios();
+},[]);
+
+
 
   if (!anuncios) {
     return (
@@ -125,13 +129,16 @@ function AnnouncementDetail({ id }: IdNun) {
             </div>
           </div>
           <div className="mt-6">
-            <p className="text-zinc-300 leading-relaxed">{anuncios.content}</p>
+              <div
+              className="prose prose-h1:text-orange-600 prose-p:text-orange-400 prose-img:max-w-52 prose-ul:text-orange-400 prose-li:text-orange-400 prose-ol:text-orange-400"
+            dangerouslySetInnerHTML={{__html: anuncios.content}}
+              />
           </div>
         </div>
       </main>
       <Aside />
     </div>
   );
-}
+};
 
 export default AnnouncementDetail;

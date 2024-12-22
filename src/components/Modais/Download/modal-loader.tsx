@@ -15,14 +15,14 @@ import { User } from "@/utils/auth";
 
 
 interface ModalLoader{
-    onClose: ()=> void
-    id: number | undefined
-    user: User | null
+    onClose: ()=> void;
+    id: number | undefined;
+    user: User | undefined;
 }
 
 export default function ModalLoader({onClose, id, user}:ModalLoader,){
-    const [order, setOrders] = useState<Order | null>(null);
-    const [usere, setUser] = useState();
+    const [order, setOrders] = useState<Order[] | null>(null);
+    const [usere, setUser] = useState<User | undefined>(user);
 
     const {t} = useTranslation();
 
@@ -37,7 +37,7 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
               if (!response.ok) {
                 throw new Error("Failed to fetch orders");
               }
-              const data = await response.json();
+              const data:Order[] = await response.json();
               setOrders(data);
             } catch (error) {
               console.error("Error fetching orders:", error);
@@ -66,6 +66,8 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
             <div className="relative w-1/2 hidden md:flex md:flex-col">
                 <div className="absolute inset-0 flex flex-col">
                     <div className="flex-grow flex items-center justify-center p-8">
+                    {order && order.length > 0 ? (
+
                         <div className="relative w-full h-full">
                             <Image
                                 src={logo}
@@ -74,7 +76,9 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
                                 objectFit="contain"
                             />
                         </div>
+                    ):null}
                     </div>
+                    {order && order.length > 0 ? (
                     <div className="p-8 bg-gradient-to-t from-black to-transparent">
                         <h2 className="text-3xl font-bold mb-4 flex justify-center items-center">
                             <span className="text-orange-400">{t("translation.thanks5")} {" "} {user?.name}{"!"}</span>
@@ -84,6 +88,19 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
                           {t("translation.thanks3")} {" "}<span className="text-orange-400 hover:text-orange-600 cursor-pointer">Fanta.club</span>, {" "}{t("translation.thanks4")}!
                         </p>
                     </div>
+
+                    ):(
+                      <div className="p-8 bg-gradient-to-t from-black to-transparent">
+                      <h2 className="text-3xl font-bold mb-4 flex justify-center items-center">
+                          <span className="text-red-600">{t("translation.fuck_you")} {" "} {user?.name}{"!"}</span>
+                      </h2>
+                      <p className="text-sm">
+                        {t("translation.fuck_you_2")} 
+                      
+                      </p>
+                  </div>
+
+                    )}
                 </div>
             </div>
 
@@ -98,7 +115,7 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
 
                 <div className="space-y-6">    
                 <h2 className="text-2xl font-bold mb-4">
-                            {t("translation.sabedoria")}
+                            {t("translation.fuck_you_3")}
                         </h2>
                 </div>
 
@@ -112,17 +129,39 @@ export default function ModalLoader({onClose, id, user}:ModalLoader,){
             </motion.button>
                 </div>
 
-                <div className="mt-10">
+      {order && order.length > 0 ? (
+
+      order?.map((produto)=>(        
+        <div className="mt-10">
+                  {produto.name === "FANTA_PRO" ? produto.name = "FANTA PRO":null}
+                  {produto.name === "FANTA_LIGHT" ? produto.name = "FANTA LIGHT":null}
+                  {produto.name === "FANTA_UNBAN" ? produto.name = "FANTA UNBAN":null}
+                  
                     <motion.button
-                       // onClick={}
-                        type="submit"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="w-full py-3 bg-orange-400 hover:bg-orange-500 text-white rounded-lg transition-colors text-lg font-semibold"
-                    >
-                        {t("translation.download_forje")} {" "} {order?.name}
-                    </motion.button>
+                    // onClick={}
+                     type="submit"
+                     whileHover={{ scale: 1.05 }}
+                     whileTap={{ scale: 0.95 }}
+                     className={`w-full py-3 ${produto.name === "FANTA PRO" ? "bg-orange-600": ""} ${produto.name === "FANTA LIGHT" ? "bg-purple-600": ""} ${produto.name === "FANTA UNBAN" ? "bg-green-800": ""} ${produto.name === "FANTA PRO" ? "hover:bg-orange-400": "hover:bg-orange-500"} text-white rounded-lg transition-colors text-lg font-semibold`}
+                 >
+                     {t("translation.download_forje")} {" "} <strong>{produto.name}</strong>
+                 </motion.button>
+        
                 </div>
+      ))
+    ):(
+        <div className="mt-10">
+        <motion.button
+        // onClick={}
+         type="submit"
+         disabled={true}
+         whileHover={{ scale: 1.05 }}
+         whileTap={{ scale: 0.95 }}
+         className={`w-full py-3 bg-orange-600 text-white rounded-lg transition-colors text-lg font-semibold cursor-no-drop`}>
+          Download
+         </motion.button>
+        </div>
+      )}
             </div>
         </motion.div>
     </motion.div>

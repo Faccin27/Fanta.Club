@@ -95,20 +95,16 @@ export default function Post() {
   const handleSubmitForm = async (evento: React.FormEvent<HTMLFormElement>) => {
     evento.preventDefault();
     console.log(usere);
-    const contentWithOutTags = DOMPurify.sanitize(content, {
-      ALLOWED_TAGS: [],
-    });
-    console.log(contentWithOutTags);
 
     try {
-      await fetch("http://localhost:3535/announcements", {
+      await fetch("http://localhost:3535/anun", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           title: title,
-          content: contentWithOutTags,
+          content: content,
           type: "Announcements",
           createdById: usere?.id,
           createdByPhoto: usere?.photo || "",

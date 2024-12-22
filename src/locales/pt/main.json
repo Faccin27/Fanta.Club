@@ -8,7 +8,7 @@
         "fanta_unban":"Foi de vasco? A fanta resolve, nosso spoofer remove o banimento de seu valorant e quaisquer outros jogos, facil rapido e funcional.",
         "about_title":"Bem vindo ao Fanta.Club",
         "showcase":"Análises",
-        "forje":"Baixar o Cheat",
+        "forje":"Baixar o Loader",
         "password":"Trocar a Senha",
         "Enable":"Habilitar",
         "Announcements":"Anúncios",
@@ -140,7 +140,18 @@
         "image_changed_success": "Imagem alterada com sucesso!",
         "attach_image": "Selecionar Imagem",
         "no_image": "Nenhuma imagem",
-        "confirm_change": "Confirmar Alteração"
+        "confirm_change": "Confirmar Alteração",
+        "updating":"Atualizar",
+        "carga":"Alterar Cargo",
+        "anunzinho":"Atualizar",
+        "alala":"Conte para nós um pouco sobre você",
+        "userr":"Vamo nessa!",
+        "att": "Change my description",
+        "recharg": "Por favor, recarregue a página para ver a sua nova descrição!",
+        "download_forje_2":"Por gentileza, compre um produto para continuar!",
+        "fuck_you":"Acesso negado",
+        "fuck_you_2":"Acesso negado. Você não comprou nenhum produto. Sem uma compra, você não poderá desfrutar dos recursos e benefícios exclusivos que oferecemos. Visite nossa loja e escolha entre uma variedade de produtos que atendam às suas necessidades. Se você tiver alguma dúvida, sinta-se à vontade para entrar em contato com nossa equipe de suporte. Obrigado por entender e esperamos vê-lo como um cliente valioso em breve. Seu apoio nos ajuda a continuar fornecendo serviços de alta qualidade e a melhorar nossas ofertas. Não perca a oportunidade de aprimorar sua experiência com nossos produtos premium.",
+        "fuck_you_3":"Compre um de nossos produtos"
  
  
     }

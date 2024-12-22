@@ -1,4 +1,4 @@
-# Fanta.club - Social and Showcase Platform
+# Fanta.club - Social, Showcase and Sell Platform
 
 **Fanta.club** é uma plataforma multifuncional que combina um sistema de fóruns, showcases personalizados, gerenciamento de compras e autenticação segura com confirmação por e-mail. Desenvolvida com tecnologias modernas como **React**, **Next.js** e **Tailwind CSS**, a interface proporciona uma experiência intuitiva e agradável para os usuários.
 

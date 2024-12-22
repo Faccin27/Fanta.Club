@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 interface NameModalProps{
     onClose: ()=> void;
     id: number| undefined;
-    user: User | null
+    user: User | undefined
 }
 
 export default function NameModal({onClose, id, user}:NameModalProps){

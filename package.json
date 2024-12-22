@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.1.10",
+    "@tailwindcss/typography": "^0.5.15",
     "axios": "^1.7.7",
     "chroma-js": "^3.1.2",
     "dompurify": "^3.2.1",

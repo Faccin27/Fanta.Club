@@ -1,7 +1,10 @@
 "use client";
 import pfp from "@/assets/images/pfp.png";
 import Aside from "@/components/Aside";
-import { ArrowLeft as BackIcon, XCircle } from "lucide-react";
+import {
+  ArrowLeft as BackIcon,
+  XCircle
+} from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -18,33 +21,34 @@ interface Updates {
   type: Type;
   createdAt: string | number | bigint | boolean | null | undefined;
   createdById: number;
-  createdByPhoto: string | undefined;
+  createdByPhoto:string | undefined;
   createdByName: string | undefined;
 }
 
-interface IdInt {
-  id: number;
+
+interface IdInt{
+  id:number
 }
-function UpdateDetail({ id }: IdInt) {
+function UpdateDetail({id}:IdInt) {
   const router = useRouter();
   const [updates, setUpdate] = useState<Updates | null>(null);
 
   useEffect(() => {
-    const fetchUpdates = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3535/announcements/${id}`
-        );
-        const result: Updates = await response.json();
+    const fetchUpdates = async () => { 
+      try{
+        const response = await fetch(`http://localhost:3535/anun/${id}`)
+        const result:Updates = await response.json();
         setUpdate(result);
-      } catch (err) {
+      } catch(err){
         throw new Error(`Erro para efetuar o fetch dos Updates. Erro: ${err}`);
-      }
+      };
     };
     fetchUpdates();
+    
   }, []);
 
-  if (!updates) {
+
+  if(!updates) {
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100">
         <main className="container mx-auto px-4 py-8">
@@ -117,15 +121,16 @@ function UpdateDetail({ id }: IdInt) {
             </div>
           </div>
           <div className="mt-6">
-            <p className="text-zinc-300 leading-relaxed mb-4">
-              {updates.content}
-            </p>
+          <div
+              className="prose prose-h1:text-orange-600 prose-p:text-orange-400 prose-img:max-w-52"
+            dangerouslySetInnerHTML={{__html: updates.content}}
+              />
           </div>
         </div>
       </main>
       <Aside />
     </div>
-  );
-}
+  )
+};
 
 export default UpdateDetail;

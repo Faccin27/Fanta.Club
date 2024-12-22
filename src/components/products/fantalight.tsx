@@ -144,7 +144,7 @@ export default function ProductPage(
   const [paymentData, setPaymentData] = useState<PaymentResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [couponLoading, setCouponLoading] = useState<boolean>(false);
-  const [usere, setUser] = useState<User | null>(null)
+  const [usere, setUser] = useState<User | null>(null);
 
   const images = [img1, img1, img1, img1];
 
@@ -212,8 +212,6 @@ export default function ProductPage(
     return selectedPlan.price - discountAmount;
   };
 
-
-  
   useEffect(() => {
     async function fetchUserData() {
       try {
@@ -378,11 +376,13 @@ export default function ProductPage(
               )}
             </div>
             <button
-              className={`w-full bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 ${user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"} disabled:cursor-not-allowed`}
+              className={`w-full bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50 ${
+                user?.isActive === false ? "cursor-no-drop" : "cursor-pointer"
+              } disabled:cursor-not-allowed`}
               onClick={handleAddToCart}
               disabled={usere?.isActive === false ? true : loading}
             >
-                  {loading ? (
+              {loading ? (
                 t("translation.processando")
               ) : (
                 <>

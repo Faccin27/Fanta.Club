@@ -30,8 +30,6 @@
 
 
 
-
-
   /* Cor dos ícones da toolbar */
   .custom-toolbar .ql-toolbar .ql-stroke {
     stroke: #e3581c; 
@@ -58,4 +56,3 @@
   .custom-toolbar .ql-clean {
     color: orange; /* Cor do botão limpar formatação */
   }
-  

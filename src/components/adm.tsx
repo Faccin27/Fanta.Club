@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { checkLoginStatus } from "@/utils/auth";
 import Image from "next/image";
 import ModalChangeRole from "./Modais/Role/RoleModal";
-interface AdmComponentProps {
+export interface AdmComponentProps {
   LogedUser: User | null;
 }
 

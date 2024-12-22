@@ -6,7 +6,7 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { FaTiktok, FaYoutube } from "react-icons/fa";
 import Aside from "./Aside";
 import { VideoCard } from "./youtube/youtube";
@@ -33,10 +33,6 @@ const SocialMediaButton: React.FC<{
   onClick: () => void;
   ariaLabel: string;
 }> = ({ name, icon: Icon, isActive, onClick, ariaLabel }) => {
-
-
-
-
   return (
     <button
       onClick={onClick}
@@ -79,8 +75,6 @@ const SocialMediaButtons: React.FC<{
       ariaLabel: "Mostrar vídeos do TikTok",
     },
   ];
-
-
 
   return (
     <div className="flex" role="tablist">
@@ -126,8 +120,6 @@ const Home: React.FC<HomeProps> = ({ videos }) => {
     return <Tiktok />;
   }, [activeTab, videos]);
 
-
-    
   const { t, i18n } = useTranslation();
   const [currentLang, setCurrentLang] = useState(i18n.language);
 

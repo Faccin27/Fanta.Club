@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
-import { api, handleApiError } from '@/utils/api';
+import { api, handleApiError } from "@/utils/api";
 
 export default function EmailChangeModal({
   isOpen,
   onClose,
-  userId
+  userId,
 }: {
   isOpen: boolean;
   onClose: () => void;
@@ -29,9 +29,9 @@ export default function EmailChangeModal({
 
     try {
       await api.put(`/users/${userId}/email`, {
-        newEmail
+        newEmail,
       });
-      
+
       setSuccess("Um link de confirmação foi enviado para seu novo email!");
       setTimeout(() => {
         onClose();
@@ -64,15 +64,15 @@ export default function EmailChangeModal({
           >
             <X size={24} />
           </button>
-          
+
           <h3 className="text-2xl font-bold mb-6">Alterar Email</h3>
-          
+
           {error && (
             <div className="bg-red-500 text-white p-3 rounded-lg mb-4">
               {error}
             </div>
           )}
-          
+
           {success && (
             <div className="bg-green-500 text-white p-3 rounded-lg mb-4">
               {success}

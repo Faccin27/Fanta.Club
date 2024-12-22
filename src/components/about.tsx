@@ -1,49 +1,49 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { ChevronDown, ChevronUp, User } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { ChevronDown, ChevronUp, User } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function About() {
   const { t, i18n } = useTranslation();
-  const [showSecret, setShowSecret] = useState(false)
-  const [openFaq, setOpenFaq] = useState<string | null>(null)
+  const [showSecret, setShowSecret] = useState(false);
+  const [openFaq, setOpenFaq] = useState<string | null>(null);
 
   const timelineEvents = [
     { year: 2021, event: t("translation.history_v1") },
     { year: 2022, event: t("translation.history_v2") },
     { year: 2023, event: t("translation.history_v3") },
     { year: 2024, event: t("translation.history_v4") },
-  ]
+  ];
 
   const teamMembers = [
-    { id: '2', name: 'Pozinho' },
-    { id: '3', name: 'Lkzin' },
-    { id: '4', name: 'Faccin' }
-  ]
+    { id: "2", name: "Pozinho" },
+    { id: "3", name: "Lkzin" },
+    { id: "4", name: "Faccin" },
+  ];
 
   const [currentLang, setCurrentLang] = useState(i18n.language);
 
   const faqItems = [
-    { 
-      question: t("translation.questions1"), 
-      answer: t("translation.answer1") 
+    {
+      question: t("translation.questions1"),
+      answer: t("translation.answer1"),
     },
-    { 
-      question: t("translation.questions2"), 
-      answer: t("translation.answer2") 
+    {
+      question: t("translation.questions2"),
+      answer: t("translation.answer2"),
     },
-    { 
-      question: t("translation.questions3"), 
-      answer: t("translation.answer3") 
+    {
+      question: t("translation.questions3"),
+      answer: t("translation.answer3"),
     },
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100 p-8 font-sans">
-      <motion.h1 
+      <motion.h1
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -52,7 +52,7 @@ export default function About() {
         {t("translation.about_title")}
       </motion.h1>
 
-      <motion.p 
+      <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
@@ -64,7 +64,7 @@ export default function About() {
       <h2 className="text-2xl font-semibold mb-4">{t("translation.badass")}</h2>
       <div className="space-y-4 mb-8">
         {timelineEvents.map((event, index) => (
-          <motion.div 
+          <motion.div
             key={index}
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -78,11 +78,13 @@ export default function About() {
         ))}
       </div>
 
-      <h2 className="text-2xl font-semibold mb-4">{t("translation.master_minds")}</h2>
+      <h2 className="text-2xl font-semibold mb-4">
+        {t("translation.master_minds")}
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {teamMembers.map((member) => (
-          <Link 
-            href={`/user/${member.id}`} 
+          <Link
+            href={`/user/${member.id}`}
             key={member.id}
             className="bg-zinc-800 p-4 rounded-lg transition-transform hover:scale-105 cursor-pointer"
           >
@@ -99,16 +101,22 @@ export default function About() {
         {faqItems.map((item, index) => (
           <div key={index} className="mb-4">
             <button
-              onClick={() => setOpenFaq(openFaq === item.question ? null : item.question)}
+              onClick={() =>
+                setOpenFaq(openFaq === item.question ? null : item.question)
+              }
               className="w-full text-left p-4 bg-zinc-800 rounded-lg focus:outline-none flex justify-between items-center"
               aria-expanded={openFaq === item.question}
               aria-controls={`faq-answer-${index}`}
             >
               <span className="font-semibold">{item.question}</span>
-              {openFaq === item.question ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+              {openFaq === item.question ? (
+                <ChevronUp className="w-5 h-5" />
+              ) : (
+                <ChevronDown className="w-5 h-5" />
+              )}
             </button>
             {openFaq === item.question && (
-              <motion.div 
+              <motion.div
                 id={`faq-answer-${index}`}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -118,11 +126,10 @@ export default function About() {
               </motion.div>
             )}
           </div>
-          
         ))}
       </div>
       <div className="text-center mb-8">
-        <button 
+        <button
           onClick={() => setShowSecret(!showSecret)}
           className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded"
           aria-expanded={showSecret}
@@ -130,23 +137,25 @@ export default function About() {
           {showSecret ? t("translation.hidden") : t("translation.show")}
         </button>
         {showSecret && (
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mt-4 text-lg"
           >
-            Psst... Use code "FANTACHEATS" for a sick 20% discount on your first purchase! 🎉
+            Psst... Use code "FANTACHEATS" for a sick 20% discount on your first
+            purchase! 🎉
           </motion.p>
         )}
-        </div>
+      </div>
 
       <div className="text-center">
-        <h2 className="text-2xl font-semibold mb-4">{t("translation.oppenents")}</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          {t("translation.oppenents")}
+        </h2>
         <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded text-lg font-bold">
           {t("translation.join")}
         </button>
       </div>
-      </div>
-      
-    )
-  }
+    </div>
+  );
+}

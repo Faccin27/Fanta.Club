@@ -5,15 +5,18 @@ import { X } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import { api, handleApiError } from '@/utils/api';
 import { useTranslation } from "react-i18next";
+import { StaticImageData } from "next/image";
 
 export default function ImageChangeModal({
   isOpen,
   onClose,
-  userId
+  userId,
+  currentImage,
 }: {
   isOpen: boolean;
   onClose: () => void;
   userId: number;
+  currentImage: string | StaticImageData
 }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [error, setError] = useState("");

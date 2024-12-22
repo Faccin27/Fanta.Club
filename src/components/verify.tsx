@@ -8,15 +8,20 @@ interface VerifyProps {
 }
 
 const Verify: React.FC<VerifyProps> = ({ id }) => {
-  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "success" | "error">(
+    "loading"
+  );
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const response = await fetch(`http://localhost:3535/users/verify/${id}`, {
-          method: "POST"
-        });
+        const response = await fetch(
+          `http://localhost:3535/users/verify/${id}`,
+          {
+            method: "POST",
+          }
+        );
 
         if (response.ok) {
           setStatus("success");
@@ -28,7 +33,9 @@ const Verify: React.FC<VerifyProps> = ({ id }) => {
         }
       } catch (error) {
         setStatus("error");
-        setMessage("Erro ao conectar com o servidor. Tente novamente mais tarde.");
+        setMessage(
+          "Erro ao conectar com o servidor. Tente novamente mais tarde."
+        );
       }
     };
 
@@ -48,7 +55,9 @@ const Verify: React.FC<VerifyProps> = ({ id }) => {
         {status === "success" && (
           <div className="text-center space-y-4">
             <div className="text-green-500 text-6xl mb-4">✓</div>
-            <h1 className="text-2xl font-bold text-green-500">Verificação Concluída!</h1>
+            <h1 className="text-2xl font-bold text-green-500">
+              Verificação Concluída!
+            </h1>
             <p>{message}</p>
           </div>
         )}
@@ -56,7 +65,9 @@ const Verify: React.FC<VerifyProps> = ({ id }) => {
         {status === "error" && (
           <div className="text-center space-y-4">
             <div className="text-red-500 text-6xl mb-4">✕</div>
-            <h1 className="text-2xl font-bold text-red-500">Erro na Verificação</h1>
+            <h1 className="text-2xl font-bold text-red-500">
+              Erro na Verificação
+            </h1>
             <p>{message}</p>
           </div>
         )}

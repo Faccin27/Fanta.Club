@@ -8,6 +8,7 @@ export interface User {
   email: string;
   photo: string;
   registeredDate: string;
+  description:string | TrustedHTML | undefined;
   expiryDate: string;
   gender: string;
   birthDate: string;
