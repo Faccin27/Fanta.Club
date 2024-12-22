@@ -7,7 +7,7 @@ export default function DropdownComponent({ anunId }: { anunId: number }) {
   const handleDelete = async () => {
     window.location.href = "/forum";
     try {
-      await fetch(`http://localhost:3535/anun/${anunId}`, {
+      await fetch(`http://localhost:3535/announcements/${anunId}`, {
         method: "DELETE",
       });
     } catch (err) {

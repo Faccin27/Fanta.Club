@@ -101,7 +101,7 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
   useEffect(() => {
     const handleFetchAnnouncement = async () => {
       try {
-        const response = await fetch("http://localhost:3535/anun/");
+        const response = await fetch("http://localhost:3535/announcements/");
         const result: Announcement | null = await response.json();
         setAnun(result);
       } catch (err) {
@@ -114,7 +114,7 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
   useEffect(() => {
     const handleFetchAnnouncement = async () => {
       try {
-        const response = await fetch("http://localhost:3535/anun/");
+        const response = await fetch("http://localhost:3535/announcements/");
         const result: Announcement[] | null = await response.json();
         setAnunci(result);
       } catch (err) {
@@ -133,7 +133,7 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
     console.log(usere);
 
     try {
-      await fetch(`http://localhost:3535/anun/${id}`, {
+      await fetch(`http://localhost:3535/announcements/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

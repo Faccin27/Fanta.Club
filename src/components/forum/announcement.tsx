@@ -42,7 +42,7 @@ function AnnouncementDetail({id}:IdNun) {
 useEffect(()=>{
   const fetchAnuncios = async () => {
     try{
-      const response = await fetch(`http://localhost:3535/anun/${id}`);
+      const response = await fetch(`http://localhost:3535/announcements/${id}`);
       const result:Announcement = await response.json();
       setAnuncios(result);
       console.log("Anuncios recebidos")

@@ -95,7 +95,7 @@ export default function Post() {
     evento.preventDefault();
     console.log(usere);
     try {
-      await api.post("/anun", {
+      await api.post("/announcements", {
         title,
         content,
         anuncio,

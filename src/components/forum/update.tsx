@@ -36,7 +36,7 @@ function UpdateDetail({id}:IdInt) {
   useEffect(() => {
     const fetchUpdates = async () => { 
       try{
-        const response = await fetch(`http://localhost:3535/anun/${id}`)
+        const response = await fetch(`http://localhost:3535/announcements/${id}`)
         const result:Updates = await response.json();
         setUpdate(result);
       } catch(err){

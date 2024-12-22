@@ -63,7 +63,7 @@ const Updates: React.FC = () => {
   useEffect((()=>{
     const fetchUpdates = async () => {
       try{
-        const response = await fetch("http://localhost:3535/anun/buscaType?type=Updates");
+        const response = await fetch("http://localhost:3535/announcements/buscaType?type=Updates");
         const result: Updates[] = await response.json();
         setUpdate(result);
       } catch(err){
