@@ -328,15 +328,6 @@ export default function Component({ user,ident  }: MeProps) {
               )}
                
             </div>
-            <div className="mt-2 flex items-center justify-center px-2">
-              {user?.description === null ? null :(
-  
-            <div
-              className="prose prose-h1:text-zinc-300 prose-h1:truncate prose-h2:text-zinc-300 prose-h2:truncate prose-h3:truncate prose-h4:truncate prose-h5:truncate prose-h6:truncate  prose-h3:text-zinc-300 prose-h4:text-zinc-300 prose-h5:text-zinc-300 prose-h6:text-zinc-300 prose-p:text-zinc-300 prose-img:max-w-52 prose-ol:text-zinc-300 prose-ol:truncate prose-ul:text-zinc-300 prose-ul:truncate border-2 border-orange-500 rounded-lg px-2 py-4 bg-zinc-900 prose-strong:text-zinc-300 prose-em:text-zinc-300 prose-blockquote:text-zinc-300 text-zinc-300 prose-p:truncate"
-            dangerouslySetInnerHTML={{__html: user?.description}}
-              />
-              )}
-            </div>
             <div>
               {user?.isActive === false ? (
                 <>
