@@ -50,7 +50,7 @@ const getRoleStyles = (role: string) => {
   }
 };
 
-export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
+export default function UpdateAnun({ LogedUser,identity }: AdmComponentProps) {
   //Funcionalidades do Quill:
   const toolbarOptions = [
     ["bold", "italic", "underline"], // toggled buttons
@@ -75,11 +75,11 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
 
   const { t } = useTranslation();
   const [usere, setUsere] = useState<User | null>(null);
-  const [title, setTitle] = useState<string>("");
+  const [title, setTitle] = useState<string | undefined>("");
   const [modal, setModal] = useState<boolean>(false);
   const [anun, setAnun] = useState<Announcement | null>(null);
   const [anunci, setAnunci] = useState<Announcement[] | null>(null);
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState<string | undefined>("");
   const [anuncio, setAnuncio] = useState<string>("");
   const [identifier, setIdentifier] = useState<number | undefined>(undefined);
   const [id, setId] = useState<number | undefined>(undefined);
@@ -102,7 +102,7 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
   useEffect(() => {
     const handleFetchAnnouncement = async () => {
       try {
-        const response = await fetch("http://localhost:3535/announcements/");
+        const response = await fetch("http://localhost:3535/anun/");
         const result: Announcement | null = await response.json();
         setAnun(result);
       } catch (err) {
@@ -115,7 +115,7 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
   useEffect(() => {
     const handleFetchAnnouncement = async () => {
       try {
-        const response = await fetch("http://localhost:3535/announcements/");
+        const response = await fetch("http://localhost:3535/anun/");
         const result: Announcement[] | null = await response.json();
         setAnunci(result);
       } catch (err) {
@@ -135,7 +135,7 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
       console.log(usere);
   
       try {
-        await fetch(`http://localhost:3535/announcements/${id}`, { 
+        await fetch(`http://localhost:3535/anun/${id}`, { 
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -147,7 +147,7 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
         });
         console.log(title);
         console.log(id);
-        alert("Postagem realizada com sucesso!");
+        alert(t("translation.foifoi"));
         setTitle("");
         setContent("");
         await fetch(`http://localhost:3535/users/${usere?.id}/up`,{
@@ -164,6 +164,8 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
         throw new Error(`We can't update the announcement here, error: ${err}`);
       } 
     };
+
+    console.debug(`Id do anúncio: ${identity}`);
   
     
     return (
@@ -241,36 +243,6 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
                         style={{ minWidth: "auto", minHeight: "auto" }}
                       />
                     </motion.div>
-                    <div className="flex justify-center items-center">
-                      <select
-                        name="role"
-                        id="role"
-                        value={id}
-                        onChange={(evento)=> setId(Number(evento.target.value))}
-                        className="px-4 py-3 bg-[#1A1A1C] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all mb-7"
-                        required
-                      >
-                        <option
-                          value={0}
-                          className="text-zinc-400 font-bold"
-                        >
-                          {t("translation.role_modal")}
-                        </option>
-
-                        {anunci?.map((item)=>(
-
-                          <option 
-                            key={item.id}
-                            value={item.id}
-                            className="text-zinc-400 font-bold"
-                          >
-                            {item.title}
-                          </option>
-                          
-                        ))}
-            
-                      </select>
-                    </div>
                   </div>
                   <motion.button
                     initial={{ opacity: 0, y: -50 }}
@@ -279,7 +251,7 @@ export default function UpdateAnun({ LogedUser }: AdmComponentProps) {
                     type="submit"
                     className="bg-orange-600 shadow-2xl rounded-lg hover:bg-orange-400 px-8 py-2"
                   >
-                    {t("translation.posts_post")}
+                    {t("translation.update")}
                   </motion.button>
                 </div>
               </motion.form>

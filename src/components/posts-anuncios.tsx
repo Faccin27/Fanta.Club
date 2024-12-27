@@ -97,7 +97,7 @@ export default function Post() {
     console.log(usere);
 
     try {
-      await fetch("http://localhost:3535/announcements", {
+      await fetch("http://localhost:3535/anun", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

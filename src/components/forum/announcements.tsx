@@ -60,7 +60,7 @@ export default function Announcements() {
   useEffect(()=>{
     const fetchAnuncios = async () => {
       try{
-        const response = await fetch("http://localhost:3535/announcements/buscaType?type=Announcements");
+        const response = await fetch("http://localhost:3535/anun/buscaType?type=Announcements");
         const result:Announcement[] = await response.json();
         setAnuncios(result);
         console.log("Anuncios recebidos")
