@@ -12,6 +12,7 @@ import Image from "next/image";
 import ModalChangeRole from "./Modais/Role/RoleModal";
 export interface AdmComponentProps {
   LogedUser: User | null;
+  identity: number | undefined;
 }
 
 interface User {
