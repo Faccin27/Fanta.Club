@@ -115,14 +115,6 @@ export default function Announcements() {
         </div>
         {canPostAnnouncement && (
           <div className="flex justify-between gap-4">
-            <button
-                  onClick={()=> window.location.href = "/update"}
-                  className="flex items-center w-full px-4 py-2 text-sky-600 hover:bg-sky-900 rounded-lg bg-sky-950 active:text-sky-800"
-                  >
-                     <UpdatesIcon className="mr-2" />
-                     Update
-                   </button>
-          
           <button
             className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-zinc-900 hover:bg-orange-400 transition-colors"
             onClick={() => router.push("/post-anun")}
