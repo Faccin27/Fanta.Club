@@ -1,4 +1,4 @@
-import {Ellipsis as Options, Trash2  } from "lucide-react";
+import {Ellipsis as Options, Trash2, RefreshCw  as Update  } from "lucide-react";
 import React, { useState } from "react";
 
 export default function DropdownComponent({ anunId }: { anunId: number }) {
@@ -15,15 +15,19 @@ export default function DropdownComponent({ anunId }: { anunId: number }) {
         };
     };
 
+    const handleMoveToUpdate = (id:number) => {
+      window.location.href = `/update/${id}`;
+    };
+
   return (
     <div className="relative inline-block">
+
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="p-2 rounded-full  hover:bg-zinc-700 ml-[1010px]"
       >
         <Options />
       </button>
-
     {open && (
       <div className="absolute right-0 mt-2 w-40 bg-zinc-800 rounded-lg shadow-lg z-20 ml-[900px]">
         <button
@@ -32,6 +36,13 @@ export default function DropdownComponent({ anunId }: { anunId: number }) {
         >
           <Trash2 className="mr-2" />
           Delete
+        </button>
+        <button
+          onClick={()=>handleMoveToUpdate(anunId)}
+          className="flex items-center w-full px-4 py-2 text-sky-600 hover:bg-zinc-900 rounded-t-lg active:text-sky-800"
+        >
+          <Update className="mr-2" />
+          Update
         </button>
       </div>
     )}
