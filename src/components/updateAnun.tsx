@@ -135,7 +135,7 @@ export default function UpdateAnun({ LogedUser,identity }: AdmComponentProps) {
       console.log(usere);
   
       try {
-        await fetch(`http://localhost:3535/anun/${id}`, { 
+        await fetch(`http://localhost:3535/anun/${identity}`, { 
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
