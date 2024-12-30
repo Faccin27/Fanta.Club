@@ -75,12 +75,10 @@ export default function UpdateAnun({ LogedUser,identity }: AdmComponentProps) {
 
   const { t } = useTranslation();
   const [usere, setUsere] = useState<User | null>(null);
-  const [title, setTitle] = useState<string | undefined>("");
-  const [modal, setModal] = useState<boolean>(false);
+  const [title, setTitle] = useState<string | undefined>("")
   const [anun, setAnun] = useState<Announcement | null>(null);
   const [anunci, setAnunci] = useState<Announcement[] | null>(null);
   const [content, setContent] = useState<string | undefined>("");
-  const [anuncio, setAnuncio] = useState<string>("");
   const [identifier, setIdentifier] = useState<number | undefined>(undefined);
   const [id, setId] = useState<number | undefined>(undefined);
 
