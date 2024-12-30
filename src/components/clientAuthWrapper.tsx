@@ -60,7 +60,7 @@ export default function ClientAuthWrapper({
 
   return (
     <I18nextProvider i18n={i18n}>
-      <Header isLoggedIn={isLoggedIn} user={user} />
+      <Header isLoggedIn={isLoggedIn} user={user}/>
       {children}
     </I18nextProvider>
   );
