@@ -27,6 +27,7 @@ import AboutModal from "./Modais/About/AboutModal";
 import ImageChangeModal from "@/components/Modais/ProfileImage/ImageChangeModal";
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
+import ModalDesc from "./Modais/Description/modal_description";
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -216,23 +217,7 @@ export default function Component({ user,ident  }: MeProps) {
     setIsModalOpen(false);
   };
 
-  const handleSubmit = async(evento:React.FormEvent)=>{
-    evento.preventDefault();
-    try{
-      await fetch(`http://localhost:3535/users/${ident}/desc`,{
-        method:"PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body:JSON.stringify({
-          description:newDescription
-        })
-      });
-      alert(t("translation.recharg"))
-    } catch(err){
-      throw new Error(`We can't update your description Error: ${err}`)
-    };
-  };
+  
 
   const handleOpenEmailModal = () => {
     setIsEmailModalOpen(true);
@@ -328,6 +313,11 @@ export default function Component({ user,ident  }: MeProps) {
               )}
                
             </div>
+            <div className="mt-2 flex items-center justify-center">
+            <span className="border-2 border-orange-500 outline-none py-2 px-4 sm:px-0 truncate rounded-xl bg-zinc-800">
+                  {user?.description}
+                </span>
+                </div>
             <div>
               {user?.isActive === false ? (
                 <>
@@ -406,72 +396,7 @@ export default function Component({ user,ident  }: MeProps) {
             )}
             <div>
               {descriptionOpen && (
-                <div className="mt-10 mb-10">
-          <div className="container mx-auto px-4 -mt-16">
-          <div className="text-center">
-            <div className="z-50">
-              <motion.form
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.5,
-                  ease: [0, 0.71, 0.2, 1.01],
-                }}
-                onSubmit={handleSubmit}
-              >
-                <div className="mt-6  rounded-xl shadow-2xl p-6 outline-none border  border-orange-500 min-w-full">
-                  <div className="flex flex-col">
-                <div className="self-end">
-                <button 
-                onClick={handleUnShowDescriptionEdit}
-                className="text-3xl text-orange-600 mb-5 hover:text-orange-400"><X size={40}/></button>
-                </div>
-                  </div>
-                  <div>
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{
-                        duration: 0.9,
-                        ease: [0, 0.71, 0.2, 1.01], 
-                        scale: {
-                          type: "spring",
-                          damping: 5,
-                          stiffness: 100,
-                          restDelta: 0.001,
-                        },
-                      }}
-                      className="mb-32"
-                    >
-                      <ReactQuill
-                          modules={{
-                            toolbar: toolbarOptions, 
-                          }}
-                          theme="snow"
-                          value={String(newDescription)}
-                          onChange={evento=>setNew(evento)}
-                          className="quill-editor custom-toolbar text-white outline-none border-zinc-200 h-40 w-[33rem]"
-                          style={{ minWidth: "auto", minHeight: "auto" }}
-                        />
-
-                    </motion.div>
-                  </div>
-                  <motion.button
-                    initial={{ opacity: 0, y: -50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 3 }}
-                    type="submit"
-                    className="bg-orange-600 shadow-2xl rounded-lg hover:bg-orange-400 px-8 py-2"
-                  >
-                    {t("translation.userr")}
-                  </motion.button>
-                </div>
-              </motion.form>
-            </div>
-          </div>
-        </div>
-                </div>
+                <ModalDesc user={user} onClose={handleUnShowDescriptionEdit} ident={ident}/>
               )}
             </div>
           </div>
